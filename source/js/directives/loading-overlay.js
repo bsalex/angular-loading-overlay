@@ -1,4 +1,6 @@
 (function () {
+    "use strict";
+
     angular.module("angularLoadingOverlay")
         .directive("loadingOverlay", ["$templateCache", "$compile",
             function ($templateCache, $compile) {

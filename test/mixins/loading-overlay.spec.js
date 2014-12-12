@@ -1,4 +1,6 @@
 describe("LoadingOverlay", function () {
+    "use strict";
+
     var LoadingOverlay;
     beforeEach(module('angularLoadingOverlay'));
     beforeEach(function () {
@@ -15,14 +17,14 @@ describe("LoadingOverlay", function () {
 
                         return result;
                     }
-                }
+                };
             }
         });
     });
 
     it("should not be instantiable", function () {
         expect(function () {
-            new LoadingOverlay()
+            var test = new LoadingOverlay();
         }).toThrowError();
     });
 

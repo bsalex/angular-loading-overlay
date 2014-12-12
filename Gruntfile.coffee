@@ -24,6 +24,10 @@ module.exports = (grunt) ->
         files:
           "dist/angular-loading-overlay.css": "source/less/styles.less"
 
+    jshint:
+      options:
+        jshintrc: true
+      src: ["source/**/*.js"]
 
     watch:
       scripts:
@@ -37,4 +41,12 @@ module.exports = (grunt) ->
     "clean:dist"
     "uglify:dist",
     "less:dist"
+  ]
+
+  grunt.registerTask "build-dev", [
+    "less:dev"
+  ]
+
+  grunt.registerTask "check", [
+    "jshint"
   ]

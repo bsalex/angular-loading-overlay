@@ -1,7 +1,9 @@
 (function () {
+    "use strict";
+
     angular.module("angularLoadingOverlay")
         .factory("LoadingOverlay", [function () {
-            var LoadingOverlay = {
+            return {
                 mixin: function (target) {
                     var activeOverlays = [];
 
@@ -22,7 +24,5 @@
                     };
                 }
             };
-
-            return LoadingOverlay;
         }]);
 })();

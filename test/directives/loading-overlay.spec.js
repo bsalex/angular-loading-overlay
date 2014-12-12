@@ -1,4 +1,6 @@
 describe("Loading overlay directive", function () {
+    "use strict";
+
     var $compile,
         $scope,
         LoadingOverlay;
@@ -14,7 +16,7 @@ describe("Loading overlay directive", function () {
         LoadingOverlay.mixin($scope);
     });
 
-    it("should be applyable", function () {
+    it("should be applicable", function () {
         $compile("<div loading-overlay></div>")($scope);
         $scope.$digest();
     });
@@ -94,8 +96,8 @@ describe("Loading overlay directive", function () {
             expect(overlay.hasClass("ng-hide")).toBeFalsy();
         });
 
-        it("should be applyable with several ids", function () {
-            var element = $compile("<div loading-overlay=\"theId, anotherId\"><div id='anotherDiv'></div></div>")($scope);
+        it("should be applicable with several ids", function () {
+            $compile("<div loading-overlay=\"theId, anotherId\"><div id='anotherDiv'></div></div>")($scope);
 
             $scope.$digest();
         });
