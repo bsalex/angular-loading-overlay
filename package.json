@@ -6,7 +6,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node_modules/karma/bin/karma start",
+    "test-watch": "node_modules/karma/bin/karma start",
+    "test": "node_modules/karma/bin/karma start --single-run",
     "watch": "node_modules/grunt-cli/bin/grunt watch",
     "build": "node_modules/grunt-cli/bin/grunt build",
     "build-dev": "node_modules/grunt-cli/bin/grunt build-dev",
