@@ -5,7 +5,10 @@
   "directories": {
     "test": "test"
   },
-  "repository": "https://github.com/bsalex/angular-loading-overlay.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bsalex/angular-loading-overlay.git"
+  },
   "scripts": {
     "test-watch": "node_modules/karma/bin/karma start",
     "test": "node_modules/karma/bin/karma start --single-run",
