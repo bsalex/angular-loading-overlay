@@ -19,7 +19,6 @@ module.exports = function (config) {
         files: [
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            'node_modules/jasmine-sinon/lib/jasmine-sinon.js',
             'source/js/module.js',
             'source/**/*.js',
             'test/**/*.js'
