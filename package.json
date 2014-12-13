@@ -1,6 +1,5 @@
 {
   "name": "angular-loading-overlay",
-  "version": "1.0.0",
   "description": "Mixin and directive to manipulate overlays on async operations.",
   "directories": {
     "test": "test"
