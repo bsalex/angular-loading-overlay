@@ -15,10 +15,12 @@
                             var ids = scope.loadingOverlay.split(","),
                                 result = false;
 
-                            for(var i = 0; i < ids.length; i++) {
-                                if (scope.$parent.isLoadingOverlay(ids[i].trim() || undefined)) {
-                                    result = true;
-                                    break;
+                            if (scope.$parent.isLoadingOverlay !== undefined) {
+                                for(var i = 0; i < ids.length; i++) {
+                                    if (scope.$parent.isLoadingOverlay(ids[i].trim() || undefined)) {
+                                        result = true;
+                                        break;
+                                    }
                                 }
                             }
 
