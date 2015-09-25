@@ -1,38 +1,91 @@
 (function() {
-  "use strict";
+  'use strict';
 
-  angular.module("angularLoadingOverlay")
-    .directive("loadingOverlay", ["$templateCache", "$compile",
-      function($templateCache, $compile) {
-        return {
-          restrict: "A",
-          transclude: true,
-          scope: {
-            loadingOverlay: "@?"
-          },
-          link: function(scope, element, attributes, controller, transclude) {
-            scope.showOverlay = function() {
-              var ids = scope.loadingOverlay.split(","),
-                result = false;
+  angular
+    .module('bsLoadingOverlay')
+    .directive('bsLoadingOverlay', bsLoadingOverlay);
 
-              if (scope.$parent.isLoadingOverlay !== undefined) {
-                for (var i = 0; i < ids.length; i++) {
-                  if (scope.$parent.isLoadingOverlay(ids[i].trim() || undefined)) {
-                    result = true;
-                    break;
-                  }
-                }
-              }
+  bsLoadingOverlay.$inject = ['$compile', '$rootScope', '$templateRequest', '$q', '$timeout', 'bsLoadingOverlayService'];
 
-              return result;
-            };
+  function bsLoadingOverlay($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) {
+    var directive = {
+      restrict: 'EA',
+      link: link
+    };
 
-            element.append($compile($templateCache.get("loadingOverlay.html"))(scope));
-            transclude(function(clone) {
-              element.append(clone);
-            });
+    function link(scope, $element, $attributes) {
+      var overlayElement,
+        referenceId,
+        activeClass,
+        templatePromise,
+        delay,
+        delayPromise;
+
+      activate();
+
+      function activate() {
+        var globalConfig = bsLoadingOverlayService.getGlobalConfig();
+        referenceId = $attributes.referenceId;
+        delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
+        activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
+        var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+
+        if (templateUrl) {
+          templatePromise = $templateRequest(templateUrl);
+        } else {
+          templatePromise = $q.when(false);
+        }
+
+        templatePromise.then(function(loadedTemplate) {
+          overlayElement = $compile(loadedTemplate)(scope);
+          overlayElement.isAttached = false;
+          updateOverlayElement(referenceId);
+        });
+
+        var unsubscribe = $rootScope.$on('bsLoadingOverlayUpdateEvent', function(event, options) {
+          if (options.referenceId === referenceId) {
+            updateOverlayElement(referenceId);
           }
-        };
+        });
+
+        $element.on('$destroy', unsubscribe);
       }
-    ]);
+
+      function updateOverlayElement(referenceId) {
+        if (bsLoadingOverlayService.isActive(referenceId)) {
+          if (!overlayElement.isAttached) {
+            addOverlay();
+          }
+        } else {
+          if (overlayElement.isAttached) {
+            removeOverlay();
+          }
+        }
+      }
+
+      function addOverlay() {
+        if (delay) {
+          delayPromise = $timeout(angular.noop, delay);
+        } else {
+          delayPromise = $q.when();
+        }
+
+        $element.append(overlayElement);
+        overlayElement.isAttached = true;
+
+        $element.addClass(activeClass);
+      }
+
+      function removeOverlay() {
+        delayPromise.then(function() {
+          overlayElement.detach();
+          overlayElement.isAttached = false;
+
+          $element.removeClass(activeClass);
+        });
+      }
+    }
+
+    return directive;
+  }
 })();

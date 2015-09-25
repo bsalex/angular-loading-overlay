@@ -2,12 +2,32 @@
 
 #Angular loading overlay
 
-A directive and mixin to show "Loading..." overlay.
+A service and directive to show "Loading..." overlays on async operations.
 
-##How to use it?
-1. Specify the module in you app module dependencies ("angularLoadingOverlay");
-2. Inject "LoadingOverlay" into a controller;
-3. Add "LoadingOverlay.mixin(this);" or "LoadingOverlay.mixin($scope)" before you use any loading overlay function;
-4. Add 'loading-overlay[="id"]' attribute to the container where you want to show overlay;
-5. Use "$scope.showLoadingOverlay([id])" or "this.showLoadingOverlay([id])" to show overlay;
-6. Use "$scope.hideLoadingOverlay([id])" or "this.hideLoadingOverlay([id])" to hide overlay.
+##Installation
+`bower install --save angular-loading-overlay`
+
+##Usage
+
+###In javascript
+````javascript
+angular.module("your nodule name", [
+  "bsLoadingOverlay"
+]);
+
+
+angular.module("your nodule name")
+  .controller(function ($timeout, bsLoadingOverlayService) {
+
+    bsLoadingOverlayService.start();
+
+    $timeout(bsLoadingOverlayService.stop, 5000);
+
+  });
+````
+###In html
+````html
+<div bs-loading-overlay>
+  loaded data usage here
+</div>
+````

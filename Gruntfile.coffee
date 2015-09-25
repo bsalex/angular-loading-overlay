@@ -10,6 +10,7 @@ module.exports = (grunt) ->
         src: [
           "source/js/module.js"
           "source/**/*.js"
+          "!source/**/*spec.js"
         ]
         dest: "dist/angular-loading-overlay.js"
 
@@ -39,12 +40,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "clean:dist"
-    "uglify:dist",
-    "less:dist"
-  ]
-
-  grunt.registerTask "build-dev", [
-    "less:dev"
+    "uglify:dist"
   ]
 
   grunt.registerTask "check", [
