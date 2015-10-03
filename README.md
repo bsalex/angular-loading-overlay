@@ -7,6 +7,9 @@ A service and directive to show "Loading..." overlays on async operations.
 ##Installation
 `bower install --save angular-loading-overlay`
 
+##Docs & Examples
+[http://bsalex.github.io/angular-loading-overlay/_site/](http://bsalex.github.io/angular-loading-overlay/_site/)
+
 ##Usage
 
 ###In javascript
