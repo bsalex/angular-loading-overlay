@@ -13,6 +13,8 @@
       link: link
     };
 
+    return directive;
+
     function link(scope, $element, $attributes) {
       var overlayElement,
         referenceId,
@@ -25,7 +27,7 @@
 
       function activate() {
         var globalConfig = bsLoadingOverlayService.getGlobalConfig();
-        referenceId = $attributes.referenceId;
+        referenceId = $attributes.bsLoadingOverlayReferenceId;
         delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
         activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
         var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
@@ -65,6 +67,9 @@
 
       function addOverlay() {
         if (delay) {
+          if (delayPromise) {
+            $timeout.cancel(delayPromise);
+          }
           delayPromise = $timeout(angular.noop, delay);
         } else {
           delayPromise = $q.when();
@@ -77,15 +82,14 @@
       }
 
       function removeOverlay() {
+        overlayElement.isAttached = false;
+
         delayPromise.then(function() {
           overlayElement.detach();
-          overlayElement.isAttached = false;
 
           $element.removeClass(activeClass);
         });
       }
     }
-
-    return directive;
   }
 })();

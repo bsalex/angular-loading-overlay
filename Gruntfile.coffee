@@ -7,23 +7,16 @@ module.exports = (grunt) ->
 
     uglify:
       dist:
+        options:
+          mangle: false
+          beautify: true
+
         src: [
           "source/**/*module.js"
           "source/**/*.js"
           "!source/**/*spec.js"
         ]
         dest: "dist/angular-loading-overlay.js"
-
-
-    less:
-      dev:
-        files:
-          "source/css/styles.css": "source/less/styles.less"
-      dist:
-        options:
-          compress: true
-        files:
-          "dist/angular-loading-overlay.css": "source/less/styles.less"
 
     jshint:
       options:
@@ -34,9 +27,6 @@ module.exports = (grunt) ->
       scripts:
         files: ["source/**/*.js"]
         tasks: ["uglify:dist"]
-      less:
-        files: ["source/**/*.less"]
-        tasks: ["less:dev"]
 
   grunt.registerTask "build", [
     "clean:dist"

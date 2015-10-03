@@ -56,11 +56,11 @@
 
           func1 = function() {
             return dependencies.$q.when(1);
-          }
+          };
 
           func2 = function() {
             return dependencies.$q.when(2);
-          }
+          };
           t = {
             func1: func1,
             func2: func2
@@ -166,11 +166,11 @@
 
           func1 = function() {
             return dependencies.$q.when(1);
-          }
+          };
 
           func2 = function() {
             return dependencies.$q.when(2);
-          }
+          };
           t = {
             func1: func1,
             func2: func2

@@ -1,1 +1,96 @@
-!function(){"use strict";angular.module("bsLoadingOverlay",[])}(),function(){"use strict";function a(a,b,c,d,e,f){function g(g,h,i){function j(){var e=f.getGlobalConfig();o=i.referenceId,r=+i.bsLoadingOverlayDelay||e.delay,p=i.bsLoadingOverlayActiveClass||e.activeClass;var j=i.bsLoadingOverlayTemplateUrl||e.templateUrl;q=j?c(j):d.when(!1),q.then(function(b){n=a(b)(g),n.isAttached=!1,k(o)});var l=b.$on("bsLoadingOverlayUpdateEvent",function(a,b){b.referenceId===o&&k(o)});h.on("$destroy",l)}function k(a){f.isActive(a)?n.isAttached||l():n.isAttached&&m()}function l(){s=r?e(angular.noop,r):d.when(),h.append(n),n.isAttached=!0,h.addClass(p)}function m(){s.then(function(){n.detach(),n.isAttached=!1,h.removeClass(p)})}var n,o,p,q,r,s;j()}var h={restrict:"EA",link:g};return h}angular.module("bsLoadingOverlay").directive("bsLoadingOverlay",a),a.$inject=["$compile","$rootScope","$templateRequest","$q","$timeout","bsLoadingOverlayService"]}(),function(){"use strict";function a(a,b){function c(a){a=a||{},l[a.referenceId]=!0,f(a.referenceId)}function d(a,c){return b.when(k.start(c)).then(a)["finally"](k.stop.bind(k,c))}function e(a){return{start:c.bind(null,a),stop:g.bind(null,a),wrap:function(b){return d(b,a)}}}function f(b){a.$emit("bsLoadingOverlayUpdateEvent",{referenceId:b})}function g(a){a=a||{},delete l[a.referenceId],f(a.referenceId)}function h(a){return l[a]}function i(a){m=angular.extend(m,a)}function j(){return m}var k={start:c,stop:g,isActive:h,createHandler:e,wrap:d,setGlobalConfig:i,getGlobalConfig:j},l={},m={};return k}angular.module("bsLoadingOverlay").factory("bsLoadingOverlayService",a),a.$inject=["$rootScope","$q"]}();
+!function() {
+    "use strict";
+    angular.module("bsLoadingOverlay", []);
+}(), function() {
+    "use strict";
+    function bsLoadingOverlay($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) {
+        function link(scope, $element, $attributes) {
+            function activate() {
+                var globalConfig = bsLoadingOverlayService.getGlobalConfig();
+                referenceId = $attributes.bsLoadingOverlayReferenceId, delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay, 
+                activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
+                var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+                templatePromise = templateUrl ? $templateRequest(templateUrl) : $q.when(!1), templatePromise.then(function(loadedTemplate) {
+                    overlayElement = $compile(loadedTemplate)(scope), overlayElement.isAttached = !1, 
+                    updateOverlayElement(referenceId);
+                });
+                var unsubscribe = $rootScope.$on("bsLoadingOverlayUpdateEvent", function(event, options) {
+                    options.referenceId === referenceId && updateOverlayElement(referenceId);
+                });
+                $element.on("$destroy", unsubscribe);
+            }
+            function updateOverlayElement(referenceId) {
+                bsLoadingOverlayService.isActive(referenceId) ? overlayElement.isAttached || addOverlay() : overlayElement.isAttached && removeOverlay();
+            }
+            function addOverlay() {
+                delay ? (delayPromise && $timeout.cancel(delayPromise), delayPromise = $timeout(angular.noop, delay)) : delayPromise = $q.when(), 
+                $element.append(overlayElement), overlayElement.isAttached = !0, $element.addClass(activeClass);
+            }
+            function removeOverlay() {
+                overlayElement.isAttached = !1, delayPromise.then(function() {
+                    overlayElement.detach(), $element.removeClass(activeClass);
+                });
+            }
+            var overlayElement, referenceId, activeClass, templatePromise, delay, delayPromise;
+            activate();
+        }
+        var directive = {
+            restrict: "EA",
+            link: link
+        };
+        return directive;
+    }
+    angular.module("bsLoadingOverlay").directive("bsLoadingOverlay", bsLoadingOverlay), 
+    bsLoadingOverlay.$inject = [ "$compile", "$rootScope", "$templateRequest", "$q", "$timeout", "bsLoadingOverlayService" ];
+}(), function() {
+    "use strict";
+    function bsLoadingOverlayServiceFactory($rootScope, $q) {
+        function start(options) {
+            options = options || {}, activeOverlays[options.referenceId] = !0, notifyOverlays(options.referenceId);
+        }
+        function wrap(promiseFunction, options) {
+            var promise = promiseFunction;
+            return angular.isFunction(promiseFunction) || (promise = function() {
+                return promiseFunction;
+            }), $q.when(bsLoadingOverlayService.start(options)).then(promise)["finally"](bsLoadingOverlayService.stop.bind(bsLoadingOverlayService, options));
+        }
+        function createHandler(options) {
+            return {
+                start: start.bind(null, options),
+                stop: stop.bind(null, options),
+                wrap: function(promiseFunction) {
+                    return wrap(promiseFunction, options);
+                }
+            };
+        }
+        function notifyOverlays(referenceId) {
+            $rootScope.$emit("bsLoadingOverlayUpdateEvent", {
+                referenceId: referenceId
+            });
+        }
+        function stop(options) {
+            options = options || {}, delete activeOverlays[options.referenceId], notifyOverlays(options.referenceId);
+        }
+        function isActive(referenceId) {
+            return activeOverlays[referenceId];
+        }
+        function setGlobalConfig(options) {
+            globalConfig = angular.extend(globalConfig, options);
+        }
+        function getGlobalConfig() {
+            return globalConfig;
+        }
+        var bsLoadingOverlayService = {
+            start: start,
+            stop: stop,
+            isActive: isActive,
+            createHandler: createHandler,
+            wrap: wrap,
+            setGlobalConfig: setGlobalConfig,
+            getGlobalConfig: getGlobalConfig
+        }, activeOverlays = {}, globalConfig = {};
+        return bsLoadingOverlayService;
+    }
+    angular.module("bsLoadingOverlay").factory("bsLoadingOverlayService", bsLoadingOverlayServiceFactory), 
+    bsLoadingOverlayServiceFactory.$inject = [ "$rootScope", "$q" ];
+}();

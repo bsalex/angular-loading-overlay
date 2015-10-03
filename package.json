@@ -3,12 +3,12 @@
   "description": "Service and directive to manipulate overlays on async operations.",
   "repository": {
     "type": "git",
-    "pre-push": "grunt build && grunt test",
     "url": "https://github.com/bsalex/angular-loading-overlay.git"
   },
   "scripts": {
     "test-watch": "node_modules/karma/bin/karma start",
     "test": "node_modules/karma/bin/karma start --single-run",
+    "prepush": "node_modules/grunt-cli/bin/grunt test && node_modules/grunt-cli/bin/grunt build && git add -u",
     "watch": "node_modules/grunt-cli/bin/grunt watch",
     "build": "node_modules/grunt-cli/bin/grunt build",
     "build-dev": "node_modules/grunt-cli/bin/grunt build-dev",

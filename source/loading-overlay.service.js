@@ -30,8 +30,16 @@
     }
 
     function wrap(promiseFunction, options) {
+      var promise = promiseFunction;
+
+      if(!angular.isFunction(promiseFunction)) {
+        promise = function () {
+          return promiseFunction;
+        };
+      }
+
       return $q.when(bsLoadingOverlayService.start(options))
-        .then(promiseFunction)
+        .then(promise)
         .finally(bsLoadingOverlayService.stop.bind(bsLoadingOverlayService, options));
     }
 
