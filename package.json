@@ -8,7 +8,7 @@
   "scripts": {
     "test-watch": "node_modules/karma/bin/karma start",
     "test": "node_modules/karma/bin/karma start --single-run",
-    "prepush": "node_modules/grunt-cli/bin/grunt test && node_modules/grunt-cli/bin/grunt build && git add -u",
+    "prepush": "npm test && npm build && git add -u",
     "watch": "node_modules/grunt-cli/bin/grunt watch",
     "build": "node_modules/grunt-cli/bin/grunt build",
     "build-dev": "node_modules/grunt-cli/bin/grunt build-dev",
