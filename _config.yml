@@ -49,7 +49,7 @@ facebook:
   profileUrl:
 
 
-exclude: ['README.md', 'LICENSE', 'bower.json', 'Gemfile.lock', 'Gemfile']
+exclude: ['README.md', 'LICENSE', 'bower.json', 'Gemfile.lock', 'Gemfile', '*.iml']
 
 gems:
   - jekyll-mentions
