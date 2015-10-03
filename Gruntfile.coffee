@@ -8,7 +8,7 @@ module.exports = (grunt) ->
     uglify:
       dist:
         src: [
-          "source/js/module.js"
+          "source/**/*module.js"
           "source/**/*.js"
           "!source/**/*spec.js"
         ]
