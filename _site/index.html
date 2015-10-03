@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Angular Loading Overlay</title>
+
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/css/docs.min.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
+
+  <style>
+    #content {
+      background:#080331;
+      background:linear-gradient(135deg, #080331, #bb6c6c);
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
+  <script src="/assets/js/docs.min.js"></script>
+</head>
+
+<body>
+  <!-- Main navigation
+  =========================================== -->
+  <header class="navbar navbar-static-top bs-docs-nav" id="top">
+    <div class="container">
+      <div class="navbar-header" role="banner">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">Angular Loading Overlay</a>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav">
+        
+        
+          
+        
+          
+        
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        
+          <li>
+            <a href="https://github.com/bsalex/angular-loading-overlay">GitHub</a>
+          </li>
+        
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- Header
+  =========================================== -->
+  
+  <div class="bs-docs-masthead" id="content">
+    <div class="container">
+      <h1 class="home-title">Angular Loading Overlay</h1>
+      <p class="lead"></p>
+      <p class="lead">
+        <a href="https://github.com/bsalex/angular-loading-overlay" class="btn btn-outline-inverse btn-lg">Download</a>
+      </p>
+      <p class="version">Currently v0.2.0</p>
+    </div>
+  </div>
+
+  
+
+  <div class="container bs-docs-container">
+    <div class="row">
+      <!-- Content
+      =========================================== -->
+      <div class="col-md-9" role="main">
+        <style>
+    .loading-overlay--active {
+        background-color: #0B0;
+    }
+</style>
+
+<script src="dist/angular/angular.js"></script>
+<script src="dist/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
+<script>
+    var app = angular.module('app', [
+        'bsLoadingOverlay',
+        'ui.bootstrap'
+    ]);
+</script>
+
+<section class="bs-docs-section">
+    <h1 id="introduction" class="page-header">Introduction</h1>
+
+    <p class="lead">
+        The directive and service provide your application with loading overlays to indicate async operations.
+        The module is designed to reduce code duplication in controllers and views of your angular application.
+    </p>
+
+    <p class="lead">
+        Inspired by <a href="https://github.com/JanStevens/angular-growl-2">angular-growl-2</a>
+    </p>
+</section>
+<section class="bs-docs-section">
+    <h1 id="options" class="page-header">Options</h1>
+
+    <p>
+        The directive and service provide 2 levels of configuration:
+    <ul>
+        <li>Global configuration level</li>
+        <li>Directive configuration level</li>
+    </ul>
+    </p>
+
+    <h2 id="global-configuration">
+        Global configuration
+    </h2>
+
+    <p>
+        Global configuration is applied to all directives by default.
+        It provides the following options:
+        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">&#39;bsLoadingOverlay&#39;</span>
+<span class="p">]).</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">setGlobalConfig</span><span class="p">({</span>
+    <span class="nx">delay</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// Minimal delay to hide loading overlay in ms.</span>
+    <span class="nx">activeClass</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// Class that is added to the element where bs-loading-overlay is applied when the overlay is active.</span>
+    <span class="nx">templateUrl</span><span class="o">:</span> <span class="kc">undefined</span> <span class="c1">// Template url for overlay element. If not specified - no overlay element is created.</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+    </p>
+
+    <h2 id="directive-configuration">
+        Directive configuration
+    </h2>
+
+    <p>
+        Directive configuration overrides global configuration and provides the following options:
+    <dl class="bs-docs-dl">
+        <dt>bs-loading-overlay-reference-id</dt>
+        <dd>Reference id for the overlay. When it is used in start, wrap or createHandler options - only this overlay is
+            activated. undefined by default.
+        </dd>
+        <dt>bs-loading-overlay-active-class</dt>
+        <dd>Class that is added to the current div when overlay is activated. empty by default.
+        </dd>
+        <dt>bs-loading-overlay-template-url</dt>
+        <dd>Template url for the element created inside this div when the overlay is activated.
+        </dd>
+    </dl>
+    </p>
+</section>
+<section class="bs-docs-section" ng-app="app">
+    <h1 id="examples" class="page-header">Examples</h1>
+
+    <h2 id="global" class="page-header">Global</h2>
+
+    <p>
+        If no reference id is not passed to start function -
+        then all loaders which don't have specified reference id are triggered.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('GlobalController', function ($scope, bsLoadingOverlayService) {
+  $scope.showOverlay = function () {
+    bsLoadingOverlayService.start();
+  };
+
+  $scope.hideOverlay = function () {
+    bsLoadingOverlayService.stop();
+  }
+});
+
+</script>
+
+<div ng-controller="GlobalController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;GlobalController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+  <span class="p">};</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="with-reference" class="page-header">With reference</h2>
+
+    <p>
+        If reference id is passed to start function -
+        then only overlays with specified ids are triggered.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('WithReferenceController', function ($scope, bsLoadingOverlayService) {
+  $scope.showOverlay = function (referenceId) {
+    bsLoadingOverlayService.start({
+      referenceId: referenceId
+    });
+  };
+
+  $scope.hideOverlay = function (referenceId) {
+    bsLoadingOverlayService.stop({
+      referenceId: referenceId
+    });
+  }
+});
+
+</script>
+
+<div ng-controller="WithReferenceController">
+  <button class="btn btn-primary" ng-click="showOverlay('first')">Show overlay first</button>
+<button class="btn btn-primary" ng-click="hideOverlay('first')">Hide overlay first</button>
+<button class="btn btn-primary" ng-click="showOverlay('second')">Show overlay second</button>
+<button class="btn btn-primary" ng-click="hideOverlay('second')">Hide overlay second</button>
+
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="first"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="second"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WithReferenceController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay first<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay first<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay second<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay second<span class="nt">&lt;/button&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;first&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;second&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="class" class="page-header">Class</h2>
+
+    <p>
+        If templateUrl is not specified in global config and in start option and in directive attributes
+        - then no overlay element is created.
+    </p>
+
+    <p>
+        On the other hand you can pass active class to directive or start function. In this case the class is added
+        directly to the element where overlay directive is applied.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('ClassController', function ($scope, bsLoadingOverlayService) {
+  $scope.showOverlay = function () {
+    bsLoadingOverlayService.start({
+      referenceId: 'class'
+    });
+  };
+
+  $scope.hideOverlay = function () {
+    bsLoadingOverlayService.stop({
+      referenceId: 'class'
+    });
+  }
+});
+
+</script>
+
+<div ng-controller="ClassController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="class"
+     bs-loading-overlay-active-class="loading-overlay--active">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;ClassController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;class&#39;</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;class&#39;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;class&quot;</span>
+     <span class="na">bs-loading-overlay-active-class=</span><span class="s">&quot;loading-overlay--active&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="delay" class="page-header">Hide with delay</h2>
+
+    <p>
+        To reduce flickering of loading overlay on possibly fast async actions you can add minimal delay to hide
+        overlay.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('DelayController', function ($scope, bsLoadingOverlayService) {
+  $scope.showOverlay = function () {
+    bsLoadingOverlayService.start({
+      referenceId: 'delay'
+    });
+  };
+
+  $scope.hideOverlay = function () {
+    bsLoadingOverlayService.stop({
+      referenceId: 'delay'
+    });
+  }
+});
+
+</script>
+
+<div ng-controller="DelayController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-delay="3000"
+     bs-loading-overlay-reference-id="delay"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DelayController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;delay&#39;</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;delay&#39;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-delay=</span><span class="s">&quot;3000&quot;</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;delay&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="handler" class="page-header">Handler</h2>
+
+    <p>
+        To reduce duplication you can create preconfigured handler for your overlay.
+        Then the overlay can be started with simple function call, without options.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('HandlerController', function ($scope, bsLoadingOverlayService) {
+  var overlayHandler = bsLoadingOverlayService.createHandler({
+    referenceId: 'handler-overlay'
+  });
+
+  $scope.showOverlay = function () {
+    overlayHandler.start();
+  };
+
+  $scope.hideOverlay = function () {
+    overlayHandler.stop();
+  }
+});
+
+</script>
+
+<div ng-controller="HandlerController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="handler-overlay"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;HandlerController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">overlayHandler</span> <span class="o">=</span> <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">createHandler</span><span class="p">({</span>
+    <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;handler-overlay&#39;</span>
+  <span class="p">});</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">overlayHandler</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+  <span class="p">};</span>
+
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">overlayHandler</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;handler-overlay&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="wrapper" class="page-header">Wrapper</h2>
+
+    <p>
+        You can wrap any promise with `wrap` function
+        and then the overlay start function will be called right after the wrap call
+        and stop function will be called on promese resolved or rejected.
+        A function can be also wrapped with handler (`handler.wrap(somePromiseHere)`).
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('WrapperController', function ($scope, $timeout, bsLoadingOverlayService) {
+  $scope.showOverlay = function () {
+    bsLoadingOverlayService.wrap($timeout(angular.noop, 5000), {
+      referenceId: 'wrapper'
+    });
+  }
+
+});
+
+</script>
+
+<div ng-controller="WrapperController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="wrapper"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">(</span><span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="p">{</span>
+      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper&#39;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;wrapper&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+    <h2 id="wrapper-function" class="page-header">Wrapper of function returning promise</h2>
+
+    <p>
+        The same as above, except that you also can wrap function that returns a promise.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+<script>
+  app.controller('WrapperFunctionController', function ($scope, $timeout, bsLoadingOverlayService) {
+  $scope.showOverlay = function () {
+    bsLoadingOverlayService.wrap(
+      function () {
+        return $timeout(angular.noop, 5000);
+      }, {
+        referenceId: 'wrapper-function'
+      });
+  }
+
+});
+
+</script>
+
+<div ng-controller="WrapperFunctionController">
+  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<div class="well well-lg bs-loading-container"
+     bs-loading-overlay
+     bs-loading-overlay-reference-id="wrapper-function"
+     bs-loading-overlay-template-url="/loading-overlay-template.html">
+    Some content here
+</div>
+
+  <tabset>
+    <tab heading="JavaScript">
+      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperFunctionController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">(</span>
+      <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+      <span class="p">},</span> <span class="p">{</span>
+        <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper-function&#39;</span>
+      <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">});</span></code></pre></div>
+    </tab>
+    <tab heading="HTML">
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
+     <span class="na">bs-loading-overlay</span>
+     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;wrapper-function&quot;</span>
+     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;/loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+    Some content here
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+    </tab>
+  </tabset>
+</div>
+
+    </div>
+
+</section>
+
+      </div>
+
+      <!-- Page navigation
+      =========================================== -->
+      <div class="col-md-3" role="complementary">
+        <div class="bs-docs-sidebar hidden-print">
+          <ul class="nav bs-docs-sidenav">
+          </ul>
+          <a class="back-to-top" href="#top">
+            <i class="glyphicon glyphicon-chevron-up"></i> Back to top
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer
+  =========================================== -->
+  <footer class="bs-docs-footer" role="contentinfo">
+    <div class="container">
+      <div class="bs-docs-social">
+        <ul class="bs-docs-social-buttons">
+        
+          <li>
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=bsalex&amp;repo=angular-loading-overlay&amp;type=watch&amp;count=true" width="90" height="20" title="Star on GitHub"></iframe>
+          </li>
+          <li>
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=bsalex&amp;repo=angular-loading-overlay&amp;type=fork&amp;count=true" width="90" height="20" title="Fork on GitHub"></iframe>
+          </li>
+        
+        
+          <li>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-count="horizontal" data-via="" data-text="Angular Loading Overlay" data-hashtags="">Tweet</a>
+          </li>
+        
+        
+        
+          <li>
+            <div class="fb-like" data-href="" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+          </li>
+        
+        
+        </ul>
+      </div>
+
+      <p>
+        Licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT License</a>,
+        documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+      </p>
+      <p>
+        Documentation template by <a href="http://getbootstrap.com">Bootstrap team</a>,
+        generated with <a href="https://github.com/mistic100/jekyll-bootstrap-doc">Jekyll Bootstrap Doc</a>
+      </p>
+
+      <ul class="bs-docs-footer-links muted">
+        <li>Currently v0.2.0</li>
+      
+        <li>&middot;</li>
+        <li><a href="https://github.com/bsalex/angular-loading-overlay">GitHub</a></li>
+      
+        <li>&middot;</li>
+        <li><a href="https://github.com/bsalex/angular-loading-overlay/issues">Issues</a></li>
+      
+      </ul>
+    </div>
+  </footer>
+
+
+  <!-- Async scripts
+  =========================================== -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2/trianglify.min.js"></script>
+  <script>trianglify('#080331', '#bb6c6c');</script>
+  
+
+  
+  <script>
+    window.twttr = (function (d,s,id) {
+      var t, js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return; js=d.createElement(s); js.id=id; js.async=1;
+      js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+      return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+    }(document, "script", "twitter-wjs"));
+  </script>
+  
+
+  
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  
+
+  
+
+</body>
+</html>
