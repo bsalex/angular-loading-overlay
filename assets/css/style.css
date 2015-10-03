@@ -42,3 +42,11 @@
 .bs-docs-masthead .version {
     color: #FFF;
 }
+.bs-docs-dl dt {
+    margin-top: 25px;
+    padding-left: 25px;
+}
+.bs-docs-dl dd {
+    margin-top: 10px;
+    padding-left: 50px;
+}

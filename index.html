@@ -18,27 +18,72 @@ isHome: true
         'bsLoadingOverlay',
         'ui.bootstrap'
     ]);
-
-
-    app.controller('controllerWithDelay', function ($scope, bsLoadingOverlayService) {
-        $scope.showOverlay = function (referenceId) {
-            bsLoadingOverlayService.start({
-                referenceId: referenceId
-            });
-        };
-
-        $scope.hideOverlay = function (referenceId) {
-            bsLoadingOverlayService.stop({
-                referenceId: referenceId
-            });
-        }
-    });
 </script>
 
+<section class="bs-docs-section">
+    <h1 id="introduction" class="page-header">Introduction</h1>
+
+    <p class="lead">
+        The directive and service provide your application with loading overlays to indicate async operations.
+        The module is designed to reduce code duplication in controllers and views of your angular application.
+    </p>
+
+    <p class="lead">
+        Inspired by <a href="https://github.com/JanStevens/angular-growl-2">angular-growl-2</a>
+    </p>
+</section>
+<section class="bs-docs-section">
+    <h1 id="options" class="page-header">Options</h1>
+
+    <p>
+        The directive and service provide 2 levels of configuration:
+    <ul>
+        <li>Global configuration level</li>
+        <li>Directive configuration level</li>
+    </ul>
+    </p>
+
+    <h2 id="global-configuration">
+        Global configuration
+    </h2>
+
+    <p>
+        Global configuration is applied to all directives by default.
+        It provides the following options:
+        {% highlight javascript %}
+        {% include global-configuration.js %}
+        {% endhighlight %}
+    </p>
+
+    <h2 id="directive-configuration">
+        Directive configuration
+    </h2>
+
+    <p>
+        Directive configuration overrides global configuration and provides the following options:
+    <dl class="bs-docs-dl">
+        <dt>bs-loading-overlay-reference-id</dt>
+        <dd>Reference id for the overlay. When it is used in start, wrap or createHandler options - only this overlay is
+            activated. undefined by default.
+        </dd>
+        <dt>bs-loading-overlay-active-class</dt>
+        <dd>Class that is added to the current div when overlay is activated. empty by default.
+        </dd>
+        <dt>bs-loading-overlay-template-url</dt>
+        <dd>Template url for the element created inside this div when the overlay is activated.
+        </dd>
+    </dl>
+    </p>
+</section>
 <section class="bs-docs-section" ng-app="app">
     <h1 id="examples" class="page-header">Examples</h1>
 
     <h2 id="global" class="page-header">Global</h2>
+
+    <p>
+        If no reference id is not passed to start function -
+        then all loaders which don't have specified reference id are triggered.
+    </p>
 
     <div class="bs-example">
         {% include example.html id="global" %}
@@ -46,11 +91,26 @@ isHome: true
 
     <h2 id="with-reference" class="page-header">With reference</h2>
 
+    <p>
+        If reference id is passed to start function -
+        then only overlays with specified ids are triggered.
+    </p>
+
     <div class="bs-example">
         {% include example.html id="with-reference" %}
     </div>
 
     <h2 id="class" class="page-header">Class</h2>
+
+    <p>
+        If templateUrl is not specified in global config and in start option and in directive attributes
+        - then no overlay element is created.
+    </p>
+
+    <p>
+        On the other hand you can pass active class to directive or start function. In this case the class is added
+        directly to the element where overlay directive is applied.
+    </p>
 
     <div class="bs-example">
         {% include example.html id="class" %}
