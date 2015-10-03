@@ -1,0 +1,22 @@
+{% capture html_path %}examples/{{include.id}}/{{include.id}}.html{% endcapture %}
+{% capture js_path %}examples/{{include.id}}/{{include.id}}.controller.js{% endcapture %}
+
+<script>
+  {% include {{js_path}} %}
+</script>
+
+<div ng-controller="{{include.id | camelize}}Controller">
+  {% include {{html_path}} %}
+  <tabset>
+    <tab heading="JavaScript">
+      {% highlight javascript %}
+        {% include {{js_path}} %}
+      {% endhighlight %}
+    </tab>
+    <tab heading="HTML">
+      {% highlight html %}
+        {% include {{html_path}} %}
+      {% endhighlight %}
+    </tab>
+  </tabset>
+</div>
