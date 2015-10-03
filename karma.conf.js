@@ -1,69 +1,60 @@
 // Karma configuration
-// Generated on Fri Dec 05 2014 18:22:16 GMT+0200 (EET)
+// Generated on Tue Sep 22 2015 23:49:19 GMT+0300 (EEST)
 
-module.exports = function (config) {
-    "use strict";
+module.exports = function(config) {
+  config.set({
 
-    config.set({
+    // base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '',
 
-        // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine', 'sinon'],
 
+    // list of files / patterns to load in the browser
+    files: [
+      'node_modules/angular/angular.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/ng-describe/dist/ng-describe.js',
+      'source/*module.js',
+      'source/*.js',
+      'source/*.spec.js'
+    ],
 
-        // frameworks to use
-        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+    // list of files to exclude
+    exclude: [],
 
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      'source/!(*.spec).js': ['coverage']
+    },
 
-        // list of files / patterns to load in the browser
-        files: [
-            'node_modules/angular/angular.js',
-            'node_modules/angular-mocks/angular-mocks.js',
-            'source/js/module.js',
-            'source/**/*.js',
-            'test/**/*.js'
-        ],
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress', 'coverage'],
 
+    // web server port
+    port: 9876,
 
-        // list of files to exclude
-        exclude: [],
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
 
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
 
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: true,
 
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['PhantomJS'],
 
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'growler'],
-
-
-        // web server port
-        port: 9876,
-
-
-        // enable / disable colors in the output (reporters and logs)
-        colors: true,
-
-
-        // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
-
-
-        // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
-
-
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Firefox'],
-
-
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false
-    });
-};
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    }
+  })
+}
