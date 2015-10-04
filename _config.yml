@@ -41,7 +41,7 @@ twitter:
   enabled: true
   via:
   hash:
-  account:
+  account: https://twitter.com/bsalexmail
 
 # facebook buttons
 facebook:
