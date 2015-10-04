@@ -53,7 +53,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
 
     coverageReporter: {
-      type : 'html',
+      type : 'lcovonly',
       dir : 'coverage/'
     }
   })
