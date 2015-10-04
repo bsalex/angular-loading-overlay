@@ -36,6 +36,8 @@
     "xit": false,
     "inject": false,
     "module": false,
-    "jasmine": false
+    "jasmine": false,
+    "ngDescribe": false,
+    "sinon": false
   }
 }
