@@ -2,7 +2,8 @@
 
 #Angular loading overlay
 
-A service and directive to show "Loading..." overlays on async operations.
+The module provides your app with overlays (like "Loading...") that could be shown on async operations.  
+It also allows you to create preconfigured handlers and wrap promises to show and hide overlays on promise work started and finished.
 
 ##Installation
 `bower install --save angular-loading-overlay`
