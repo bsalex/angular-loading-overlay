@@ -1,15 +1,11 @@
 language: node_js
 node_js:
-  - "0.12"
+  - "4.12"
 
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm install -g codeclimate-test-reporter
 
 addons:
   code_climate:
     repo_token: 4391dac465d1650d4aa8517b1162b0b2e7db2e03faaffa73650dba2560d4c52f
-
-after_script:
-  - codeclimate-test-reporter < coverage/PhantomJS 1.9.8 (Linux 0.0.0)/lcov.info
