@@ -1,19 +1,20 @@
 [![Build Status](https://travis-ci.org/bsalex/angular-loading-overlay.svg?branch=master)](https://travis-ci.org/bsalex/angular-loading-overlay)
+[![Code Climate](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/gpa.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay)
 
-#Angular loading overlay
+# Angular loading overlay
 
 The module provides your app with overlays (like "Loading...") that could be shown on async operations.  
 It also allows you to create preconfigured handlers and wrap promises to show and hide overlays on promise work started and finished.
 
-##Installation
+## Installation
 `bower install --save angular-loading-overlay`
 
-##Docs & Examples
+## Docs & Examples
 [http://bsalex.github.io/angular-loading-overlay/_site/](http://bsalex.github.io/angular-loading-overlay/_site/)
 
-##Usage
+## Usage
 
-###In javascript
+### In javascript
 ````javascript
 angular.module("your nodule name", [
   "bsLoadingOverlay"
@@ -29,9 +30,13 @@ angular.module("your nodule name")
 
   });
 ````
-###In html
+### In html
 ````html
 <div bs-loading-overlay>
   loaded data usage here
 </div>
 ````
+# License
+
+Copyright (c) 2015 Oleksandr Beshchuk <[bs.alex.mail@gmail.com](mailto:bs.alex.mail@gmail.com)>  
+Licensed under the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
