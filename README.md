@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/bsalex/angular-loading-overlay.svg?branch=master)](https://travis-ci.org/bsalex/angular-loading-overlay)
 [![Code Climate](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/gpa.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay)
+[![Test Coverage](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/coverage.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay/coverage)
 
 # Angular loading overlay
 
