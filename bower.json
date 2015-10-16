@@ -4,14 +4,14 @@
   "authors": [
     "Oleksandr Beshchuk <bs.alex.mail@gmail.com>"
   ],
-  "description": "Service and directive to manipulate overlays on async operations.",
+  "description": "Module that provides ability to manipulate overlays on async operations.",
   "main": "dist/angular-loading-overlay.js",
   "keywords": [
     "angular",
     "loading",
     "overlay"
   ],
-  "license": "ISC",
+  "license": "Apache-2.0",
   "ignore": [
     "**/.*",
     "node_modules",
