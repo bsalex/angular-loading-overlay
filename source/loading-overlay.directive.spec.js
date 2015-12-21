@@ -1,7 +1,7 @@
-(function() {
+(function () {
   'use strict';
 
-  describe("bsLoadingOverlay directive", function() {
+  describe("bsLoadingOverlay directive", function () {
     var bsLoadingOverlayService,
       bsLoadingOverlayServiceMock,
       $compile,
@@ -13,12 +13,12 @@
       $timeout,
       defaultConfig;
 
-    beforeEach(function() {
+    beforeEach(function () {
       module('bsLoadingOverlay');
 
-      module(function($provide) {
+      module(function ($provide) {
         $provide.value('bsLoadingOverlayService', bsLoadingOverlayService);
-        $provide.decorator('$timeout', function($delegate) {
+        $provide.decorator('$timeout', function ($delegate) {
           return sinon.spy($delegate);
         });
       });
@@ -39,7 +39,7 @@
       bsLoadingOverlayServiceMock = sinon.mock(bsLoadingOverlayService);
       bsLoadingOverlayServiceMock.expects('getGlobalConfig').atLeast(1).returns(defaultConfig);
 
-      inject(function(_$compile_, _$rootScope_, _$q_, _$document_, _$templateCache_, _$timeout_) {
+      inject(function (_$compile_, _$rootScope_, _$q_, _$document_, _$templateCache_, _$timeout_) {
         $compile = _$compile_;
         scope = _$rootScope_.$new();
         scope.model = {};
@@ -51,9 +51,9 @@
       $templateCache.put('default-template-url.html', '<div class="bs-loading-overlay"></div>');
     });
 
-    it("should compile", function() {
+    it("should compile", function () {
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -61,11 +61,11 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should not add overlay when reference is not active", function() {
+    it("should not add overlay when reference is not active", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -73,11 +73,11 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should add overlay when reference is active", function() {
+    it("should add overlay when reference is active", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -85,12 +85,12 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should not add overlay when reference templateUrl is false in global config and not set in directive", function() {
+    it("should not add overlay when reference templateUrl is false in global config and not set in directive", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
       defaultConfig.templateUrl = false;
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -98,13 +98,13 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should reuse the same element on start stop and start again", function() {
+    it("should reuse the same element on start stop and start again", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -122,14 +122,14 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should add overlay element using provided templateUrl when reference is active", function() {
+    it("should add overlay element using provided templateUrl when reference is active", function () {
       $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
       template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
 
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -137,13 +137,13 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    describe("with global config", function() {
+    describe("with global config", function () {
       var globalConfig = {
         templateUrl: 'global-template-url.html',
         activeClass: 'globalActiveClass'
       };
 
-      beforeEach(function() {
+      beforeEach(function () {
         bsLoadingOverlayServiceMock.restore();
         bsLoadingOverlayServiceMock = sinon.mock(bsLoadingOverlayService);
         bsLoadingOverlayServiceMock.expects('getGlobalConfig').once().returns(globalConfig);
@@ -153,33 +153,33 @@
         $templateCache.put('global-template-url.html', '<div class="from-global-template-url"></div>');
       });
 
-      it("should use templateUrl from global config if it is not provided directly into directive", function() {
+      it("should use templateUrl from global config if it is not provided directly into directive", function () {
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
         expect(element[0].querySelector('.from-global-template-url')).not.toBeNull();
       });
 
-      it("should use active class from global config if it is not provided directly into directive", function() {
+      it("should use active class from global config if it is not provided directly into directive", function () {
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
         expect(element.hasClass('globalActiveClass')).toBeTruthy();
       });
 
-      it("should use delay from global config if it is not provided directly into directive", function() {
+      it("should use delay from global config if it is not provided directly into directive", function () {
         globalConfig.delay = 1000;
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
-        scope.$apply(function() {
+        scope.$apply(function () {
           $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
             referenceId: referenceId
           });
@@ -191,14 +191,14 @@
       });
     });
 
-    describe("with delay", function() {
-      it("should call timeout with correct args if delay is set", function() {
+    describe("with delay", function () {
+      it("should call timeout with correct args if delay is set", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -210,13 +210,13 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should not remove overlay element until timer is triggered", function() {
+      it("should not remove overlay element until timer is triggered", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -228,13 +228,13 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should remove overlay element when timer is triggered", function() {
+      it("should remove overlay element when timer is triggered", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -248,14 +248,14 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should not remove overlay element when timer is triggered, but overlay became active again", function() {
+      it("should not remove overlay element when timer is triggered, but overlay became active again", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -273,7 +273,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should not remove overlay element until timeout triggered on second stop", function() {
+      it("should not remove overlay element until timeout triggered on second stop", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
@@ -281,7 +281,7 @@
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -303,7 +303,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should remove overlay element when timeout triggered on second stop", function() {
+      it("should remove overlay element when timeout triggered on second stop", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-delay="5000" bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
@@ -311,7 +311,7 @@
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -335,13 +335,13 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should not call timeout if delay is not set", function() {
+      it("should not call timeout if delay is not set", function () {
         template = '<div bs-loading-overlay bs-loading-overlay-reference-id="referenceId">';
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
@@ -354,8 +354,8 @@
       });
     });
 
-    describe("with two loader overlays", function() {
-      it("should be able to render two loaders with different templates and references", function() {
+    describe("with two loader overlays", function () {
+      it("should be able to render two loaders with different templates and references", function () {
         $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
         $templateCache.put('some-another-template.html', '<div class="from-another-template-url"></div>');
         template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
@@ -366,7 +366,7 @@
 
         var element, anotherElement;
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
           anotherElement = $compile(anotherTemplate)(scope);
         });
@@ -376,7 +376,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should be able to render and show two loaders with same referenceId and template", function() {
+      it("should be able to render and show two loaders with same referenceId and template", function () {
         $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
         template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
 
@@ -384,7 +384,7 @@
 
         var element, anotherElement;
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
           anotherElement = $compile(template)(scope);
         });
@@ -394,7 +394,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should be able to render two loaders with same referenceId but different templates", function() {
+      it("should be able to render two loaders with same referenceId but different templates", function () {
         $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
         $templateCache.put('some-another-template.html', '<div class="from-another-template-url"></div>');
         template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
@@ -404,7 +404,7 @@
 
         var element, anotherElement;
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
           anotherElement = $compile(anotherTemplate)(scope);
         });
@@ -414,7 +414,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should be able to render two loaders with different referenceId but same templates", function() {
+      it("should be able to render two loaders with different referenceId but same templates", function () {
         $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
         template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
         var anotherTemplate = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="anotherreferenceId">';
@@ -424,7 +424,7 @@
 
         var element, anotherElement;
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
           anotherElement = $compile(anotherTemplate)(scope);
         });
@@ -434,7 +434,7 @@
         bsLoadingOverlayServiceMock.verify();
       });
 
-      it("should be able to render two loaders with different referenceId and templates then hide and show first", function() {
+      it("should be able to render two loaders with different referenceId and templates then hide and show first", function () {
         $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
         $templateCache.put('some-another-template.html', '<div class="from-another-template-url"></div>');
         template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
@@ -447,7 +447,7 @@
 
         var element, anotherElement;
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
           anotherElement = $compile(anotherTemplate)(scope);
         });
@@ -470,7 +470,7 @@
       });
     });
 
-    it("should remove overlay with provided templateUrl class if reference became inactive and update event emitted", function() {
+    it("should remove overlay with provided templateUrl class if reference became inactive and update event emitted", function () {
       $templateCache.put('some-template.html', '<div class="from-template-url"></div>');
       template = '<div bs-loading-overlay bs-loading-overlay-template-url="some-template.html" bs-loading-overlay-reference-id="referenceId">';
 
@@ -483,11 +483,11 @@
         .returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
-      scope.$apply(function() {
+      scope.$apply(function () {
         $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
           referenceId: referenceId
         });
@@ -496,42 +496,42 @@
       expect(element[0].querySelector('.from-template-url')).toBeNull();
     });
 
-    it("should add overlay class when reference is active", function() {
+    it("should add overlay class when reference is active", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
       expect(element.hasClass('bs-loading-overlay--active')).toBeTruthy();
     });
 
-    it("should add overlay class when reference is active event if templateUrl is false", function() {
+    it("should add overlay class when reference is active event if templateUrl is false", function () {
       defaultConfig.templateUrl = false;
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
       expect(element.hasClass('bs-loading-overlay--active')).toBeTruthy();
     });
 
-    it("should not add overlay class when it is false in global config and not provided to directive", function() {
+    it("should not add overlay class when it is false in global config and not provided to directive", function () {
       defaultConfig.activeClass = false;
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
       expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
-    it("should remove overlay class if reference became inactive and update event emitted", function() {
+    it("should remove overlay class if reference became inactive and update event emitted", function () {
       bsLoadingOverlayServiceMock.expects('isActive')
         .twice()
         .withArgs(referenceId)
@@ -541,11 +541,11 @@
         .returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
-      scope.$apply(function() {
+      scope.$apply(function () {
         $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
           referenceId: referenceId
         });
@@ -554,7 +554,7 @@
       expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
-    it("should remove overlay class if reference became inactive and update event emitted and templateUrl is false", function() {
+    it("should remove overlay class if reference became inactive and update event emitted and templateUrl is false", function () {
       defaultConfig.templateUrl = false;
       bsLoadingOverlayServiceMock.expects('isActive')
         .twice()
@@ -565,11 +565,11 @@
         .returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
-      scope.$apply(function() {
+      scope.$apply(function () {
         $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
           referenceId: referenceId
         });
@@ -578,23 +578,23 @@
       expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
-    describe("with custom class", function() {
-      beforeEach(function() {
+    describe("with custom class", function () {
+      beforeEach(function () {
         template = '<div bs-loading-overlay bs-loading-overlay-active-class="some-active-class" bs-loading-overlay-reference-id="referenceId">';
       });
 
-      it("should add overlay custom class when reference is active", function() {
+      it("should add overlay custom class when reference is active", function () {
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
         expect(element.hasClass('some-active-class')).toBeTruthy();
       });
 
-      it("should remove overlay custom class if reference became inactive and update event emitted", function() {
+      it("should remove overlay custom class if reference became inactive and update event emitted", function () {
         bsLoadingOverlayServiceMock.expects('isActive')
           .twice()
           .withArgs(referenceId)
@@ -604,11 +604,11 @@
           .returns(false);
 
         var element;
-        scope.$apply(function() {
+        scope.$apply(function () {
           element = $compile(template)(scope);
         });
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
             referenceId: referenceId
           });
@@ -618,7 +618,7 @@
       });
     });
 
-    it("should remove overlay if reference became inactive and update event emitted", function() {
+    it("should remove overlay if reference became inactive and update event emitted", function () {
       bsLoadingOverlayServiceMock.expects('isActive')
         .twice()
         .withArgs(referenceId)
@@ -628,10 +628,10 @@
         .returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
-      scope.$apply(function() {
+      scope.$apply(function () {
         $rootScope.$emit('bsLoadingOverlayUpdateEvent', {
           referenceId: referenceId
         });
@@ -640,7 +640,7 @@
       expect(element[0].querySelector('.bs-loading-overlay')).toBeNull();
     });
 
-    it("should not remove overlay if reference became inactive and update event is not emitted", function() {
+    it("should not remove overlay if reference became inactive and update event is not emitted", function () {
       bsLoadingOverlayServiceMock.expects('isActive')
         .twice()
         .withArgs(referenceId)
@@ -648,18 +648,18 @@
         .returns(true);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
       expect(element[0].querySelector('.bs-loading-overlay')).not.toBeNull();
     });
 
-    it("should add overlay when rootScope event triggered and reference become active", function() {
+    it("should add overlay when rootScope event triggered and reference become active", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -672,9 +672,9 @@
       bsLoadingOverlayServiceMock.verify();
     });
 
-    it("should not add overlay when reference become active but rootScope event is not triggered", function() {
+    it("should not add overlay when reference become active but rootScope event is not triggered", function () {
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
@@ -683,24 +683,24 @@
       expect(element[0].querySelector('.bs-loading-overlay')).toBeNull();
     });
 
-    it("should remove rootScope listener on overlay element removed", function() {
+    it("should remove rootScope listener on overlay element removed", function () {
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 
-      scope.$apply(function() {
+      scope.$apply(function () {
         element.remove();
       });
 
       expect($rootScope.$$listeners.bsLoadingOverlayUpdateEvent[0]).toBeNull();
     });
 
-    it("should not add overlay when rootScope event triggered for another reference", function() {
+    it("should not add overlay when rootScope event triggered for another reference", function () {
       bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
       var element;
-      scope.$apply(function() {
+      scope.$apply(function () {
         element = $compile(template)(scope);
       });
 

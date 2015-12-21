@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -32,7 +32,7 @@
     function wrap(promiseFunction, options) {
       var promise = promiseFunction;
 
-      if(!angular.isFunction(promiseFunction)) {
+      if (!angular.isFunction(promiseFunction)) {
         promise = function () {
           return promiseFunction;
         };
@@ -47,7 +47,7 @@
       return {
         start: start.bind(null, options),
         stop: stop.bind(null, options),
-        wrap: function(promiseFunction) {
+        wrap: function (promiseFunction) {
           return wrap(promiseFunction, options);
         }
       };

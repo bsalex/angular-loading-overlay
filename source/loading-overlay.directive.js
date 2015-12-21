@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -38,13 +38,13 @@
           templatePromise = $q.when(false);
         }
 
-        templatePromise.then(function(loadedTemplate) {
+        templatePromise.then(function (loadedTemplate) {
           overlayElement = $compile(loadedTemplate)(scope);
           overlayElement.isAttached = false;
           updateOverlayElement(referenceId);
         });
 
-        var unsubscribe = $rootScope.$on('bsLoadingOverlayUpdateEvent', function(event, options) {
+        var unsubscribe = $rootScope.$on('bsLoadingOverlayUpdateEvent', function (event, options) {
           if (options.referenceId === referenceId) {
             updateOverlayElement(referenceId);
           }
@@ -84,7 +84,7 @@
       function removeOverlay() {
         overlayElement.isAttached = false;
 
-        delayPromise.then(function() {
+        delayPromise.then(function () {
           overlayElement.detach();
 
           $element.removeClass(activeClass);
