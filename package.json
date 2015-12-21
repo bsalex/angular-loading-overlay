@@ -7,13 +7,13 @@
     "url": "https://github.com/bsalex/angular-loading-overlay.git"
   },
   "scripts": {
-    "test-watch": "node_modules/karma/bin/karma start",
-    "test": "node_modules/karma/bin/karma start --single-run",
-    "prepush": "npm test && npm build && git add -u",
-    "watch": "node_modules/grunt-cli/bin/grunt watch",
-    "build": "node_modules/grunt-cli/bin/grunt build",
-    "build-dev": "node_modules/grunt-cli/bin/grunt build-dev",
-    "check": "node_modules/grunt-cli/bin/grunt check"
+    "test-watch": "karma start",
+    "test": "karma start --single-run",
+    "prepush": "npm test && npm run build && git add -u",
+    "watch": "grunt watch",
+    "build": "grunt build",
+    "build-dev": "grunt build-dev",
+    "check": "grunt check"
   },
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",

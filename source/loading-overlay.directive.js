@@ -27,7 +27,7 @@
 
       function activate() {
         var globalConfig = bsLoadingOverlayService.getGlobalConfig();
-        referenceId = $attributes.bsLoadingOverlayReferenceId;
+        referenceId = $attributes.bsLoadingOverlayReferenceId || $attributes.bsLoadingOverlay;
         delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
         activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
         var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;

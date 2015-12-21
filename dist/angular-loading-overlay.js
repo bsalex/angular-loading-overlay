@@ -7,8 +7,8 @@
         function link(scope, $element, $attributes) {
             function activate() {
                 var globalConfig = bsLoadingOverlayService.getGlobalConfig();
-                referenceId = $attributes.bsLoadingOverlayReferenceId, delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay, 
-                activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
+                referenceId = $attributes.bsLoadingOverlayReferenceId || $attributes.bsLoadingOverlay, 
+                delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay, activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
                 var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
                 templatePromise = templateUrl ? $templateRequest(templateUrl) : $q.when(!1), templatePromise.then(function(loadedTemplate) {
                     overlayElement = $compile(loadedTemplate)(scope), overlayElement.isAttached = !1, 
