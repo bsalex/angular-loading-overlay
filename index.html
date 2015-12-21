@@ -6,9 +6,9 @@ isHome: true
 ---
 {% comment %}
 <html>
-    <head>
-        <meta http-equiv="refresh" content="0; url=http://bsalex.github.io/angular-loading-overlay/_site/" />
-    </head>
+<head>
+    <meta http-equiv="refresh" content="0; url=http://bsalex.github.io/angular-loading-overlay/_site/"/>
+</head>
 </html>>
 {% endcomment %}
 
@@ -108,6 +108,14 @@ isHome: true
         {% include example.html id="with-reference" %}
     </div>
 
+    <p>
+        Or it can be passed with directive name attribute
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="with-reference-in-name-attribute" %}
+    </div>
+
     <h2 id="class" class="page-header">Class</h2>
 
     <p>
@@ -169,4 +177,19 @@ isHome: true
         {% include example.html id="wrapper-function" %}
     </div>
 
+</section>
+
+<section class="bs-docs-section" ng-app="app">
+    <h1 id="changelog" class="page-header">Changelog</h1>
+
+    <p class="lead">
+        <ul>
+            <li>
+                0.2.1 - Ability to pass reference id with directory name attribute.
+            </li>
+            <li>
+                0.2.0 - Glowl-like API and documentation.
+            </li>
+        </ul>
+    </p>
 </section>
