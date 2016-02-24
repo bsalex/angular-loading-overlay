@@ -54,6 +54,10 @@
       }
 
       function updateOverlayElement(referenceId) {
+        if (overlayElement === undefined) {
+          return false;
+        }
+        
         if (bsLoadingOverlayService.isActive(referenceId)) {
           if (!overlayElement.isAttached) {
             addOverlay();
