@@ -350,8 +350,6 @@
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs('anotherreferenceId').returns(true);
 
-        var element, anotherElement;
-
         var element = getCompiledElement(template, scope);
         var anotherElement = getCompiledElement(anotherTemplate, scope);
 

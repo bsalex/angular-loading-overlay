@@ -29,7 +29,7 @@
       notifyOverlays(options.referenceId);
     }
 
-    function wrap(promiseFunction, options) {
+    function wrap(options, promiseFunction) {
       var promise = promiseFunction;
 
       if (!angular.isFunction(promiseFunction)) {
@@ -47,9 +47,7 @@
       return {
         start: start.bind(null, options),
         stop: stop.bind(null, options),
-        wrap: function (promiseFunction) {
-          return wrap(promiseFunction, options);
-        }
+        wrap: wrap.bind(null, options)
       };
     }
 
@@ -71,7 +69,7 @@
     }
 
     function setGlobalConfig(options) {
-      globalConfig = angular.extend(globalConfig, options);
+      angular.extend(globalConfig, options);
     }
 
     function getGlobalConfig() {

@@ -20,7 +20,7 @@
                 $element.on("$destroy", unsubscribe);
             }
             function updateOverlayElement(referenceId) {
-                bsLoadingOverlayService.isActive(referenceId) ? overlayElement.isAttached || addOverlay() : overlayElement.isAttached && removeOverlay();
+                return void 0 === overlayElement ? !1 : void (bsLoadingOverlayService.isActive(referenceId) ? overlayElement.isAttached || addOverlay() : overlayElement.isAttached && removeOverlay());
             }
             function addOverlay() {
                 delay ? (delayPromise && $timeout.cancel(delayPromise), delayPromise = $timeout(angular.noop, delay)) : delayPromise = $q.when(), 
@@ -48,7 +48,7 @@
         function start(options) {
             options = options || {}, activeOverlays[options.referenceId] = !0, notifyOverlays(options.referenceId);
         }
-        function wrap(promiseFunction, options) {
+        function wrap(options, promiseFunction) {
             var promise = promiseFunction;
             return angular.isFunction(promiseFunction) || (promise = function() {
                 return promiseFunction;
@@ -58,9 +58,7 @@
             return {
                 start: start.bind(null, options),
                 stop: stop.bind(null, options),
-                wrap: function(promiseFunction) {
-                    return wrap(promiseFunction, options);
-                }
+                wrap: wrap.bind(null, options)
             };
         }
         function notifyOverlays(referenceId) {
@@ -75,7 +73,7 @@
             return activeOverlays[referenceId];
         }
         function setGlobalConfig(options) {
-            globalConfig = angular.extend(globalConfig, options);
+            angular.extend(globalConfig, options);
         }
         function getGlobalConfig() {
             return globalConfig;

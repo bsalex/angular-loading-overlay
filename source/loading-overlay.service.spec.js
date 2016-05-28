@@ -73,10 +73,10 @@
 
         it("should wrap provided function returning promise in start and stop functions", function () {
           dependencies.$rootScope.$apply(function () {
-            dependencies.bsLoadingOverlayService.wrap(function () {
-              return t.func1().then(t.func2);
-            }, {
+            dependencies.bsLoadingOverlayService.wrap({
               referenceId: referenceId
+            }, function () {
+              return t.func1().then(t.func2);
             });
           });
 
