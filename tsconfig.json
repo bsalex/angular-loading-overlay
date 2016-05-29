@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "umd",
+        "target": "es5",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": true,
+        "outDir": "dist/"
+    },
+    "compileOnSave": false,
+    "filesGlob": [
+        "typings/index.d.ts",
+        "source/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    },
+    "files": [
+        "typings/index.d.ts",
+        "source/loading-overlay.directive.spec.ts",
+        "source/loading-overlay.directive.ts",
+        "source/loading-overlay.handler.ts",
+        "source/loading-overlay.module.ts",
+        "source/loading-overlay.options.ts",
+        "source/loading-overlay.service.ts"
+    ]
+}
