@@ -1,71 +1,77 @@
-import IBsLoadingOverlayOptions from './loading-overlay.options';
-import IBsLoadingOverlayHandler from './loading-overlay.handler';
+/// <reference path="./loading-overlay.options.ts"/>
+/// <reference path="./loading-overlay.handler.ts"/>
 
-export class BsLoadingOverlayService {
-    constructor(
-        private $rootScope: ng.IRootScopeService,
-        private $q: ng.IQService
-    ) { }
+module BsLoadingOverlay {
 
-    globalConfig: IBsLoadingOverlayOptions;
-    activeOverlays: { string: boolean };
+    //import IBsLoadingOverlayOptions from './loading-overlay.options';
+    //import IBsLoadingOverlayHandler from './loading-overlay.handler';
 
-    start(options: IBsLoadingOverlayOptions) {
-        options = options || {};
-        this.activeOverlays[options.referenceId] = true;
+    export class BsLoadingOverlayService {
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $q: ng.IQService
+        ) { }
 
-        this.notifyOverlays(options.referenceId);
-    }
+        globalConfig: IBsLoadingOverlayOptions;
+        activeOverlays: { [key: string]: boolean };
 
-    wrap(options: IBsLoadingOverlayOptions, promiseFunction: ng.IPromise<any> | (() => (ng.IPromise<any> | {}))): ng.IPromise<any> {
-        let promise: () => (ng.IPromise<any> | {});
+        start(options: IBsLoadingOverlayOptions) {
+            options = options || {};
+            this.activeOverlays[options.referenceId] = true;
 
-        if (typeof promiseFunction == "function") {
-            promise = promiseFunction;
-        } else {
-            promise = () => promiseFunction
+            this.notifyOverlays(options.referenceId);
         }
 
-        return this.$q.when(this.start(options))
-            .then(promise)
-            .finally(this.stop.bind(this, options));
+        wrap(options: IBsLoadingOverlayOptions, promiseFunction: ng.IPromise<any> | (() => (ng.IPromise<any> | {}))): ng.IPromise<any> {
+            let promise: () => (ng.IPromise<any> | {});
+
+            if (typeof promiseFunction == "function") {
+                promise = <() => ng.IPromise<any>>promiseFunction;
+            } else {
+                promise = () => promiseFunction
+            }
+
+            return this.$q.when(this.start(options))
+                .then(promise)
+                .finally(this.stop.bind(this, options));
+        }
+
+        createHandler(options: IBsLoadingOverlayOptions): IBsLoadingOverlayHandler {
+            return {
+                start: this.start.bind(null, options),
+                stop: this.stop.bind(null, options),
+                wrap: this.wrap.bind(null, options)
+            };
+        }
+
+        notifyOverlays(referenceId: string) {
+            this.$rootScope.$emit('bsLoadingOverlayUpdateEvent', {
+                referenceId: referenceId
+            });
+        }
+
+        stop(options: IBsLoadingOverlayOptions) {
+            options = options || {};
+
+            delete this.activeOverlays[options.referenceId];
+            this.notifyOverlays(options.referenceId);
+        }
+
+        isActive(referenceId: string) {
+            return this.activeOverlays[referenceId];
+        }
+
+        setGlobalConfig(options: IBsLoadingOverlayOptions) {
+            angular.extend(this.globalConfig, options);
+        }
+
+        getGlobalConfig() {
+            return this.globalConfig;
+        }
     }
 
-    createHandler(options: IBsLoadingOverlayOptions): IBsLoadingOverlayHandler {
-        return {
-            start: this.start.bind(null, options),
-            stop: this.stop.bind(null, options),
-            wrap: this.wrap.bind(null, options)
-        };
-    }
+    const bsLoadingOverlayServiceFactory = ($rootScope: ng.IRootScopeService, $q: ng.IQService) => new BsLoadingOverlayService($rootScope, $q)
+    bsLoadingOverlayServiceFactory.$inject = ['$rootScope', '$q'];
 
-    notifyOverlays(referenceId: string) {
-        this.$rootScope.$emit('bsLoadingOverlayUpdateEvent', {
-            referenceId: referenceId
-        });
-    }
-
-    stop(options: IBsLoadingOverlayOptions) {
-        options = options || {};
-
-        delete this.activeOverlays[options.referenceId];
-        this.notifyOverlays(options.referenceId);
-    }
-
-    isActive(referenceId: string) {
-        return this.activeOverlays[referenceId];
-    }
-
-    setGlobalConfig(options: IBsLoadingOverlayOptions) {
-        angular.extend(this.globalConfig, options);
-    }
-
-    getGlobalConfig() {
-        return this.globalConfig;
-    }
+    //export default bsLoadingOverlayServiceFactory;
 }
-
-const bsLoadingOverlayServiceFactory = ($rootScope: ng.IRootScopeService, $q: ng.IQService) => new BsLoadingOverlayService($rootScope, $q)
-bsLoadingOverlayServiceFactory.$inject = ['$rootScope', '$q'];
-
-export default bsLoadingOverlayServiceFactory;

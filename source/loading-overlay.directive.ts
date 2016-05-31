@@ -1,123 +1,126 @@
-import IBsLoadingOverlayOptions from './loading-overlay.options';
-import {BsLoadingOverlayService} from './loading-overlay.service';
+module BsLoadingOverlay {
 
-export default class BsLoadingOverlayDirective implements ng.IDirective {
-    constructor(
-        private $compile: ng.ICompileService,
-        private $rootScope: ng.IRootScopeService,
-        private $templateRequest: ng.ITemplateRequestService,
-        private $q: ng.IQService,
-        private $timeout: ng.ITimeoutService,
-        private bsLoadingOverlayService: BsLoadingOverlayService
-    ) { }
+    //import IBsLoadingOverlayOptions from './loading-overlay.options';
+    //import {BsLoadingOverlayService} from './loading-overlay.service';
 
-    restrict = 'EA';
-    link: ng.IDirectiveLinkFn = (scope: ng.IScope, $element: ng.IAugmentedJQuery, $attributes: ng.IAttributes) => {
-        var overlayElement: ng.IAugmentedJQuery,
-            referenceId: string,
-            activeClass: string,
-            templatePromise: ng.IPromise<string>,
-            delay: Number,
-            delayPromise: ng.IPromise<void>;
+    export default class BsLoadingOverlayDirective implements ng.IDirective {
+        constructor(
+            private $compile: ng.ICompileService,
+            private $rootScope: ng.IRootScopeService,
+            private $templateRequest: ng.ITemplateRequestService,
+            private $q: ng.IQService,
+            private $timeout: ng.ITimeoutService,
+            private bsLoadingOverlayService: BsLoadingOverlayService
+        ) { }
 
-        activate();
+        restrict = 'EA';
+        link: ng.IDirectiveLinkFn = (scope: ng.IScope, $element: ng.IAugmentedJQuery, $attributes: ng.IAttributes) => {
+            var overlayElement: ng.IAugmentedJQuery,
+                referenceId: string,
+                activeClass: string,
+                templatePromise: ng.IPromise<string>,
+                delay: Number,
+                delayPromise: ng.IPromise<void>;
 
-        function activate() {
-            var globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
-            referenceId = this.$attributes.bsLoadingOverlayReferenceId || this.$attributes.bsLoadingOverlay;
-            delay = +this.$attributes.bsLoadingOverlayDelay || globalConfig.delay;
-            activeClass = this.$attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
-            var templateUrl = this.$attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+            activate();
 
-            if (templateUrl) {
-                templatePromise = this.$templateRequest(templateUrl);
-            } else {
-                templatePromise = this.$q.when(false);
-            }
+            function activate() {
+                var globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
+                referenceId = this.$attributes.bsLoadingOverlayReferenceId || this.$attributes.bsLoadingOverlay;
+                delay = +this.$attributes.bsLoadingOverlayDelay || globalConfig.delay;
+                activeClass = this.$attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
+                var templateUrl = this.$attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
 
-            templatePromise.then(function(loadedTemplate: string) {
-                overlayElement = this.$compile(loadedTemplate)(scope);
-                overlayElement.data('isAttached', false);
-                updateOverlayElement(referenceId);
-            });
+                if (templateUrl) {
+                    templatePromise = this.$templateRequest(templateUrl);
+                } else {
+                    templatePromise = this.$q.when(false);
+                }
 
-            var unsubscribe = this.$rootScope.$on('bsLoadingOverlayUpdateEvent', function(event: ng.IAngularEvent, options: IBsLoadingOverlayOptions) {
-                if (options.referenceId === referenceId) {
+                templatePromise.then(function(loadedTemplate: string) {
+                    overlayElement = this.$compile(loadedTemplate)(scope);
+                    overlayElement.data('isAttached', false);
                     updateOverlayElement(referenceId);
-                }
-            });
+                });
 
-            $element.on('$destroy', unsubscribe);
-        }
+                var unsubscribe = this.$rootScope.$on('bsLoadingOverlayUpdateEvent', function(event: ng.IAngularEvent, options: IBsLoadingOverlayOptions) {
+                    if (options.referenceId === referenceId) {
+                        updateOverlayElement(referenceId);
+                    }
+                });
 
-        function updateOverlayElement(referenceId: string) {
-            if (overlayElement === undefined) {
-                return false;
+                $element.on('$destroy', unsubscribe);
             }
 
-            if (this.bsLoadingOverlayService.isActive(referenceId)) {
-                if (!overlayElement.data('isAttached')) {
-                    addOverlay();
+            function updateOverlayElement(referenceId: string) {
+                if (overlayElement === undefined) {
+                    return false;
                 }
-            } else {
-                if (overlayElement.data('isAttached')) {
-                    removeOverlay();
+
+                if (this.bsLoadingOverlayService.isActive(referenceId)) {
+                    if (!overlayElement.data('isAttached')) {
+                        addOverlay();
+                    }
+                } else {
+                    if (overlayElement.data('isAttached')) {
+                        removeOverlay();
+                    }
                 }
             }
-        }
 
-        function addOverlay() {
-            if (delay) {
-                if (delayPromise) {
-                    this.$timeout.cancel(delayPromise);
+            function addOverlay() {
+                if (delay) {
+                    if (delayPromise) {
+                        this.$timeout.cancel(delayPromise);
+                    }
+                    delayPromise = this.$timeout(angular.noop, delay);
+                } else {
+                    delayPromise = this.$q.when();
                 }
-                delayPromise = this.$timeout(angular.noop, delay);
-            } else {
-                delayPromise = this.$q.when();
+
+                $element.append(overlayElement);
+                overlayElement.data('isAttached', true);
+
+                $element.addClass(activeClass);
             }
 
-            $element.append(overlayElement);
-            overlayElement.data('isAttached', true);
+            function removeOverlay() {
+                overlayElement.data('isAttached', false);
 
-            $element.addClass(activeClass);
-        }
+                delayPromise.then(function() {
+                    overlayElement.detach();
 
-        function removeOverlay() {
-            overlayElement.data('isAttached', false);
-
-            delayPromise.then(function() {
-                overlayElement.detach();
-
-                $element.removeClass(activeClass);
-            });
+                    $element.removeClass(activeClass);
+                });
+            }
         }
     }
+
+    export const BsLoadingOverlayDirectiveFactory: ng.IDirectiveFactory = (
+        $compile: ng.ICompileService,
+        $rootScope: ng.IRootScopeService,
+        $templateRequest: ng.ITemplateRequestService,
+        $q: ng.IQService,
+        $timeout: ng.ITimeoutService,
+        bsLoadingOverlayService: BsLoadingOverlayService
+    ) => {
+
+        return new BsLoadingOverlayDirective(
+            $compile,
+            $rootScope,
+            $templateRequest,
+            $q,
+            $timeout,
+            bsLoadingOverlayService
+        );
+    }
+
+    BsLoadingOverlayDirectiveFactory.$inject = [
+        '$compile',
+        '$rootScope',
+        '$templateRequest',
+        '$q',
+        '$timeout',
+        'bsLoadingOverlayService'
+    ];
 }
-
-export const BsLoadingOverlayDirectiveFactory: ng.IDirectiveFactory = (
-    $compile: ng.ICompileService,
-    $rootScope: ng.IRootScopeService,
-    $templateRequest: ng.ITemplateRequestService,
-    $q: ng.IQService,
-    $timeout: ng.ITimeoutService,
-    bsLoadingOverlayService: BsLoadingOverlayService
-) => {
-
-    return new BsLoadingOverlayDirective(
-        $compile,
-        $rootScope,
-        $templateRequest,
-        $q,
-        $timeout,
-        bsLoadingOverlayService
-    );
-}
-
-BsLoadingOverlayDirectiveFactory.$inject = [
-    '$compile',
-    '$rootScope',
-    '$templateRequest',
-    '$q',
-    '$timeout',
-    'bsLoadingOverlayService'
-];

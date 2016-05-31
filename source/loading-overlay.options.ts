@@ -1,7 +1,7 @@
-interface IBsLoadingOverlayOptions {
-    referenceId?: string,
-    templateUrl?: string,
-    activeClass?: string
+module BsLoadingOverlay {
+    export interface IBsLoadingOverlayOptions {
+        referenceId?: string,
+        templateUrl?: string,
+        activeClass?: string
+    }
 }
-
-export default IBsLoadingOverlayOptions;

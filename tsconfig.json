@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "umd",
+        "module": "amd",
         "target": "es5",
         "moduleResolution": "node",
         "sourceMap": true,
@@ -8,7 +8,7 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": true,
-        "outDir": "dist/"
+        "outFile": "dist/angular-loading-overlay.js"
     },
     "compileOnSave": false,
     "filesGlob": [
