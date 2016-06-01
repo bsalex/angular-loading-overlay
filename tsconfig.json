@@ -1,14 +1,7 @@
 {
     "compilerOptions": {
-        "module": "amd",
         "target": "es5",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": true,
-        "outFile": "dist/angular-loading-overlay.js"
+        "sourceMap": true
     },
     "compileOnSave": false,
     "filesGlob": [

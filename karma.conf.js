@@ -1,6 +1,6 @@
 // Karma configuration
 // Generated on Tue Sep 22 2015 23:49:19 GMT+0300 (EEST)
-
+var path = require('path');
 module.exports = function(config) {
     config.set({
 
@@ -25,8 +25,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'source/!(*.spec).js': ['coverage'],
-            '**/*.ts': ['typescript']
+            'source/**/*.ts': ['webpack', 'sourcemap']
         },
 
         // test results reporter to use
@@ -51,20 +50,37 @@ module.exports = function(config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ['PhantomJS'],
 
-        typescriptPreprocessor: {
-            // options passed to the typescript compiler
-            options: {
-                "module": "amd",
-                "target": "es5",
-                "sourceMap": true,
-                "emitDecoratorMetadata": true,
-                "experimentalDecorators": true,
-                "removeComments": false,
-                "noImplicitAny": true
+        webpack: {
+            devtool: 'inline-source-map',
+            cache: true,
+            debug: true,
+            stats: {
+                colors: true,
+                reasons: true
             },
-            // transforming the filenames
-            transformPath: function(path) {
-                return path.replace(/\.ts$/, '.js');
+            module: {
+                preLoaders: [
+                    {
+                        test: /\.ts$/,
+                        exclude: /node_modules/,
+                        loader: 'tslint-loader'
+                    }
+                ],
+                loaders: [{
+                    test: /\.ts$/,
+                    loader: 'ts-loader',
+                    exclude: /node_modules/
+                }]
+            },
+            resolve: {
+                extensions: ['', '.ts']
+            }
+        },
+
+        webpackMiddleware: {
+            noInfo: false,
+            stats: {
+                colors: true
             }
         },
 
