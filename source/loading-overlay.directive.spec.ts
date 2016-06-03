@@ -541,8 +541,6 @@ describe('bsLoadingOverlay directive', () => {
             });
         });
 
-        console.log(element);
-
         expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
