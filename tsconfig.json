@@ -21,6 +21,7 @@
         "source/loading-overlay.handler.ts",
         "source/loading-overlay.module.ts",
         "source/loading-overlay.options.ts",
+        "source/loading-overlay.service.spec.ts",
         "source/loading-overlay.service.ts"
     ]
 }

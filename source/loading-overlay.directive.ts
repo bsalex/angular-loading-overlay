@@ -66,7 +66,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
             }
         };
 
-        const isOverlayAdded = () => !!delayPromise
+        const isOverlayAdded = () => !!delayPromise;
         const addOverlay = () => {
             if (delay) {
                 if (delayPromise) {

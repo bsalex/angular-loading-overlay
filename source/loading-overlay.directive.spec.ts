@@ -523,7 +523,7 @@ describe('bsLoadingOverlay directive', () => {
         expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
-    it('should remove overlay class if reference became inactive and update event emitted and templateUrl is false', function() {
+    fit('should remove overlay class if reference became inactive and update event emitted and templateUrl is false', function() {
         defaultConfig.templateUrl = undefined;
         bsLoadingOverlayServiceMock.expects('isActive')
             .twice()

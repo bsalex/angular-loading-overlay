@@ -7,13 +7,11 @@ export class BsLoadingOverlayService {
         private $q: ng.IQService
     ) { }
 
-    globalConfig: IBsLoadingOverlayOptions;
-    activeOverlays: { [key: string]: boolean };
+    globalConfig: IBsLoadingOverlayOptions = {};
+    activeOverlays: { [key: string]: boolean } = {};
 
-    start(options: IBsLoadingOverlayOptions) {
-        options = options || {};
+    start(options: IBsLoadingOverlayOptions = {}) {
         this.activeOverlays[options.referenceId] = true;
-
         this.notifyOverlays(options.referenceId);
     }
 
@@ -31,13 +29,11 @@ export class BsLoadingOverlayService {
             .finally(this.stop.bind(this, options));
     }
 
-    createHandler(options: IBsLoadingOverlayOptions): IBsLoadingOverlayHandler {
-        return {
-            start: this.start.bind(null, options),
-            stop: this.stop.bind(null, options),
-            wrap: this.wrap.bind(null, options)
-        };
-    }
+    createHandler = (options: IBsLoadingOverlayOptions): IBsLoadingOverlayHandler => ({
+        start: this.start.bind(this, options),
+        stop: this.stop.bind(this, options),
+        wrap: this.wrap.bind(this, options)
+    })
 
     notifyOverlays(referenceId: string) {
         this.$rootScope.$emit('bsLoadingOverlayUpdateEvent', {
@@ -45,16 +41,12 @@ export class BsLoadingOverlayService {
         });
     }
 
-    stop(options: IBsLoadingOverlayOptions) {
-        options = options || {};
-
+    stop(options: IBsLoadingOverlayOptions = {}) {
         delete this.activeOverlays[options.referenceId];
         this.notifyOverlays(options.referenceId);
     }
 
-    isActive(referenceId: string) {
-        return this.activeOverlays[referenceId];
-    }
+    isActive = (referenceId: string  = undefined) => this.activeOverlays[referenceId];
 
     setGlobalConfig(options: IBsLoadingOverlayOptions) {
         angular.extend(this.globalConfig, options);
