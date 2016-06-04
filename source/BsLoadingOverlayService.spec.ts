@@ -1,10 +1,11 @@
-import {BsLoadingOverlayService} from './loading-overlay.service';
+import BsLoadingOverlayModule from './BsLoadingOverlayModule';
+import {BsLoadingOverlayService} from './BsLoadingOverlayService';
 
 declare var ngDescribe: (testDescriptions: any) => void;
 
 ngDescribe({
     name: 'bsLoadingOverlayService interface',
-    modules: 'bsLoadingOverlay',
+    modules: BsLoadingOverlayModule.name,
     inject: ['$rootScope', 'bsLoadingOverlayService', '$q'],
     tests: function(dependencies: {
         bsLoadingOverlayService: BsLoadingOverlayService,

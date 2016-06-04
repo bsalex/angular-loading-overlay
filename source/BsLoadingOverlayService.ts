@@ -1,5 +1,5 @@
-import IBsLoadingOverlayOptions from './loading-overlay.options';
-import IBsLoadingOverlayHandler from './loading-overlay.handler';
+import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
+import IBsLoadingOverlayHandler from './IBsLoadingOverlayHandler';
 
 export class BsLoadingOverlayService {
     constructor(
@@ -46,7 +46,7 @@ export class BsLoadingOverlayService {
         this.notifyOverlays(options.referenceId);
     }
 
-    isActive = (referenceId: string  = undefined) => this.activeOverlays[referenceId];
+    isActive = (referenceId: string = undefined) => this.activeOverlays[referenceId];
 
     setGlobalConfig(options: IBsLoadingOverlayOptions) {
         angular.extend(this.globalConfig, options);

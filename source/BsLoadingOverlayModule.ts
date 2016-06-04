@@ -1,5 +1,5 @@
-import {BsLoadingOverlayDirectiveFactory} from './loading-overlay.directive';
-import BsLoadingOverlayService from './loading-overlay.service';
+import {BsLoadingOverlayDirectiveFactory} from './BsLoadingOverlayDirective';
+import BsLoadingOverlayService from './BsLoadingOverlayService';
 
 export default angular.module('bsLoadingOverlay', [])
     .directive('bsLoadingOverlay', BsLoadingOverlayDirectiveFactory)

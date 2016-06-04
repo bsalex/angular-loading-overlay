@@ -24,32 +24,25 @@ module.exports = {
         contentBase: './source/'
     },
 
-    cache: true,
-    debug: true,
-    devtool: 'sourcemap',
-    entry: './source/loading-overlay.module.ts',
+    entry: './source/BsLoadingOverlayModule.ts',
     stats: {
         colors: true,
         reasons: true
     },
 
     resolve: {
-        extensions: ['', '.ts']
+        extensions: ['', '.ts', '.js']
     },
     module: {
-        preLoaders: [
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                loader: 'tslint-loader'
-            }
-        ],
-        loaders: [
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                loader: 'ts-loader'
-            }
-        ]
+        preLoaders: [{
+            test: /\.ts$/,
+            exclude: /node_modules/,
+            loader: 'tslint-loader'
+        }],
+        loaders: [{
+            test: /\.ts$/,
+            exclude: /node_modules/,
+            loader: 'ts-loader'
+        }]
     }
 };

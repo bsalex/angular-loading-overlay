@@ -1,5 +1,5 @@
-import IBsLoadingOverlayOptions from './loading-overlay.options';
-import {BsLoadingOverlayService} from './loading-overlay.service';
+import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
+import {BsLoadingOverlayService} from './BsLoadingOverlayService';
 
 interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
     bsLoadingOverlayReferenceId: string;

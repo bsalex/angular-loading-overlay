@@ -1,7 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 
-import BsLoadingOverlayModule from './loading-overlay.module';
-import IBsLoadingOverlayOptions from './loading-overlay.options';
+import BsLoadingOverlayModule from './BsLoadingOverlayModule';
+import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
 
 interface BsLoadingOverlayScope extends ng.IScope {
     model: any;
@@ -523,7 +523,7 @@ describe('bsLoadingOverlay directive', () => {
         expect(element.hasClass('bs-loading-overlay--active')).toBeFalsy();
     });
 
-    fit('should remove overlay class if reference became inactive and update event emitted and templateUrl is false', function() {
+    it('should remove overlay class if reference became inactive and update event emitted and templateUrl is false', function() {
         defaultConfig.templateUrl = undefined;
         bsLoadingOverlayServiceMock.expects('isActive')
             .twice()

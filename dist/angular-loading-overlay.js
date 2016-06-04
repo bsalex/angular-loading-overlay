@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "./dist/";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,12 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var loading_overlay_directive_1 = __webpack_require__(1);
-	var loading_overlay_service_1 = __webpack_require__(2);
+	var BsLoadingOverlayDirective_1 = __webpack_require__(1);
+	var BsLoadingOverlayService_1 = __webpack_require__(2);
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = angular.module('bsLoadingOverlay', [])
-	    .directive('bsLoadingOverlay', loading_overlay_directive_1.BsLoadingOverlayDirectiveFactory)
-	    .factory('bsLoadingOverlayService', loading_overlay_service_1.default);
+	    .directive('bsLoadingOverlay', BsLoadingOverlayDirective_1.BsLoadingOverlayDirectiveFactory)
+	    .factory('bsLoadingOverlayService', BsLoadingOverlayService_1.default);
 
 
 /***/ },
@@ -219,4 +219,3 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=angular-loading-overlay.js.map

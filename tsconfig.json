@@ -6,7 +6,8 @@
     "compileOnSave": false,
     "filesGlob": [
         "typings/index.d.ts",
-        "source/**/*.ts"
+        "source/**/*.ts",
+        "tests/**/*.ts"
     ],
     "exclude": [
         "node_modules"
@@ -16,12 +17,13 @@
     },
     "files": [
         "typings/index.d.ts",
-        "source/loading-overlay.directive.spec.ts",
-        "source/loading-overlay.directive.ts",
-        "source/loading-overlay.handler.ts",
-        "source/loading-overlay.module.ts",
-        "source/loading-overlay.options.ts",
-        "source/loading-overlay.service.spec.ts",
-        "source/loading-overlay.service.ts"
+        "source/BsLoadingOverlayDirective.spec.ts",
+        "source/BsLoadingOverlayDirective.ts",
+        "source/BsLoadingOverlayModule.ts",
+        "source/BsLoadingOverlayService.spec.ts",
+        "source/BsLoadingOverlayService.ts",
+        "source/IBsLoadingOverlayHandler.ts",
+        "source/IBsLoadingOverlayOptions.ts",
+        "tests/setup.ts"
     ]
 }

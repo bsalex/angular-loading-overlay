@@ -31,15 +31,14 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-sinon": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-typescript-preprocessor": "^0.2.0",
-    "karma-webpack": "^1.7.0",
-    "load-grunt-tasks": "^3.3.0",
+    "karma-webpack": "github:webpack/karma-webpack#pull/127/head",
     "ng-describe": "^1.3.0",
     "phantomjs": "^1.9.18",
     "sinon": "^1.17.0",
     "ts-loader": "^0.8.2",
     "tslint": "^3.10.2",
     "tslint-loader": "^2.1.4",
+    "typescript": "^1.8.10",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }

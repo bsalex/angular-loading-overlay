@@ -16,7 +16,7 @@ module.exports = function(config) {
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/ng-describe/dist/ng-describe.js',
-            'source/**/*.spec.ts'
+            'source/**/*spec.ts'
         ],
 
         // list of files to exclude
@@ -25,7 +25,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'source/**/*.ts': ['webpack', 'sourcemap']
+            'source/**/*spec.ts': ['webpack', 'sourcemap']
         },
 
         // test results reporter to use
@@ -51,21 +51,18 @@ module.exports = function(config) {
         browsers: ['PhantomJS'],
 
         webpack: {
-            devtool: 'inline-source-map',
             cache: true,
-            debug: true,
+            devtool: 'inline-source-map',
             stats: {
                 colors: true,
                 reasons: true
             },
             module: {
-                preLoaders: [
-                    {
-                        test: /\.ts$/,
-                        exclude: /node_modules/,
-                        loader: 'tslint-loader'
-                    }
-                ],
+                preLoaders: [{
+                    test: /\.ts$/,
+                    exclude: /node_modules/,
+                    loader: 'tslint-loader'
+                }],
                 loaders: [{
                     test: /\.ts$/,
                     loader: 'ts-loader',
@@ -73,12 +70,12 @@ module.exports = function(config) {
                 }]
             },
             resolve: {
-                extensions: ['', '.ts']
+                extensions: ['', '.ts', '.js']
             }
         },
 
         webpackMiddleware: {
-            noInfo: false,
+            noInfo: true,
             stats: {
                 colors: true
             }
