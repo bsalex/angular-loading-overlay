@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "sourceMap": true
+    },
+    "compileOnSave": false,
+    "filesGlob": [
+        "typings/index.d.ts",
+        "source/**/*.ts",
+        "tests/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    },
+    "files": [
+        "typings/index.d.ts",
+        "source/BsLoadingOverlayDirective.spec.ts",
+        "source/BsLoadingOverlayDirective.ts",
+        "source/BsLoadingOverlayModule.ts",
+        "source/BsLoadingOverlayService.spec.ts",
+        "source/BsLoadingOverlayService.ts",
+        "source/IBsLoadingOverlayHandler.ts",
+        "source/IBsLoadingOverlayOptions.ts",
+        "tests/setup.ts"
+    ]
+}
