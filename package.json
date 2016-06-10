@@ -9,7 +9,7 @@
   "scripts": {
     "test:watch": "karma start",
     "test": "karma start --single-run",
-    "prepush": "npm test && npm run build && git add -u",
+    "prepush": "npm test && npm run build && git add -u && git diff-index --quiet HEAD || git commit -q -m 'Build'",
     "watch": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack",
     "lint": "tslint ./source/*.ts"
