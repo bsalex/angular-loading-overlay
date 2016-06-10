@@ -47,14 +47,8 @@ export class BsLoadingOverlayService {
     }
 
     isActive = (referenceId: string = undefined) => this.activeOverlays[referenceId];
-
-    setGlobalConfig(options: IBsLoadingOverlayOptions) {
-        angular.extend(this.globalConfig, options);
-    }
-
-    getGlobalConfig() {
-        return this.globalConfig;
-    }
+    setGlobalConfig = (options: IBsLoadingOverlayOptions) => angular.extend(this.globalConfig, options);
+    getGlobalConfig = () => this.globalConfig;
 }
 
 const bsLoadingOverlayServiceFactory = ($rootScope: ng.IRootScopeService, $q: ng.IQService) => new BsLoadingOverlayService($rootScope, $q);

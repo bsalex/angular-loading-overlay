@@ -174,6 +174,8 @@
 	            if (referenceId === void 0) { referenceId = undefined; }
 	            return _this.activeOverlays[referenceId];
 	        };
+	        this.setGlobalConfig = function (options) { return angular.extend(_this.globalConfig, options); };
+	        this.getGlobalConfig = function () { return _this.globalConfig; };
 	    }
 	    BsLoadingOverlayService.prototype.start = function (options) {
 	        if (options === void 0) { options = {}; }
@@ -201,12 +203,6 @@
 	        if (options === void 0) { options = {}; }
 	        delete this.activeOverlays[options.referenceId];
 	        this.notifyOverlays(options.referenceId);
-	    };
-	    BsLoadingOverlayService.prototype.setGlobalConfig = function (options) {
-	        angular.extend(this.globalConfig, options);
-	    };
-	    BsLoadingOverlayService.prototype.getGlobalConfig = function () {
-	        return this.globalConfig;
 	    };
 	    return BsLoadingOverlayService;
 	}());
