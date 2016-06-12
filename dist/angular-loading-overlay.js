@@ -72,7 +72,7 @@
 	            var overlayElement, referenceId, activeClass, templatePromise, delay, delayPromise;
 	            var activate = function () {
 	                var globalConfig = _this.bsLoadingOverlayService.getGlobalConfig();
-	                referenceId = $attributes.bsLoadingOverlayReferenceId || $attributes.bsLoadingOverlay;
+	                referenceId = $attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay);
 	                delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
 	                activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
 	                var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
