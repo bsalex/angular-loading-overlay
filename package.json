@@ -40,6 +40,7 @@
     "tslint": "^3.10.2",
     "tslint-loader": "^2.1.4",
     "typescript": "^1.8.10",
+    "typings": "^1.0.5",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
