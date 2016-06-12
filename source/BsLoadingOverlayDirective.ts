@@ -30,7 +30,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
 
         const activate = () => {
             const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
-            referenceId = $attributes.bsLoadingOverlayReferenceId || $attributes.bsLoadingOverlay;
+            referenceId = $attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay);
             delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
             activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
             const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
