@@ -12,7 +12,8 @@
     "prepush": "npm test && npm run build && git add -u && git diff-index --quiet HEAD || git commit -q -m 'Build'",
     "watch": "webpack-dev-server --host 0.0.0.0",
     "build": "webpack",
-    "lint": "tslint ./source/*.ts"
+    "lint": "tslint ./source/*.ts",
+    "postinstall": "typings install"
   },
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",
