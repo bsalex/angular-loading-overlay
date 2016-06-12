@@ -6,8 +6,7 @@
     "compileOnSave": false,
     "filesGlob": [
         "typings/index.d.ts",
-        "source/**/*.ts",
-        "tests/**/*.ts"
+        "source/**/*.ts"
     ],
     "exclude": [
         "node_modules"
@@ -23,7 +22,6 @@
         "source/BsLoadingOverlayService.spec.ts",
         "source/BsLoadingOverlayService.ts",
         "source/IBsLoadingOverlayHandler.ts",
-        "source/IBsLoadingOverlayOptions.ts",
-        "tests/setup.ts"
+        "source/IBsLoadingOverlayOptions.ts"
     ]
 }
