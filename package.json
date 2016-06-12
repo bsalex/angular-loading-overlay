@@ -1,6 +1,6 @@
 {
   "name": "angular-loading-overlay",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Service and directive to manipulate overlays on async operations.",
   "repository": {
     "type": "git",
