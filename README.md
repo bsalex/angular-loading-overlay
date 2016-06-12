@@ -1,4 +1,2 @@
-Jekyll Bootstrap Doc
-====================
-
-http://mistic100.github.io/jekyll-bootstrap-doc
+Documentation site for [angular-loading-overlay](https://github.com/bsalex/angular-loading-overlay)
+===================================================================================================

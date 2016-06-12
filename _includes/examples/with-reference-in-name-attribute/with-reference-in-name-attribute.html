@@ -1,15 +1,15 @@
-<button class="btn btn-primary" ng-click="showOverlay('first')">Show overlay first</button>
-<button class="btn btn-primary" ng-click="hideOverlay('first')">Hide overlay first</button>
-<button class="btn btn-primary" ng-click="showOverlay('second')">Show overlay second</button>
-<button class="btn btn-primary" ng-click="hideOverlay('second')">Hide overlay second</button>
+<button class="btn btn-primary" ng-click="showOverlay('first-in-name')">Show overlay first</button>
+<button class="btn btn-primary" ng-click="hideOverlay('first-in-name')">Hide overlay first</button>
+<button class="btn btn-primary" ng-click="showOverlay('second-in-name')">Show overlay second</button>
+<button class="btn btn-primary" ng-click="hideOverlay('second-in-name')">Hide overlay second</button>
 
 <div class="well well-lg bs-loading-container"
-     bs-loading-overlay="first"
+     bs-loading-overlay="first-in-name"
      bs-loading-overlay-template-url="loading-overlay-template.html">
     Some content here
 </div>
 <div class="well well-lg bs-loading-container"
-     bs-loading-overlay="second"
+     bs-loading-overlay="second-in-name"
      bs-loading-overlay-template-url="loading-overlay-template.html">
     Some content here
 </div>

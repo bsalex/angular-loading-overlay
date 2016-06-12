@@ -49,10 +49,6 @@
         
           
         
-          
-        
-          
-        
         </ul>
         <ul class="nav navbar-nav navbar-right">
         
@@ -76,7 +72,7 @@
       <p class="lead">
         <a href="https://github.com/bsalex/angular-loading-overlay" class="btn btn-outline-inverse btn-lg">Download</a>
       </p>
-      <p class="version">Currently v0.3.1</p>
+      <p class="version">Currently v1.0.0</p>
     </div>
   </div>
 
@@ -341,18 +337,18 @@
 </script>
 
 <div ng-controller="WithReferenceInNameAttributeController">
-  <button class="btn btn-primary" ng-click="showOverlay('first')">Show overlay first</button>
-<button class="btn btn-primary" ng-click="hideOverlay('first')">Hide overlay first</button>
-<button class="btn btn-primary" ng-click="showOverlay('second')">Show overlay second</button>
-<button class="btn btn-primary" ng-click="hideOverlay('second')">Hide overlay second</button>
+  <button class="btn btn-primary" ng-click="showOverlay('first-in-name')">Show overlay first</button>
+<button class="btn btn-primary" ng-click="hideOverlay('first-in-name')">Hide overlay first</button>
+<button class="btn btn-primary" ng-click="showOverlay('second-in-name')">Show overlay second</button>
+<button class="btn btn-primary" ng-click="hideOverlay('second-in-name')">Hide overlay second</button>
 
 <div class="well well-lg bs-loading-container"
-     bs-loading-overlay="first"
+     bs-loading-overlay="first-in-name"
      bs-loading-overlay-template-url="loading-overlay-template.html">
     Some content here
 </div>
 <div class="well well-lg bs-loading-container"
-     bs-loading-overlay="second"
+     bs-loading-overlay="second-in-name"
      bs-loading-overlay-template-url="loading-overlay-template.html">
     Some content here
 </div>
@@ -374,18 +370,18 @@
 <span class="p">});</span></code></pre></div>
     </tab>
     <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay second<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay second<span class="nt">&lt;/button&gt;</span>
+      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;first-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay first<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;first-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay first<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;second-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay second<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;second-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay second<span class="nt">&lt;/button&gt;</span>
 
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay=</span><span class="s">&quot;first&quot;</span>
+     <span class="na">bs-loading-overlay=</span><span class="s">&quot;first-in-name&quot;</span>
      <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
     Some content here
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay=</span><span class="s">&quot;second&quot;</span>
+     <span class="na">bs-loading-overlay=</span><span class="s">&quot;second-in-name&quot;</span>
      <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
     Some content here
 <span class="nt">&lt;/div&gt;</span></code></pre></div>
@@ -625,9 +621,9 @@
 <script>
   app.controller('WrapperController', function ($scope, $timeout, bsLoadingOverlayService) {
   $scope.showOverlay = function () {
-    bsLoadingOverlayService.wrap($timeout(angular.noop, 5000), {
+    bsLoadingOverlayService.wrap({
       referenceId: 'wrapper'
-    });
+  }, $timeout(angular.noop, 5000));
   }
 
 });
@@ -647,9 +643,9 @@
     <tab heading="JavaScript">
       <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">(</span><span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="p">{</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">({</span>
       <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper&#39;</span>
-    <span class="p">});</span>
+  <span class="p">},</span> <span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">));</span>
   <span class="p">}</span>
 
 <span class="p">});</span></code></pre></div>
@@ -681,11 +677,11 @@
 <script>
   app.controller('WrapperFunctionController', function ($scope, $timeout, bsLoadingOverlayService) {
   $scope.showOverlay = function () {
-    bsLoadingOverlayService.wrap(
+    bsLoadingOverlayService.wrap({
+        referenceId: 'wrapper-function'
+      },
       function () {
         return $timeout(angular.noop, 5000);
-      }, {
-        referenceId: 'wrapper-function'
       });
   }
 
@@ -706,11 +702,11 @@
     <tab heading="JavaScript">
       <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperFunctionController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">(</span>
+    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">({</span>
+        <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper-function&#39;</span>
+      <span class="p">},</span>
       <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
-      <span class="p">},</span> <span class="p">{</span>
-        <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper-function&#39;</span>
       <span class="p">});</span>
   <span class="p">}</span>
 
@@ -737,6 +733,9 @@
 
     <p class="lead">
         <ul>
+            <li>
+                1.0.0 - Transition to typescript. Wrap arguments change.
+            </li>
             <li>
                 0.3.1 - Fix for version in package.json.
             </li>
@@ -813,7 +812,7 @@
       </p>
 
       <ul class="bs-docs-footer-links muted">
-        <li>Currently v0.3.1</li>
+        <li>Currently v1.0.0</li>
       
         <li>&middot;</li>
         <li><a href="https://github.com/bsalex/angular-loading-overlay">GitHub</a></li>
