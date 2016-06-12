@@ -8,7 +8,9 @@ The module provides your app with overlays (like "Loading...") that could be sho
 It also allows you to create preconfigured handlers and wrap promises to show and hide overlays on promise work started and finished.
 
 ## Installation
-`bower install --save angular-loading-overlay`
+`bower install --save angular-loading-overlay`  
+or  
+`npm install --save angular-loading-overlay`
 
 ## Docs & Examples
 [http://bsalex.github.io/angular-loading-overlay/_site/](http://bsalex.github.io/angular-loading-overlay/_site/)
