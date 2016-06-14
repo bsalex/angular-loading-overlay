@@ -89,5 +89,5 @@ module.exports = function(config) {
             }],
             dir: 'coverage/'
         }
-    })
-}
+    });
+};

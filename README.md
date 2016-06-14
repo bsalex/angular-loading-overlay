@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/bsalex/angular-loading-overlay.svg?branch=master)](https://travis-ci.org/bsalex/angular-loading-overlay)
 [![Code Climate](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/gpa.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay)
-[![Test Coverage](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/coverage.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay/coverage)
+[![Test Coverage](https://codeclimate.com/github/bsalex/angular-loading-overlay/badges/coverage.svg)](https://codeclimate.com/github/bsalex/angular-loading-overlay/coverage)  
+[![Package Quality](http://npm.packagequality.com/badge/angular-loading-overlay.png)](http://packagequality.com/#?package=angular-loading-overlay)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8310c436284d4919876a1f8e7ac6e0c0)](https://www.codacy.com/app/bs-alex-mail/angular-loading-overlay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsalex/angular-loading-overlay&amp;utm_campaign=Badge_Grade)
 
 # Angular loading overlay
 
