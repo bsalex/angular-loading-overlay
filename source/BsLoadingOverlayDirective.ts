@@ -8,6 +8,11 @@ interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
     bsLoadingOverlayDelay: number;
     bsLoadingOverlayActiveClass: string;
     bsLoadingOverlayTemplateUrl: string;
+    bsLoadingOverlayTemplateOptions: any;
+}
+
+interface BsLoadingOverlayDirectiveScope extends ng.IScope {
+    bsLoadingOverlayOptions: any;
 }
 
 export default class BsLoadingOverlayDirective implements ng.IDirective {
@@ -29,10 +34,12 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
     };
 
     restrict = 'EA';
-    link: ng.IDirectiveLinkFn = (scope: ng.IScope, $element: ng.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
+    link: ng.IDirectiveLinkFn = (scope: BsLoadingOverlayDirectiveScope, $element: ng.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
         let templatePromise: ng.IPromise<string>;
         const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
         const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+        const templateOptions = scope.$eval($attributes.bsLoadingOverlayTemplateOptions) || globalConfig.templateOptions;
+
         let overlayElement = null;
 
         if (templateUrl) {
@@ -42,6 +49,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
         }
 
         templatePromise.then((loadedTemplate: string) => {
+            scope.bsLoadingOverlayOptions = templateOptions;
             overlayElement = this.$compile(loadedTemplate)(scope);
             overlayElement.data('isAttached', false);
         }).finally(() => {

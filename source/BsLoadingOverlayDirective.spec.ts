@@ -95,6 +95,22 @@ describe('bsLoadingOverlay directive', () => {
         bsLoadingOverlayServiceMock.verify();
     });
 
+    describe('with options', () => {
+        it('should pass provided template options to the template', function() {
+            bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
+            template = '<div bs-loading-overlay bs-loading-overlay-template-options="{option: \'optionValue\'}" bs-loading-overlay-reference-id="referenceId"></div>';
+            $templateCache.put(
+                'default-template-url.html',
+                '<div class="bs-loading-overlay">{{bsLoadingOverlayOptions.option}}</div>'
+            );
+
+            const element = getCompiledElement(template, scope);
+
+            expect(element[0].querySelector('.bs-loading-overlay').textContent).toBe('optionValue');
+            bsLoadingOverlayServiceMock.verify();
+        });
+    });
+
     it('should not add overlay when reference is not active', function() {
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
 
@@ -213,6 +229,19 @@ describe('bsLoadingOverlay directive', () => {
             expect(element[0].querySelector('.from-global-template-url')).not.toBeNull();
             $timeout.flush();
             expect(element[0].querySelector('.from-global-template-url')).toBeNull();
+        });
+
+        it('should pass provided template options from global config if it is not provided directly into directive', function() {
+            globalConfig.templateOptions = {option: 'optionValue'};
+            $templateCache.put(
+                'global-template-url.html',
+                '<div class="from-global-template-url">{{bsLoadingOverlayOptions.option}}</div>'
+            );
+
+            const element = getCompiledElement(template, scope);
+
+            expect(element[0].querySelector('.from-global-template-url').textContent).toBe('optionValue');
+            bsLoadingOverlayServiceMock.verify();
         });
     });
 

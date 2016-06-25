@@ -73,6 +73,7 @@
 	            var templatePromise;
 	            var globalConfig = _this.bsLoadingOverlayService.getGlobalConfig();
 	            var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+	            var templateOptions = scope.$eval($attributes.bsLoadingOverlayTemplateOptions) || globalConfig.templateOptions;
 	            var overlayElement = null;
 	            if (templateUrl) {
 	                templatePromise = _this.$templateRequest(templateUrl);
@@ -81,6 +82,7 @@
 	                templatePromise = _this.$q.reject();
 	            }
 	            templatePromise.then(function (loadedTemplate) {
+	                scope.bsLoadingOverlayOptions = templateOptions;
 	                overlayElement = _this.$compile(loadedTemplate)(scope);
 	                overlayElement.data('isAttached', false);
 	            }).finally(function () {
