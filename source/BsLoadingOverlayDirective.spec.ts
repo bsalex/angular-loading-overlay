@@ -86,21 +86,21 @@ describe('bsLoadingOverlay directive', () => {
         bsLoadingOverlayServiceMock.verify();
     });
 
-    it('should not add overlay when reference is not active', function() {
-        bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
-
-        const element = getCompiledElement(template, scope);
-
-        expect(element[0].querySelector('.bs-loading-overlay')).toBeNull();
-        bsLoadingOverlayServiceMock.verify();
-    });
-
     it('should add overlay when reference is active', function() {
         bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
 
         const element = getCompiledElement(template, scope);
 
         expect(element[0].querySelector('.bs-loading-overlay')).not.toBeNull();
+        bsLoadingOverlayServiceMock.verify();
+    });
+
+    it('should not add overlay when reference is not active', function() {
+        bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(false);
+
+        const element = getCompiledElement(template, scope);
+
+        expect(element[0].querySelector('.bs-loading-overlay')).toBeNull();
         bsLoadingOverlayServiceMock.verify();
     });
 

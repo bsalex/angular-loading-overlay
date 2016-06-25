@@ -1,4 +1,5 @@
 import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
+import BsLoadingOverlayInstance from './BsLoadingOverlayInstance';
 import {BsLoadingOverlayService} from './BsLoadingOverlayService';
 
 interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
@@ -17,89 +18,55 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
         private $q: ng.IQService,
         private $timeout: ng.ITimeoutService,
         private bsLoadingOverlayService: BsLoadingOverlayService
-    ) { }
+    ) {}
+
+    private updateOverlayElement(overlayInstance: BsLoadingOverlayInstance) {
+        if (this.bsLoadingOverlayService.isActive(overlayInstance.referenceId)) {
+            overlayInstance.add();
+        } else {
+            overlayInstance.remove();
+        }
+    };
 
     restrict = 'EA';
     link: ng.IDirectiveLinkFn = (scope: ng.IScope, $element: ng.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
-        let overlayElement: ng.IAugmentedJQuery,
-            referenceId: string,
-            activeClass: string,
-            templatePromise: ng.IPromise<string>,
-            delay: number,
-            delayPromise: ng.IPromise<void>;
+        let templatePromise: ng.IPromise<string>;
+        const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
+        const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+        let overlayElement = null;
 
-        const activate = () => {
-            const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
-            referenceId = $attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay);
-            delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
-            activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
-            const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+        if (templateUrl) {
+            templatePromise = this.$templateRequest(templateUrl);
+        } else {
+            templatePromise = this.$q.reject();
+        }
 
-            if (templateUrl) {
-                templatePromise = this.$templateRequest(templateUrl);
-            } else {
-                templatePromise = this.$q.reject();
-            }
+        templatePromise.then((loadedTemplate: string) => {
+            overlayElement = this.$compile(loadedTemplate)(scope);
+            overlayElement.data('isAttached', false);
+        }).finally(() => {
+            const overlayInstance = new BsLoadingOverlayInstance(
+                $attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay),
+                +$attributes.bsLoadingOverlayDelay || globalConfig.delay,
+                $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass,
+                $element,
+                overlayElement,
+                this.$timeout,
+                this.$q
+            );
 
-            templatePromise.then((loadedTemplate: string) => {
-                overlayElement = this.$compile(loadedTemplate)(scope);
-                overlayElement.data('isAttached', false);
-                updateOverlayElement(referenceId);
-            }).catch(() => {
-                updateOverlayElement(referenceId);
-            });
-
-            const unsubscribe = this.$rootScope.$on('bsLoadingOverlayUpdateEvent', (event: ng.IAngularEvent, options: IBsLoadingOverlayOptions) => {
-                if (options.referenceId === referenceId) {
-                    updateOverlayElement(referenceId);
+            const unsubscribe = this.$rootScope.$on(
+                'bsLoadingOverlayUpdateEvent',
+                (event: ng.IAngularEvent, options: IBsLoadingOverlayOptions) => {
+                    if (options.referenceId === overlayInstance.referenceId) {
+                        this.updateOverlayElement(overlayInstance);
+                    }
                 }
-            });
+            );
 
             $element.on('$destroy', unsubscribe);
-        };
-
-        const updateOverlayElement = (referenceId: string) => {
-            if (this.bsLoadingOverlayService.isActive(referenceId)) {
-                addOverlay();
-            } else {
-                removeOverlay();
-            }
-        };
-
-        const isOverlayAdded = () => !!delayPromise;
-        const addOverlay = () => {
-            if (delay) {
-                if (delayPromise) {
-                    this.$timeout.cancel(delayPromise);
-                }
-                delayPromise = this.$timeout(angular.noop, delay);
-            } else {
-                delayPromise = this.$q.when();
-            }
-
-            if (overlayElement && !overlayElement.data('isAttached')) {
-                $element.append(overlayElement);
-                overlayElement.data('isAttached', true);
-            }
-
-            $element.addClass(activeClass);
-        };
-
-        const removeOverlay = () => {
-            if (isOverlayAdded()) {
-                delayPromise.then(() => {
-                    if (overlayElement && overlayElement.data('isAttached')) {
-                        overlayElement.data('isAttached', false);
-                        overlayElement.detach();
-                    }
-
-                    $element.removeClass(activeClass);
-                    delayPromise = undefined;
-                });
-            }
-        };
-
-        activate();
+            this.updateOverlayElement(overlayInstance);
+        });
     }
 }
 

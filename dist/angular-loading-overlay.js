@@ -46,7 +46,7 @@
 
 	"use strict";
 	var BsLoadingOverlayDirective_1 = __webpack_require__(1);
-	var BsLoadingOverlayService_1 = __webpack_require__(2);
+	var BsLoadingOverlayService_1 = __webpack_require__(3);
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = angular.module('bsLoadingOverlay', [])
 	    .directive('bsLoadingOverlay', BsLoadingOverlayDirective_1.BsLoadingOverlayDirectiveFactory)
@@ -55,9 +55,10 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var BsLoadingOverlayInstance_1 = __webpack_require__(2);
 	var BsLoadingOverlayDirective = (function () {
 	    function BsLoadingOverlayDirective($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) {
 	        var _this = this;
@@ -69,73 +70,40 @@
 	        this.bsLoadingOverlayService = bsLoadingOverlayService;
 	        this.restrict = 'EA';
 	        this.link = function (scope, $element, $attributes) {
-	            var overlayElement, referenceId, activeClass, templatePromise, delay, delayPromise;
-	            var activate = function () {
-	                var globalConfig = _this.bsLoadingOverlayService.getGlobalConfig();
-	                referenceId = $attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay);
-	                delay = +$attributes.bsLoadingOverlayDelay || globalConfig.delay;
-	                activeClass = $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass;
-	                var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
-	                if (templateUrl) {
-	                    templatePromise = _this.$templateRequest(templateUrl);
-	                }
-	                else {
-	                    templatePromise = _this.$q.reject();
-	                }
-	                templatePromise.then(function (loadedTemplate) {
-	                    overlayElement = _this.$compile(loadedTemplate)(scope);
-	                    overlayElement.data('isAttached', false);
-	                    updateOverlayElement(referenceId);
-	                }).catch(function () {
-	                    updateOverlayElement(referenceId);
-	                });
+	            var templatePromise;
+	            var globalConfig = _this.bsLoadingOverlayService.getGlobalConfig();
+	            var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
+	            var overlayElement = null;
+	            if (templateUrl) {
+	                templatePromise = _this.$templateRequest(templateUrl);
+	            }
+	            else {
+	                templatePromise = _this.$q.reject();
+	            }
+	            templatePromise.then(function (loadedTemplate) {
+	                overlayElement = _this.$compile(loadedTemplate)(scope);
+	                overlayElement.data('isAttached', false);
+	            }).finally(function () {
+	                var overlayInstance = new BsLoadingOverlayInstance_1.default($attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay), +$attributes.bsLoadingOverlayDelay || globalConfig.delay, $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass, $element, overlayElement, _this.$timeout, _this.$q);
 	                var unsubscribe = _this.$rootScope.$on('bsLoadingOverlayUpdateEvent', function (event, options) {
-	                    if (options.referenceId === referenceId) {
-	                        updateOverlayElement(referenceId);
+	                    if (options.referenceId === overlayInstance.referenceId) {
+	                        _this.updateOverlayElement(overlayInstance);
 	                    }
 	                });
 	                $element.on('$destroy', unsubscribe);
-	            };
-	            var updateOverlayElement = function (referenceId) {
-	                if (_this.bsLoadingOverlayService.isActive(referenceId)) {
-	                    addOverlay();
-	                }
-	                else {
-	                    removeOverlay();
-	                }
-	            };
-	            var isOverlayAdded = function () { return !!delayPromise; };
-	            var addOverlay = function () {
-	                if (delay) {
-	                    if (delayPromise) {
-	                        _this.$timeout.cancel(delayPromise);
-	                    }
-	                    delayPromise = _this.$timeout(angular.noop, delay);
-	                }
-	                else {
-	                    delayPromise = _this.$q.when();
-	                }
-	                if (overlayElement && !overlayElement.data('isAttached')) {
-	                    $element.append(overlayElement);
-	                    overlayElement.data('isAttached', true);
-	                }
-	                $element.addClass(activeClass);
-	            };
-	            var removeOverlay = function () {
-	                if (isOverlayAdded()) {
-	                    delayPromise.then(function () {
-	                        if (overlayElement && overlayElement.data('isAttached')) {
-	                            overlayElement.data('isAttached', false);
-	                            overlayElement.detach();
-	                        }
-	                        $element.removeClass(activeClass);
-	                        delayPromise = undefined;
-	                    });
-	                }
-	            };
-	            activate();
+	                _this.updateOverlayElement(overlayInstance);
+	            });
 	        };
 	    }
+	    BsLoadingOverlayDirective.prototype.updateOverlayElement = function (overlayInstance) {
+	        if (this.bsLoadingOverlayService.isActive(overlayInstance.referenceId)) {
+	            overlayInstance.add();
+	        }
+	        else {
+	            overlayInstance.remove();
+	        }
+	    };
+	    ;
 	    return BsLoadingOverlayDirective;
 	}());
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -155,6 +123,61 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var BsLoadingOverlayInstance = (function () {
+	    function BsLoadingOverlayInstance(referenceId, delay, activeClass, $element, overlayElement, $timeout, $q) {
+	        this.referenceId = referenceId;
+	        this.delay = delay;
+	        this.activeClass = activeClass;
+	        this.$element = $element;
+	        this.overlayElement = overlayElement;
+	        this.$timeout = $timeout;
+	        this.$q = $q;
+	    }
+	    BsLoadingOverlayInstance.prototype.isAdded = function () {
+	        return !!this.delayPromise;
+	    };
+	    BsLoadingOverlayInstance.prototype.add = function () {
+	        if (this.delay) {
+	            if (this.delayPromise) {
+	                this.$timeout.cancel(this.delayPromise);
+	            }
+	            this.delayPromise = this.$timeout(angular.noop, this.delay);
+	        }
+	        else {
+	            this.delayPromise = this.$q.when();
+	        }
+	        if (this.overlayElement && !this.overlayElement.data('isAttached')) {
+	            this.$element.append(this.overlayElement);
+	            this.overlayElement.data('isAttached', true);
+	        }
+	        this.$element.addClass(this.activeClass);
+	    };
+	    ;
+	    BsLoadingOverlayInstance.prototype.remove = function () {
+	        var _this = this;
+	        if (this.isAdded()) {
+	            this.delayPromise.then(function () {
+	                if (_this.overlayElement && _this.overlayElement.data('isAttached')) {
+	                    _this.overlayElement.data('isAttached', false);
+	                    _this.overlayElement.detach();
+	                }
+	                _this.$element.removeClass(_this.activeClass);
+	                _this.delayPromise = undefined;
+	            });
+	        }
+	    };
+	    ;
+	    return BsLoadingOverlayInstance;
+	}());
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = BsLoadingOverlayInstance;
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";

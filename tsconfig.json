@@ -18,6 +18,7 @@
         "typings/index.d.ts",
         "source/BsLoadingOverlayDirective.spec.ts",
         "source/BsLoadingOverlayDirective.ts",
+        "source/BsLoadingOverlayInstance.ts",
         "source/BsLoadingOverlayModule.ts",
         "source/BsLoadingOverlayService.spec.ts",
         "source/BsLoadingOverlayService.ts",
