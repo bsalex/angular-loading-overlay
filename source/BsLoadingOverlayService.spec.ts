@@ -80,7 +80,7 @@ ngDescribe({
             it('should wrap provided function returning promise in start and stop functions', () => {
                 dependencies.$rootScope.$apply(() => {
                     dependencies.bsLoadingOverlayService.wrap({
-                        referenceId: referenceId
+                        referenceId
                     }, () => {
                         return t.func1().then(t.func2);
                     });
@@ -184,7 +184,7 @@ ngDescribe({
                 func1Spy = sinon.spy(t, 'func1');
                 func2Spy = sinon.spy(t, 'func2');
                 handler = dependencies.bsLoadingOverlayService.createHandler({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 startSpy = sinon.spy(dependencies.bsLoadingOverlayService, 'start');
@@ -207,7 +207,7 @@ ngDescribe({
             it('should wrap provided promise in start and stop functions', () => {
                 dependencies.$rootScope.$apply(() => {
                     handler.wrap(t.func1().then(t.func2), {
-                        referenceId: referenceId
+                        referenceId
                     });
                 });
 
@@ -275,7 +275,7 @@ ngDescribe({
                 });
 
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
             });
 
@@ -285,35 +285,35 @@ ngDescribe({
                 });
 
                 dependencies.bsLoadingOverlayService.stop({
-                    referenceId: referenceId
+                    referenceId
                 });
             });
 
             it('should emit rootScope event on start with referenceId in options', (done) => {
-                dependencies.$rootScope.$on('bsLoadingOverlayUpdateEvent', function(event, options) {
+                dependencies.$rootScope.$on('bsLoadingOverlayUpdateEvent', (event, options) => {
                     expect(options.referenceId).toEqual(referenceId);
                     done();
                 });
 
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
             });
 
             it('should emit rootScope event on stop with referenceId in options', (done) => {
-                dependencies.$rootScope.$on('bsLoadingOverlayUpdateEvent', function(event, options) {
+                dependencies.$rootScope.$on('bsLoadingOverlayUpdateEvent', (event, options) => {
                     expect(options.referenceId).toEqual(referenceId);
                     done();
                 });
 
                 dependencies.bsLoadingOverlayService.stop({
-                    referenceId: referenceId
+                    referenceId
                 });
             });
 
             it('should not make other references active on start', () => {
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 expect(dependencies.bsLoadingOverlayService.isActive('otherReference')).toBeFalsy();
@@ -329,7 +329,7 @@ ngDescribe({
 
             it('should not stop other references on stop', () => {
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 dependencies.bsLoadingOverlayService.start({
@@ -337,7 +337,7 @@ ngDescribe({
                 });
 
                 dependencies.bsLoadingOverlayService.stop({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 expect(dependencies.bsLoadingOverlayService.isActive('otherReference')).toBeTruthy();
@@ -345,7 +345,7 @@ ngDescribe({
 
             it('should indicate that loadingOverlay is active after start', () => {
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 expect(dependencies.bsLoadingOverlayService.isActive(referenceId)).toBeTruthy();
@@ -357,10 +357,10 @@ ngDescribe({
 
             it('should indicate that loadingOverlay is not active after stop', () => {
                 dependencies.bsLoadingOverlayService.start({
-                    referenceId: referenceId
+                    referenceId
                 });
                 dependencies.bsLoadingOverlayService.stop({
-                    referenceId: referenceId
+                    referenceId
                 });
 
                 expect(dependencies.bsLoadingOverlayService.isActive(referenceId)).toBeFalsy();
