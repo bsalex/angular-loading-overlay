@@ -36,6 +36,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
     restrict = 'EA';
     link: ng.IDirectiveLinkFn = (scope: BsLoadingOverlayDirectiveScope, $element: ng.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
         let templatePromise: ng.IPromise<string>;
+        let overlayElementScope: BsLoadingOverlayDirectiveScope;
         const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
         const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
         const templateOptions = scope.$eval($attributes.bsLoadingOverlayTemplateOptions) || globalConfig.templateOptions;
@@ -49,8 +50,9 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
         }
 
         templatePromise.then((loadedTemplate: string) => {
-            scope.bsLoadingOverlayOptions = templateOptions;
-            overlayElement = this.$compile(loadedTemplate)(scope);
+            overlayElementScope = <BsLoadingOverlayDirectiveScope> scope.$new();
+            overlayElementScope.bsLoadingOverlayOptions = templateOptions;
+            overlayElement = this.$compile(loadedTemplate)(overlayElementScope);
             overlayElement.data('isAttached', false);
         }).finally(() => {
             const overlayInstance = new BsLoadingOverlayInstance(
@@ -72,7 +74,10 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
                 }
             );
 
-            $element.on('$destroy', unsubscribe);
+            $element.on('$destroy', () => {
+                overlayElementScope.$destroy();
+                unsubscribe();
+            });
             this.updateOverlayElement(overlayInstance);
         });
     }

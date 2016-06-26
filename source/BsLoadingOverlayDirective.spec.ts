@@ -107,6 +107,30 @@ describe('bsLoadingOverlay directive', () => {
             expect(element[0].querySelector('.bs-loading-overlay').textContent).toBe('optionValue');
             bsLoadingOverlayServiceMock.verify();
         });
+
+        it('should pass provided different template options for different overlays in the same scope', () => {
+            bsLoadingOverlayServiceMock.expects('isActive').once().withArgs(referenceId).returns(true);
+            bsLoadingOverlayServiceMock.expects('isActive').once().withArgs('anotherReferenceId').returns(true);
+
+            template = `
+                <div>
+                    <div bs-loading-overlay bs-loading-overlay-template-options="{option: \'optionValue\'}" bs-loading-overlay-reference-id="referenceId"></div>
+                    <div bs-loading-overlay bs-loading-overlay-template-options="{option: \'anotherOptionValue\'}" bs-loading-overlay-reference-id="anotherReferenceId"></div>
+                </div>`;
+
+            $templateCache.put(
+                'default-template-url.html',
+                '<div class="bs-loading-overlay">{{bsLoadingOverlayOptions.option}}</div>'
+            );
+
+            const element = getCompiledElement(template, scope);
+            const overlayElements = element[0].querySelectorAll('.bs-loading-overlay');
+
+            expect(overlayElements[0].textContent).toBe('optionValue');
+            expect(overlayElements[1].textContent).toBe('anotherOptionValue');
+
+            bsLoadingOverlayServiceMock.verify();
+        });
     });
 
     it('should not add overlay when reference is not active', () => {

@@ -71,6 +71,7 @@
 	        this.restrict = 'EA';
 	        this.link = function (scope, $element, $attributes) {
 	            var templatePromise;
+	            var overlayElementScope;
 	            var globalConfig = _this.bsLoadingOverlayService.getGlobalConfig();
 	            var templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
 	            var templateOptions = scope.$eval($attributes.bsLoadingOverlayTemplateOptions) || globalConfig.templateOptions;
@@ -82,8 +83,9 @@
 	                templatePromise = _this.$q.reject();
 	            }
 	            templatePromise.then(function (loadedTemplate) {
-	                scope.bsLoadingOverlayOptions = templateOptions;
-	                overlayElement = _this.$compile(loadedTemplate)(scope);
+	                overlayElementScope = scope.$new();
+	                overlayElementScope.bsLoadingOverlayOptions = templateOptions;
+	                overlayElement = _this.$compile(loadedTemplate)(overlayElementScope);
 	                overlayElement.data('isAttached', false);
 	            }).finally(function () {
 	                var overlayInstance = new BsLoadingOverlayInstance_1.default($attributes.bsLoadingOverlayReferenceId || ($attributes.bsLoadingOverlay === '' ? undefined : $attributes.bsLoadingOverlay), +$attributes.bsLoadingOverlayDelay || globalConfig.delay, $attributes.bsLoadingOverlayActiveClass || globalConfig.activeClass, $element, overlayElement, _this.$timeout, _this.$q);
@@ -92,7 +94,10 @@
 	                        _this.updateOverlayElement(overlayInstance);
 	                    }
 	                });
-	                $element.on('$destroy', unsubscribe);
+	                $element.on('$destroy', function () {
+	                    overlayElementScope.$destroy();
+	                    unsubscribe();
+	                });
 	                _this.updateOverlayElement(overlayInstance);
 	            });
 	        };
