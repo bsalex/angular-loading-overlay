@@ -12,7 +12,7 @@ interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
 }
 
 interface BsLoadingOverlayDirectiveScope extends ng.IScope {
-    bsLoadingOverlayOptions: any;
+    bsLoadingOverlayTemplateOptions: any;
 }
 
 export default class BsLoadingOverlayDirective implements ng.IDirective {
@@ -51,7 +51,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
 
         templatePromise.then((loadedTemplate: string) => {
             overlayElementScope = <BsLoadingOverlayDirectiveScope> scope.$new();
-            overlayElementScope.bsLoadingOverlayOptions = templateOptions;
+            overlayElementScope.bsLoadingOverlayTemplateOptions = templateOptions;
             overlayElement = this.$compile(loadedTemplate)(overlayElementScope);
             overlayElement.data('isAttached', false);
         }).finally(() => {

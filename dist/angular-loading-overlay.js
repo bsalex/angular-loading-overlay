@@ -84,7 +84,7 @@
 	            }
 	            templatePromise.then(function (loadedTemplate) {
 	                overlayElementScope = scope.$new();
-	                overlayElementScope.bsLoadingOverlayOptions = templateOptions;
+	                overlayElementScope.bsLoadingOverlayTemplateOptions = templateOptions;
 	                overlayElement = _this.$compile(loadedTemplate)(overlayElementScope);
 	                overlayElement.data('isAttached', false);
 	            }).finally(function () {

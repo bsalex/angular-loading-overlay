@@ -99,7 +99,7 @@ describe('bsLoadingOverlay directive', () => {
             template = '<div bs-loading-overlay bs-loading-overlay-template-options="{option: \'optionValue\'}" bs-loading-overlay-reference-id="referenceId"></div>';
             $templateCache.put(
                 'default-template-url.html',
-                '<div class="bs-loading-overlay">{{bsLoadingOverlayOptions.option}}</div>'
+                '<div class="bs-loading-overlay">{{bsLoadingOverlayTemplateOptions.option}}</div>'
             );
 
             const element = getCompiledElement(template, scope);
@@ -120,7 +120,7 @@ describe('bsLoadingOverlay directive', () => {
 
             $templateCache.put(
                 'default-template-url.html',
-                '<div class="bs-loading-overlay">{{bsLoadingOverlayOptions.option}}</div>'
+                '<div class="bs-loading-overlay">{{bsLoadingOverlayTemplateOptions.option}}</div>'
             );
 
             const element = getCompiledElement(template, scope);
@@ -257,7 +257,7 @@ describe('bsLoadingOverlay directive', () => {
             globalConfig.templateOptions = {option: 'optionValue'};
             $templateCache.put(
                 'global-template-url.html',
-                '<div class="from-global-template-url">{{bsLoadingOverlayOptions.option}}</div>'
+                '<div class="from-global-template-url">{{bsLoadingOverlayTemplateOptions.option}}</div>'
             );
 
             const element = getCompiledElement(template, scope);
