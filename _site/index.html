@@ -10,6 +10,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <link href="assets/css/prism.css" rel="stylesheet">
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/docs.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
@@ -94,12 +95,7 @@
 <script src="dist/angular/angular.js"></script>
 <script src="dist/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
-<script>
-    var app = angular.module('app', [
-        'bsLoadingOverlay',
-        'ui.bootstrap'
-    ]);
-</script>
+<script src="https://rawgit.com/bsalex/angular-loading-overlay-spinjs/master/dist/angular-loading-overlay-spinjs.js"></script>
 
 <section class="bs-docs-section">
     <h1 id="introduction" class="page-header">Introduction</h1>
@@ -162,13 +158,13 @@
     </dl>
     </p>
 </section>
-<section class="bs-docs-section" ng-app="app">
+<section class="bs-docs-section app">
     <h1 id="examples" class="page-header">Examples</h1>
 
     <h2 id="global" class="page-header">Global</h2>
 
     <p>
-        If no reference id is not passed to start function -
+        If reference id is not passed to start function -
         then all loaders which don't have specified reference id are triggered.
     </p>
 
@@ -176,51 +172,94 @@
         
 
 
-<script>
-  app.controller('GlobalController', function ($scope, bsLoadingOverlayService) {
-  $scope.showOverlay = function () {
-    bsLoadingOverlayService.start();
-  };
 
-  $scope.hideOverlay = function () {
-    bsLoadingOverlayService.stop();
-  }
+
+
+<div class="app-global">
+  <div ng-controller="GlobalController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;GlobalController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-global&quot;&gt;
+  &lt;div ng-controller=&quot;GlobalController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-global&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-global', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('GlobalController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-global"), ['app-global']);
+    })()
 </script>
-
-<div ng-controller="GlobalController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;GlobalController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-  <span class="p">};</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
@@ -235,79 +274,124 @@
         
 
 
-<script>
-  app.controller('WithReferenceController', function ($scope, bsLoadingOverlayService) {
-  $scope.showOverlay = function (referenceId) {
-    bsLoadingOverlayService.start({
-      referenceId: referenceId
-    });
-  };
 
-  $scope.hideOverlay = function (referenceId) {
-    bsLoadingOverlayService.stop({
-      referenceId: referenceId
-    });
-  }
-});
 
-</script>
 
-<div ng-controller="WithReferenceController">
-  <button class="btn btn-primary" ng-click="showOverlay('first')">Show overlay first</button>
+<div class="app-with-reference">
+  <div ng-controller="WithReferenceController">
+    <button class="btn btn-primary" ng-click="showOverlay('first')">Show overlay first</button>
 <button class="btn btn-primary" ng-click="hideOverlay('first')">Hide overlay first</button>
 <button class="btn btn-primary" ng-click="showOverlay('second')">Show overlay second</button>
 <button class="btn btn-primary" ng-click="hideOverlay('second')">Hide overlay second</button>
 
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="first"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="second"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-reference-id="first"
+>
     Some content here
 </div>
 
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WithReferenceController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-reference-id="second"
+>
 
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;first&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay second<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;second&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay second<span class="nt">&lt;/button&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;first&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
     Some content here
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;second&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
 </div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;WithReferenceController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function(referenceId) {
+        bsLoadingOverlayService.start({
+            referenceId: referenceId
+        });
+    };
+
+    $scope.hideOverlay = function(referenceId) {
+        bsLoadingOverlayService.stop({
+            referenceId: referenceId
+        });
+    }
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-with-reference&quot;&gt;
+  &lt;div ng-controller=&quot;WithReferenceController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay(&#39;first&#39;)&quot;&gt;Show overlay first&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay(&#39;first&#39;)&quot;&gt;Hide overlay first&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay(&#39;second&#39;)&quot;&gt;Show overlay second&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay(&#39;second&#39;)&quot;&gt;Hide overlay second&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-reference-id=&quot;first&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-reference-id=&quot;second&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-with-reference&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-with-reference', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('WithReferenceController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function(referenceId) {
+        bsLoadingOverlayService.start({
+            referenceId: referenceId
+        });
+    };
+
+    $scope.hideOverlay = function(referenceId) {
+        bsLoadingOverlayService.stop({
+            referenceId: referenceId
+        });
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-with-reference"), ['app-with-reference']);
+    })()
+</script>
 
     </div>
 
@@ -319,75 +403,119 @@
         
 
 
-<script>
-  app.controller('WithReferenceInNameAttributeController', function ($scope, bsLoadingOverlayService) {
-  $scope.showOverlay = function (referenceId) {
-    bsLoadingOverlayService.start({
-      referenceId: referenceId
-    });
-  };
 
-  $scope.hideOverlay = function (referenceId) {
-    bsLoadingOverlayService.stop({
-      referenceId: referenceId
-    });
-  }
-});
 
-</script>
 
-<div ng-controller="WithReferenceInNameAttributeController">
-  <button class="btn btn-primary" ng-click="showOverlay('first-in-name')">Show overlay first</button>
+<div class="app-with-reference-in-name-attribute">
+  <div ng-controller="WithReferenceInNameAttributeController">
+    <button class="btn btn-primary" ng-click="showOverlay('first-in-name')">Show overlay first</button>
 <button class="btn btn-primary" ng-click="hideOverlay('first-in-name')">Hide overlay first</button>
 <button class="btn btn-primary" ng-click="showOverlay('second-in-name')">Show overlay second</button>
 <button class="btn btn-primary" ng-click="hideOverlay('second-in-name')">Hide overlay second</button>
 
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay="first-in-name"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay="second-in-name"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay="first-in-name"
+>
     Some content here
 </div>
 
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WithReferenceInNameAttributeController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">referenceId</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="nx">referenceId</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;first-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;first-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay first<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay(&#39;second-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Show overlay second<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay(&#39;second-in-name&#39;)&quot;</span><span class="nt">&gt;</span>Hide overlay second<span class="nt">&lt;/button&gt;</span>
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay=</span><span class="s">&quot;first-in-name&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay="second-in-name"
+>
     Some content here
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay=</span><span class="s">&quot;second-in-name&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
 </div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;WithReferenceInNameAttributeController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function(referenceId) {
+        bsLoadingOverlayService.start({
+            referenceId: referenceId
+        });
+    };
+
+    $scope.hideOverlay = function(referenceId) {
+        bsLoadingOverlayService.stop({
+            referenceId: referenceId
+        });
+    }
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-with-reference-in-name-attribute&quot;&gt;
+  &lt;div ng-controller=&quot;WithReferenceInNameAttributeController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay(&#39;first-in-name&#39;)&quot;&gt;Show overlay first&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay(&#39;first-in-name&#39;)&quot;&gt;Hide overlay first&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay(&#39;second-in-name&#39;)&quot;&gt;Show overlay second&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay(&#39;second-in-name&#39;)&quot;&gt;Hide overlay second&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay=&quot;first-in-name&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay=&quot;second-in-name&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-with-reference-in-name-attribute&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-with-reference-in-name-attribute', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('WithReferenceInNameAttributeController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function(referenceId) {
+        bsLoadingOverlayService.start({
+            referenceId: referenceId
+        });
+    };
+
+    $scope.hideOverlay = function(referenceId) {
+        bsLoadingOverlayService.stop({
+            referenceId: referenceId
+        });
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-with-reference-in-name-attribute"), ['app-with-reference-in-name-attribute']);
+    })()
+</script>
 
     </div>
 
@@ -407,61 +535,88 @@
         
 
 
-<script>
-  app.controller('ClassController', function ($scope, bsLoadingOverlayService) {
-  $scope.showOverlay = function () {
-    bsLoadingOverlayService.start({
-      referenceId: 'class'
-    });
-  };
 
-  $scope.hideOverlay = function () {
-    bsLoadingOverlayService.stop({
-      referenceId: 'class'
-    });
-  }
+
+
+<div class="app-class">
+  <div ng-controller="ClassController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-active-class="loading-overlay--active"
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;ClassController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-class&quot;&gt;
+  &lt;div ng-controller=&quot;ClassController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-active-class=&quot;loading-overlay--active&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-class&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]);
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-class', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]);
+
+        app.controller('ClassController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-class"), ['app-class']);
+    })()
 </script>
-
-<div ng-controller="ClassController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="class"
-     bs-loading-overlay-active-class="loading-overlay--active">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;ClassController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;class&#39;</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;class&#39;</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;class&quot;</span>
-     <span class="na">bs-loading-overlay-active-class=</span><span class="s">&quot;loading-overlay--active&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
@@ -476,63 +631,96 @@
         
 
 
-<script>
-  app.controller('DelayController', function ($scope, bsLoadingOverlayService) {
-  $scope.showOverlay = function () {
-    bsLoadingOverlayService.start({
-      referenceId: 'delay'
-    });
-  };
 
-  $scope.hideOverlay = function () {
-    bsLoadingOverlayService.stop({
-      referenceId: 'delay'
-    });
-  }
+
+
+<div class="app-delay">
+  <div ng-controller="DelayController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-delay="3000"
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;DelayController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-delay&quot;&gt;
+  &lt;div ng-controller=&quot;DelayController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-delay=&quot;3000&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-delay&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-delay', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('DelayController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-delay"), ['app-delay']);
+    })()
 </script>
-
-<div ng-controller="DelayController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-delay="3000"
-     bs-loading-overlay-reference-id="delay"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DelayController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;delay&#39;</span>
-    <span class="p">});</span>
-  <span class="p">};</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">stop</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;delay&#39;</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-delay=</span><span class="s">&quot;3000&quot;</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;delay&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
@@ -547,61 +735,104 @@
         
 
 
-<script>
-  app.controller('HandlerController', function ($scope, bsLoadingOverlayService) {
-  var overlayHandler = bsLoadingOverlayService.createHandler({
-    referenceId: 'handler-overlay'
-  });
 
-  $scope.showOverlay = function () {
-    overlayHandler.start();
-  };
 
-  $scope.hideOverlay = function () {
-    overlayHandler.stop();
-  }
+
+<div class="app-handler">
+  <div ng-controller="HandlerController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-reference-id="handler-overlay"
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;HandlerController&#39;, function($scope, bsLoadingOverlayService) {
+    var overlayHandler = bsLoadingOverlayService.createHandler({
+        referenceId: &#39;handler-overlay&#39;
+    });
+
+    $scope.showOverlay = function() {
+        overlayHandler.start();
+    };
+
+    $scope.hideOverlay = function() {
+        overlayHandler.stop();
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-handler&quot;&gt;
+  &lt;div ng-controller=&quot;HandlerController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-reference-id=&quot;handler-overlay&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-handler&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-handler', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('HandlerController', function($scope, bsLoadingOverlayService) {
+    var overlayHandler = bsLoadingOverlayService.createHandler({
+        referenceId: 'handler-overlay'
+    });
+
+    $scope.showOverlay = function() {
+        overlayHandler.start();
+    };
+
+    $scope.hideOverlay = function() {
+        overlayHandler.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-handler"), ['app-handler']);
+    })()
 </script>
-
-<div ng-controller="HandlerController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="handler-overlay"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;HandlerController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">overlayHandler</span> <span class="o">=</span> <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">createHandler</span><span class="p">({</span>
-    <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;handler-overlay&#39;</span>
-  <span class="p">});</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">overlayHandler</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-  <span class="p">};</span>
-
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">hideOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">overlayHandler</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;hideOverlay()&quot;</span><span class="nt">&gt;</span>Hide overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;handler-overlay&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
@@ -618,49 +849,84 @@
         
 
 
-<script>
-  app.controller('WrapperController', function ($scope, $timeout, bsLoadingOverlayService) {
-  $scope.showOverlay = function () {
-    bsLoadingOverlayService.wrap({
-      referenceId: 'wrapper'
-  }, $timeout(angular.noop, 5000));
-  }
 
+
+
+<div class="app-wrapper">
+  <div ng-controller="WrapperController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;WrapperController&#39;, function($scope, $timeout, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 5000));
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-wrapper&quot;&gt;
+  &lt;div ng-controller=&quot;WrapperController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-wrapper&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-wrapper', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('WrapperController', function($scope, $timeout, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 5000));
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-wrapper"), ['app-wrapper']);
+    })()
 </script>
-
-<div ng-controller="WrapperController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="wrapper"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">({</span>
-      <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper&#39;</span>
-  <span class="p">},</span> <span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">));</span>
-  <span class="p">}</span>
-
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;wrapper&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
@@ -674,61 +940,447 @@
         
 
 
-<script>
-  app.controller('WrapperFunctionController', function ($scope, $timeout, bsLoadingOverlayService) {
-  $scope.showOverlay = function () {
-    bsLoadingOverlayService.wrap({
-        referenceId: 'wrapper-function'
-      },
-      function () {
-        return $timeout(angular.noop, 5000);
-      });
-  }
 
+
+
+<div class="app-wrapper-function">
+  <div ng-controller="WrapperFunctionController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;WrapperFunctionController&#39;, function($scope, $timeout, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.wrap({},
+            function() {
+                return $timeout(angular.noop, 5000);
+            });
+    }
 });
 
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-wrapper-function&quot;&gt;
+  &lt;div ng-controller=&quot;WrapperFunctionController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-wrapper-function&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-wrapper-function', [
+    'bsLoadingOverlay',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('WrapperFunctionController', function($scope, $timeout, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.wrap({},
+            function() {
+                return $timeout(angular.noop, 5000);
+            });
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-wrapper-function"), ['app-wrapper-function']);
+    })()
 </script>
-
-<div ng-controller="WrapperFunctionController">
-  <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay
-     bs-loading-overlay-reference-id="wrapper-function"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
-    Some content here
-</div>
-
-  <tabset>
-    <tab heading="JavaScript">
-      <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;WrapperFunctionController&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$timeout</span><span class="p">,</span> <span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">$scope</span><span class="p">.</span><span class="nx">showOverlay</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">wrap</span><span class="p">({</span>
-        <span class="nx">referenceId</span><span class="o">:</span> <span class="s1">&#39;wrapper-function&#39;</span>
-      <span class="p">},</span>
-      <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">$timeout</span><span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
-      <span class="p">});</span>
-  <span class="p">}</span>
-
-<span class="p">});</span></code></pre></div>
-    </tab>
-    <tab heading="HTML">
-      <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn btn-primary&quot;</span> <span class="na">ng-click=</span><span class="s">&quot;showOverlay()&quot;</span><span class="nt">&gt;</span>Show overlay<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well well-lg bs-loading-container&quot;</span>
-     <span class="na">bs-loading-overlay</span>
-     <span class="na">bs-loading-overlay-reference-id=</span><span class="s">&quot;wrapper-function&quot;</span>
-     <span class="na">bs-loading-overlay-template-url=</span><span class="s">&quot;loading-overlay-template.html&quot;</span><span class="nt">&gt;</span>
-    Some content here
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-    </tab>
-  </tabset>
-</div>
 
     </div>
 
 </section>
 
-<section class="bs-docs-section" ng-app="app">
+<section class="bs-docs-section appWithSpinJs">
+    <h1 id="examples-spinjs" class="page-header">Examples of integration with Spin.js <a href="http://spin.js.org/" target="_blank">Spin.js</a></h1>
+
+    <h2 id="global-spinjs" class="page-header">Global</h2>
+
+    <p>
+        To use default Spin.js integration with default options:
+        <ul>
+            <li>
+                Install <a href="#" target="_blank">angular-loading-overlay-spinjs</a> package. <br />
+                <code>npm install angular-loading-overlay-spinjs</code>
+            </li>
+            <li>
+                Add <code>node_modules/angular-loading-overlay-spinjs/dist/angular-loading-overlay-spinjs.js</code> script to your page
+            </li>
+            <li>
+                Add <code>bsLoadingOverlaySpinJs</code> dependency to your app module
+            </li>
+            <li>
+                Set global option <code>templateUrl</code> to <code>bsLoadingOverlaySpinJs</code> in your app module run block
+            </li>
+        </ul>
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-global-spinjs">
+  <div ng-controller="GlobalSpinjsController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;GlobalSpinjsController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-global-spinjs&quot;&gt;
+  &lt;div ng-controller=&quot;GlobalSpinjsController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-global-spinjs&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlaySpinJs&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;bsLoadingOverlaySpinJs&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-global-spinjs', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlaySpinJs',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'bsLoadingOverlaySpinJs'
+    });
+});
+
+        app.controller('GlobalSpinjsController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-global-spinjs"), ['app-global-spinjs']);
+    })()
+</script>
+
+    </div>
+
+    <h2 id="spinjs-options" class="page-header">With options</h2>
+
+    <p>
+        You can customize the spinner with options from <a href="http://spin.js.org/" target="_blank">Spin.js</a> site,
+        providing options to <code>bs-loading-overlay-template-options</code> attribute.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-spinjs-options">
+  <div ng-controller="SpinjsOptionsController">
+    <button class="btn btn-primary" ng-click="showOverlay('with-options')">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay('with-options')">Hide overlay</button>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-template-options="{radius:8, width:2, length: 5, color: 'red'}"
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;SpinjsOptionsController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-spinjs-options&quot;&gt;
+  &lt;div ng-controller=&quot;SpinjsOptionsController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay(&#39;with-options&#39;)&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay(&#39;with-options&#39;)&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-template-options=&quot;{radius:8, width:2, length: 5, color: &#39;red&#39;}&quot;
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-spinjs-options&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlaySpinJs&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;bsLoadingOverlaySpinJs&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-spinjs-options', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlaySpinJs',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'bsLoadingOverlaySpinJs'
+    });
+});
+
+        app.controller('SpinjsOptionsController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-spinjs-options"), ['app-spinjs-options']);
+    })()
+</script>
+
+    </div>
+
+    <h2 id="global-spinjs-options" class="page-header">With global options</h2>
+
+    <p>
+        Also you can specify <a href="http://spin.js.org/" target="_blank">Spin.js</a> options globally in your
+        app module run block.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-global-spinjs-options">
+  <div ng-controller="GlobalSpinjsOptionsController">
+    <button class="btn btn-primary" ng-click="showOverlay()">Show overlay</button>
+<button class="btn btn-primary" ng-click="hideOverlay()">Hide overlay</button>
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+>
+    Some content here
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;GlobalSpinjsOptionsController&#39;, function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-global-spinjs-options&quot;&gt;
+  &lt;div ng-controller=&quot;GlobalSpinjsOptionsController&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;showOverlay()&quot;&gt;Show overlay&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;hideOverlay()&quot;&gt;Hide overlay&lt;/button&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+&gt;
+      Some content here
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-global-spinjs-options&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlaySpinJs&#39;,
+    &#39;ui.bootstrap&#39;
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;bsLoadingOverlaySpinJs&#39;
+    });
+
+    bsLoadingOverlayService.setGlobalConfig({
+        templateOptions: {
+            radius: 8,
+            width: 2,
+            length: 4,
+            lines: 5,
+            color: &#39;purple&#39;
+        }
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-global-spinjs-options', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlaySpinJs',
+    'ui.bootstrap'
+]).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'bsLoadingOverlaySpinJs'
+    });
+
+    bsLoadingOverlayService.setGlobalConfig({
+        templateOptions: {
+            radius: 8,
+            width: 2,
+            length: 4,
+            lines: 5,
+            color: 'purple'
+        }
+    });
+});
+
+        app.controller('GlobalSpinjsOptionsController', function($scope, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+});
+
+        angular.bootstrap(document.querySelector(".app-global-spinjs-options"), ['app-global-spinjs-options']);
+    })()
+</script>
+
+    </div>
+</section>
+
+<section class="bs-docs-section">
     <h1 id="changelog" class="page-header">Changelog</h1>
 
     <p class="lead">
@@ -857,6 +1509,19 @@
   
 
   
-
+  <script src="assets/js/prism.js"></script>
+  <script>
+      Prism.plugins.NormalizeWhitespace.setDefaults({
+          'remove-trailing': true,
+          'remove-indent': true,
+          'left-trim': true,
+          'right-trim': true,
+          'break-lines': 240,
+          'indent': 0,
+          'remove-initial-line-feed': true,
+          'tabs-to-spaces': 4,
+          'spaces-to-tabs': 4
+      });
+  </script>
 </body>
 </html>

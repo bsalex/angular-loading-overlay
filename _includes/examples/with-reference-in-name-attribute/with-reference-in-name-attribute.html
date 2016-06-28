@@ -3,13 +3,16 @@
 <button class="btn btn-primary" ng-click="showOverlay('second-in-name')">Show overlay second</button>
 <button class="btn btn-primary" ng-click="hideOverlay('second-in-name')">Hide overlay second</button>
 
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay="first-in-name"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay="first-in-name"
+>
     Some content here
 </div>
-<div class="well well-lg bs-loading-container"
-     bs-loading-overlay="second-in-name"
-     bs-loading-overlay-template-url="loading-overlay-template.html">
+
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay="second-in-name"
+>
     Some content here
 </div>

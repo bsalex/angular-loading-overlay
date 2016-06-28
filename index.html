@@ -21,12 +21,7 @@ isHome: true
 <script src="dist/angular/angular.js"></script>
 <script src="dist/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
-<script>
-    var app = angular.module('app', [
-        'bsLoadingOverlay',
-        'ui.bootstrap'
-    ]);
-</script>
+<script src="https://rawgit.com/bsalex/angular-loading-overlay-spinjs/master/dist/angular-loading-overlay-spinjs.js"></script>
 
 <section class="bs-docs-section">
     <h1 id="introduction" class="page-header">Introduction</h1>
@@ -83,13 +78,13 @@ isHome: true
     </dl>
     </p>
 </section>
-<section class="bs-docs-section" ng-app="app">
+<section class="bs-docs-section app">
     <h1 id="examples" class="page-header">Examples</h1>
 
     <h2 id="global" class="page-header">Global</h2>
 
     <p>
-        If no reference id is not passed to start function -
+        If reference id is not passed to start function -
         then all loaders which don't have specified reference id are triggered.
     </p>
 
@@ -179,7 +174,58 @@ isHome: true
 
 </section>
 
-<section class="bs-docs-section" ng-app="app">
+<section class="bs-docs-section appWithSpinJs">
+    <h1 id="examples-spinjs" class="page-header">Examples of integration with Spin.js <a href="http://spin.js.org/" target="_blank">Spin.js</a></h1>
+
+    <h2 id="global-spinjs" class="page-header">Global</h2>
+
+    <p>
+        To use default Spin.js integration with default options:
+        <ul>
+            <li>
+                Install <a href="#" target="_blank">angular-loading-overlay-spinjs</a> package. <br />
+                <code>npm install angular-loading-overlay-spinjs</code>
+            </li>
+            <li>
+                Add <code>node_modules/angular-loading-overlay-spinjs/dist/angular-loading-overlay-spinjs.js</code> script to your page
+            </li>
+            <li>
+                Add <code>bsLoadingOverlaySpinJs</code> dependency to your app module
+            </li>
+            <li>
+                Set global option <code>templateUrl</code> to <code>bsLoadingOverlaySpinJs</code> in your app module run block
+            </li>
+        </ul>
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="global-spinjs" %}
+    </div>
+
+    <h2 id="spinjs-options" class="page-header">With options</h2>
+
+    <p>
+        You can customize the spinner with options from <a href="http://spin.js.org/" target="_blank">Spin.js</a> site,
+        providing options to <code>bs-loading-overlay-template-options</code> attribute.
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="spinjs-options" %}
+    </div>
+
+    <h2 id="global-spinjs-options" class="page-header">With global options</h2>
+
+    <p>
+        Also you can specify <a href="http://spin.js.org/" target="_blank">Spin.js</a> options globally in your
+        app module run block.
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="global-spinjs-options" %}
+    </div>
+</section>
+
+<section class="bs-docs-section">
     <h1 id="changelog" class="page-header">Changelog</h1>
 
     <p class="lead">
