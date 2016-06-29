@@ -6,6 +6,8 @@
 
 # Angular loading overlay
 
+[![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The module provides your app with overlays (like "Loading...") that could be shown on async operations.  
 It supports multiple independent named overlays on one page.  
 It also allows you to create preconfigured handlers and wrap promises to show and hide overlays on promise work started and finished.
