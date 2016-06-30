@@ -7,6 +7,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8310c436284d4919876a1f8e7ac6e0c0)](https://www.codacy.com/app/bs-alex-mail/angular-loading-overlay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsalex/angular-loading-overlay&amp;utm_campaign=Badge_Grade)
 [![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The module provides your app with overlays (like "Loading...") that could be shown on async operations.  
 It supports multiple independent named overlays on one page.  
 It also allows you to create preconfigured handlers and wrap promises to show and hide overlays on promise work started and finished.
