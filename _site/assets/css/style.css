@@ -53,7 +53,7 @@
     padding-left: 50px;
 }
 
-pre[class*="language-"] {
+.tab-pane pre[class*="language-"] {
     margin: 0;
     border-top-width: 0;
     border-top-left-radius: 0;

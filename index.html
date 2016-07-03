@@ -53,9 +53,10 @@ isHome: true
     <p>
         Global configuration is applied to all directives by default.
         It provides the following options:
-        {% highlight javascript %}
+        {% capture global_configuration %}
         {% include global-configuration.js %}
-        {% endhighlight %}
+        {% endcapture %}
+        <pre><code class="language-javascript line-numbers">{{ global_configuration | escape }}</code></pre>
     </p>
 
     <h2 id="directive-configuration">

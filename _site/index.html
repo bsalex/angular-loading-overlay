@@ -127,15 +127,20 @@
     <p>
         Global configuration is applied to all directives by default.
         It provides the following options:
-        <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="p">[</span>
-  <span class="s1">&#39;bsLoadingOverlay&#39;</span>
-<span class="p">]).</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">bsLoadingOverlayService</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">bsLoadingOverlayService</span><span class="p">.</span><span class="nx">setGlobalConfig</span><span class="p">({</span>
-    <span class="nx">delay</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// Minimal delay to hide loading overlay in ms.</span>
-    <span class="nx">activeClass</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// Class that is added to the element where bs-loading-overlay is applied when the overlay is active.</span>
-    <span class="nx">templateUrl</span><span class="o">:</span> <span class="kc">undefined</span> <span class="c1">// Template url for overlay element. If not specified - no overlay element is created.</span>
-  <span class="p">});</span>
-<span class="p">});</span></code></pre></div>
+        
+        <pre><code class="language-javascript line-numbers">
+        angular.module(&#39;app&#39;, [
+  &#39;bsLoadingOverlay&#39;
+]).run(function (bsLoadingOverlayService) {
+  bsLoadingOverlayService.setGlobalConfig({
+    delay: 0, // Minimal delay to hide loading overlay in ms.
+    activeClass: undefined, // Class that is added to the element where bs-loading-overlay is applied when the overlay is active.
+    templateUrl: undefined // Template url for overlay element. If not specified - no overlay element is created.
+    templateOptions: undefined // Options that are passed to overlay template (specified by templateUrl option above).
+  });
+});
+
+        </code></pre>
     </p>
 
     <h2 id="directive-configuration">
