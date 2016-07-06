@@ -57,6 +57,7 @@ Licensed under the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
 1. Fork the repo
 1. `npm install`
+1. `npm run prepare-development`
 1. `npm run test:watch`
 1. Make your changes, add your tests
 1. `npm run build`
