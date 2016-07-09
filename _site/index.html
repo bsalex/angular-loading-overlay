@@ -118,6 +118,7 @@
 <script src="dist/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay-spinjs/master/dist/angular-loading-overlay-spinjs.js"></script>
+<script src="http://localhost:8787/angular-loading-overlay-http-interceptor.js"></script>
 
 <section class="bs-docs-section">
     <h1 id="introduction" class="page-header">Introduction</h1>
@@ -1069,7 +1070,7 @@
         <ul>
             <li>
                 Install <a href="https://github.com/bsalex/angular-loading-overlay-spinjs" target="_blank">angular-loading-overlay-spinjs</a> package. <br />
-                <code>npm install angular-loading-overlay-spinjs</code>
+                <code>npm install -S angular-loading-overlay-spinjs</code>
             </li>
             <li>
                 Add <code>node_modules/angular-loading-overlay-spinjs/dist/angular-loading-overlay-spinjs.js</code> script to your page
@@ -1409,6 +1410,159 @@
 
     </div>
 </section>
+
+<section class="bs-docs-section">
+    <h1 id="examples-http-service" class="page-header">Examples of integration with $http service</h1>
+
+    <p>
+        To use default Spin.js integration with default options:
+        <ul>
+            <li>
+                Install <a href="https://github.com/bsalex/angular-loading-overlay-http-interceptor" target="_blank">angular-loading-overlay-http-interceptor</a> package. <br />
+                <code>npm install -S angular-loading-overlay-http-interceptor</code>
+            </li>
+            <li>
+                Add <code>node_modules/angular-loading-overlay-http-interceptor/dist/angular-loading-overlay-http-interceptor.js</code> script to your page
+            </li>
+            <li>
+                Add <code>bsLoadingOverlayHttpInterceptor</code> dependency to your app module
+            </li>
+            <li>
+                Add interceptor like in the code below.
+            </li>
+        </ul>
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-http-integration">
+  <div ng-controller="HttpIntegrationController">
+    <style>
+    .fetch-random-result {
+        overflow: auto;
+        height: 300px;
+        margin-top: 1em;
+    }
+</style>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-delay="3000"
+>
+    Fetch random text: <button ng-click="fetchRandomText()">Fetch</button>
+
+    <div ng-bind-html="result" class="fetch-random-result"></div>
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;HttpIntegrationController&#39;, function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.result = $sce.trustAsHtml(&#39;Fetch result here&#39;);
+    $scope.fetchRandomText = function() {
+        $http.get(&#39;http://hipsterjesus.com/api/&#39;)
+            .success(function(data) {
+                $scope.result = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                $scope.result = &#39;Can not get the article&#39;;
+            });
+    };
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-http-integration&quot;&gt;
+  &lt;div ng-controller=&quot;HttpIntegrationController&quot;&gt;
+    &lt;style&gt;
+      .fetch-random-result {
+              overflow: auto;
+              height: 300px;
+              margin-top: 1em;
+          }
+    &lt;/style&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-delay=&quot;3000&quot;
+&gt;
+      Fetch random text: &lt;button ng-click=&quot;fetchRandomText()&quot;&gt;Fetch&lt;/button&gt;
+      &lt;div ng-bind-html=&quot;result&quot; class=&quot;fetch-random-result&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-http-integration&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlayHttpInterceptor&#39;,
+    &#39;ui.bootstrap&#39;
+])
+.factory(&#39;allHttpInterceptor&#39;, function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory();
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push(&#39;allHttpInterceptor&#39;);
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-http-integration', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlayHttpInterceptor',
+    'ui.bootstrap'
+])
+.factory('allHttpInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory();
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push('allHttpInterceptor');
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('HttpIntegrationController', function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.result = $sce.trustAsHtml('Fetch result here');
+    $scope.fetchRandomText = function() {
+        $http.get('http://hipsterjesus.com/api/')
+            .success(function(data) {
+                $scope.result = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                $scope.result = 'Can not get the article';
+            });
+    };
+});
+
+        angular.bootstrap(document.querySelector(".app-http-integration"), ['app-http-integration']);
+    })()
+</script>
+
+    </div>
+</section>
+
 
 <section class="bs-docs-section">
     <h1 id="changelog" class="page-header">Changelog</h1>

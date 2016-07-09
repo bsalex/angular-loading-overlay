@@ -22,6 +22,7 @@ isHome: true
 <script src="dist/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
 <script src="https://rawgit.com/bsalex/angular-loading-overlay-spinjs/master/dist/angular-loading-overlay-spinjs.js"></script>
+<script src="http://localhost:8787/angular-loading-overlay-http-interceptor.js"></script>
 
 <section class="bs-docs-section">
     <h1 id="introduction" class="page-header">Introduction</h1>
@@ -188,7 +189,7 @@ isHome: true
         <ul>
             <li>
                 Install <a href="https://github.com/bsalex/angular-loading-overlay-spinjs" target="_blank">angular-loading-overlay-spinjs</a> package. <br />
-                <code>npm install angular-loading-overlay-spinjs</code>
+                <code>npm install -S angular-loading-overlay-spinjs</code>
             </li>
             <li>
                 Add <code>node_modules/angular-loading-overlay-spinjs/dist/angular-loading-overlay-spinjs.js</code> script to your page
@@ -228,6 +229,34 @@ isHome: true
         {% include example.html id="global-spinjs-options" %}
     </div>
 </section>
+
+<section class="bs-docs-section">
+    <h1 id="examples-http-service" class="page-header">Examples of integration with $http service</h1>
+
+    <p>
+        To use default Spin.js integration with default options:
+        <ul>
+            <li>
+                Install <a href="https://github.com/bsalex/angular-loading-overlay-http-interceptor" target="_blank">angular-loading-overlay-http-interceptor</a> package. <br />
+                <code>npm install -S angular-loading-overlay-http-interceptor</code>
+            </li>
+            <li>
+                Add <code>node_modules/angular-loading-overlay-http-interceptor/dist/angular-loading-overlay-http-interceptor.js</code> script to your page
+            </li>
+            <li>
+                Add <code>bsLoadingOverlayHttpInterceptor</code> dependency to your app module
+            </li>
+            <li>
+                Add interceptor like in the code below.
+            </li>
+        </ul>
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="http-integration" %}
+    </div>
+</section>
+
 
 <section class="bs-docs-section">
     <h1 id="changelog" class="page-header">Changelog</h1>
