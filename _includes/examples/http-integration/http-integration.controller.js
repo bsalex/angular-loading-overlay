@@ -6,7 +6,7 @@ app.controller('{{include.controller_name}}', function($scope, $http, $sce, bsLo
                 $scope.result = $sce.trustAsHtml(data.text);
             })
             .error(function() {
-                $scope.result = 'Can not get the article';
+                $scope.result = $sce.trustAsHtml('Can not get the article');
             });
     };
 });
