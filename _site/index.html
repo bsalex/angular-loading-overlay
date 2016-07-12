@@ -1561,6 +1561,147 @@
 </script>
 
     </div>
+
+    <h2 id="examples-http-service-with-reference" class="page-header">With reference id</h2>
+
+    <p>
+        You can provide referenceId option to interceptor factory.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-http-integration-with-reference-id">
+  <div ng-controller="HttpIntegrationWithReferenceIdController">
+    <style>
+    .fetch-random-result {
+        overflow: auto;
+        height: 300px;
+        margin-top: 1em;
+    }
+</style>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-reference-id="all-ajax-spinner"
+    bs-loading-overlay-delay="3000"
+>
+    Fetch random text: <button ng-click="fetchRandomText()">Fetch</button>
+
+    <div ng-bind-html="result" class="fetch-random-result"></div>
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;HttpIntegrationWithReferenceIdController&#39;, function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.result = $sce.trustAsHtml(&#39;Fetch result here&#39;);
+    $scope.fetchRandomText = function() {
+        $http.get(&#39;http://hipsterjesus.com/api/&#39;)
+            .success(function(data) {
+                $scope.result = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                $scope.result = $sce.trustAsHtml(&#39;Can not get the article&#39;);
+            });
+    };
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-http-integration-with-reference-id&quot;&gt;
+  &lt;div ng-controller=&quot;HttpIntegrationWithReferenceIdController&quot;&gt;
+    &lt;style&gt;
+      .fetch-random-result {
+              overflow: auto;
+              height: 300px;
+              margin-top: 1em;
+          }
+    &lt;/style&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+    bs-loading-overlay
+    bs-loading-overlay-reference-id=&quot;all-ajax-spinner&quot;
+    bs-loading-overlay-delay=&quot;3000&quot;
+&gt;
+      Fetch random text: &lt;button ng-click=&quot;fetchRandomText()&quot;&gt;Fetch&lt;/button&gt;
+      &lt;div ng-bind-html=&quot;result&quot; class=&quot;fetch-random-result&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-http-integration-with-reference-id&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlayHttpInterceptor&#39;,
+    &#39;ui.bootstrap&#39;
+])
+.factory(&#39;allHttpInterceptor&#39;, function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: &#39;all-ajax-spinner&#39;
+    });
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push(&#39;allHttpInterceptor&#39;);
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-http-integration-with-reference-id', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlayHttpInterceptor',
+    'ui.bootstrap'
+])
+.factory('allHttpInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: 'all-ajax-spinner'
+    });
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push('allHttpInterceptor');
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('HttpIntegrationWithReferenceIdController', function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.result = $sce.trustAsHtml('Fetch result here');
+    $scope.fetchRandomText = function() {
+        $http.get('http://hipsterjesus.com/api/')
+            .success(function(data) {
+                $scope.result = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                $scope.result = $sce.trustAsHtml('Can not get the article');
+            });
+    };
+});
+
+        angular.bootstrap(document.querySelector(".app-http-integration-with-reference-id"), ['app-http-integration-with-reference-id']);
+    })()
+</script>
+
+    </div>
 </section>
 
 

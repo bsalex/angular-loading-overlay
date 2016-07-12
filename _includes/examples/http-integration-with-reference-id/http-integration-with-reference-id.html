@@ -1,0 +1,17 @@
+<style>
+    .fetch-random-result {
+        overflow: auto;
+        height: 300px;
+        margin-top: 1em;
+    }
+</style>
+<div
+    class="well well-lg bs-loading-container"
+    bs-loading-overlay
+    bs-loading-overlay-reference-id="all-ajax-spinner"
+    bs-loading-overlay-delay="3000"
+>
+    Fetch random text: <button ng-click="fetchRandomText()">Fetch</button>
+
+    <div ng-bind-html="result" class="fetch-random-result"></div>
+</div>
