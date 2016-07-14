@@ -12,7 +12,10 @@ It supports multiple independent named overlays on one page.
 
 It also allows you to create **preconfigured handlers** and wrap **promises** to show and hide overlays on promise work started and finished.
 
-The module has integration with [Spin.js](http://spin.js.org/) via [angular-loading-overlay-spinjs](https://github.com/bsalex/angular-loading-overlay-spinjs).  
+The module has integration with **[Spin.js](http://spin.js.org/)** via [angular-loading-overlay-spinjs](https://github.com/bsalex/angular-loading-overlay-spinjs).  
+See Docs & Examples for more information.  
+
+The module has integration with angular **$http service** via [angular-loading-overlay-http-interceptor](https://github.com/bsalex/angular-loading-overlay-http-interceptor).  
 See Docs & Examples for more information.  
 
 Should you have any questions, feel free to contact me on Gitter [![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -34,18 +37,16 @@ angular.module("your nodule name", [
 
 
 angular.module("your nodule name")
-  .controller(function ($timeout, bsLoadingOverlayService) {
+    .controller(function ($timeout, bsLoadingOverlayService) {
+        bsLoadingOverlayService.start();
 
-    bsLoadingOverlayService.start();
-
-    $timeout(bsLoadingOverlayService.stop, 5000);
-
-  });
+        $timeout(bsLoadingOverlayService.stop, 5000);
+    });
 ````
 ### In html
 ````html
 <div bs-loading-overlay>
-  loaded data usage here
+    loaded data usage here
 </div>
 ````
 ## License
