@@ -256,7 +256,7 @@ isHome: true
         {% include example.html id="http-integration" %}
     </div>
 
-    <h2 id="examples-http-service-with-reference" class="page-header">With reference id</h2>
+    <h2 id="examples-http-service-with-reference-id" class="page-header">With reference id</h2>
 
     <p>
         You can provide referenceId option to interceptor factory.
@@ -264,6 +264,17 @@ isHome: true
 
     <div class="bs-example">
         {% include example.html id="http-integration-with-reference-id" %}
+    </div>
+
+    <h2 id="examples-http-service-with-reference-id-and-matchers" class="page-header">With matchers</h2>
+
+    <p>
+        It is also possible to provide requests matcher to interceptors which allows to
+        show spinners for particular requests.
+    </p>
+
+    <div class="bs-example">
+        {% include example.html id="http-integration-with-reference-id-and-matchers" %}
     </div>
 </section>
 

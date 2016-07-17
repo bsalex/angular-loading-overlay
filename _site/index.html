@@ -1562,7 +1562,7 @@
 
     </div>
 
-    <h2 id="examples-http-service-with-reference" class="page-header">With reference id</h2>
+    <h2 id="examples-http-service-with-reference-id" class="page-header">With reference id</h2>
 
     <p>
         You can provide referenceId option to interceptor factory.
@@ -1698,6 +1698,275 @@
 });
 
         angular.bootstrap(document.querySelector(".app-http-integration-with-reference-id"), ['app-http-integration-with-reference-id']);
+    })()
+</script>
+
+    </div>
+
+    <h2 id="examples-http-service-with-reference-id-and-matchers" class="page-header">With matchers</h2>
+
+    <p>
+        It is also possible to provide requests matcher to interceptors which allows to
+        show spinners for particular requests.
+    </p>
+
+    <div class="bs-example">
+        
+
+
+
+
+
+<div class="app-http-integration-with-reference-id-and-matchers">
+  <div ng-controller="HttpIntegrationWithReferenceIdAndMatchersController">
+    <style>
+    .random-result {
+        display: flex;
+        height: 300px;
+        margin-top: 1em;
+    }
+
+    .random-result__text, .random-result__user {
+        position: relative;
+        overflow: auto;
+        border: 2px dashed #C00;
+        flex: 1;
+        margin: 1em;
+        padding: 1em;
+        text-align: center;
+    }
+
+    .user__photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 20px;
+    }
+
+    .user__name {
+        font-size: 2em;
+        text-align: center;
+    }
+</style>
+<div
+    class="well well-lg bs-loading-container"
+>
+    <button ng-click="fetchRandomText()">Fetch random text</button>
+    <button ng-click="fetchRandomUser()">Fetch random user</button>
+
+    <div class="random-result">
+        <div
+            ng-bind-html="vm.randomText"
+            class="random-result__text"
+            bs-loading-overlay
+            bs-loading-overlay-reference-id="random-text-spinner"
+            bs-loading-overlay-delay="3000"
+        ></div>
+        <div
+            class="random-result__user user"
+            bs-loading-overlay
+            bs-loading-overlay-reference-id="random-user-spinner"
+            bs-loading-overlay-delay="3000"
+        >
+            
+            <img ng-src="{{vm.randomUser.picture.large}}" alt="" class="user__photo" />
+            <p class="user__name">
+                {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+            </p>
+            
+
+
+        </div>
+    </div>
+
+</div>
+
+    <tabset>
+      <tab heading="Controller">
+        
+        <pre><code class="language-javascript line-numbers">
+        app.controller(&#39;HttpIntegrationWithReferenceIdAndMatchersController&#39;, function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.vm = vm = {};
+    vm.randomText = $sce.trustAsHtml(&#39;Fetch result here&#39;);
+    vm.randomUser = {};
+
+    $scope.fetchRandomText = function() {
+        $http.get(&#39;http://hipsterjesus.com/api/&#39;)
+            .success(function(data) {
+                vm.randomText = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                vm.randomText = $sce.trustAsHtml(&#39;Can not get the article&#39;);
+            });
+    };
+
+    $scope.fetchRandomUser = function() {
+        $http.get(&#39;https://randomuser.me/api/&#39;)
+            .success(function(data) {
+                vm.randomUser = data.results[0];
+            });
+    };
+});
+
+        </code></pre>
+      </tab>
+      <tab heading="HTML">
+          
+          <pre><code class="language-markup line-numbers">&lt;div ng-app=&quot;app-http-integration-with-reference-id-and-matchers&quot;&gt;
+  &lt;div ng-controller=&quot;HttpIntegrationWithReferenceIdAndMatchersController&quot;&gt;
+    &lt;style&gt;
+      .random-result {
+              display: flex;
+              height: 300px;
+              margin-top: 1em;
+          }
+      
+          .random-result__text, .random-result__user {
+              position: relative;
+              overflow: auto;
+              border: 2px dashed #C00;
+              flex: 1;
+              margin: 1em;
+              padding: 1em;
+              text-align: center;
+          }
+      
+          .user__photo {
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+              margin: 20px;
+          }
+      
+          .user__name {
+              font-size: 2em;
+              text-align: center;
+          }
+    &lt;/style&gt;
+    &lt;div
+    class=&quot;well well-lg bs-loading-container&quot;
+&gt;
+      &lt;button ng-click=&quot;fetchRandomText()&quot;&gt;Fetch random text&lt;/button&gt;
+      &lt;button ng-click=&quot;fetchRandomUser()&quot;&gt;Fetch random user&lt;/button&gt;
+      &lt;div class=&quot;random-result&quot;&gt;
+        &lt;div
+            ng-bind-html=&quot;vm.randomText&quot;
+            class=&quot;random-result__text&quot;
+            bs-loading-overlay
+            bs-loading-overlay-reference-id=&quot;random-text-spinner&quot;
+            bs-loading-overlay-delay=&quot;3000&quot;
+        &gt;&lt;/div&gt;
+        &lt;div
+            class=&quot;random-result__user user&quot;
+            bs-loading-overlay
+            bs-loading-overlay-reference-id=&quot;random-user-spinner&quot;
+            bs-loading-overlay-delay=&quot;3000&quot;
+        &gt;
+          &lt;img ng-src=&quot;{{vm.randomUser.picture.large}}&quot; alt=&quot;&quot; class=&quot;user__photo&quot; /&gt;
+          &lt;p class=&quot;user__name&quot;&gt;
+            {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+            &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </tab>
+      <tab heading="Module">
+        
+        <pre><code class="language-javascript line-numbers">
+        var app = angular.module(&#39;app-http-integration-with-reference-id-and-matchers&#39;, [
+    &#39;bsLoadingOverlay&#39;,
+    &#39;bsLoadingOverlayHttpInterceptor&#39;,
+    &#39;ui.bootstrap&#39;
+])
+.factory(&#39;randomTextInterceptor&#39;, function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: &#39;random-text-spinner&#39;,
+        requestsMatcher: function (requestConfig) {
+            return requestConfig.url.indexOf(&#39;hipsterjesus&#39;) !== -1;
+        }
+    });
+})
+.factory(&#39;randomUserInterceptor&#39;, function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: &#39;random-user-spinner&#39;,
+        requestsMatcher: function (requestConfig) {
+            return requestConfig.url.indexOf(&#39;randomuser&#39;) !== -1;
+        }
+    });
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push(&#39;randomTextInterceptor&#39;);
+    $httpProvider.interceptors.push(&#39;randomUserInterceptor&#39;);
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: &#39;loading-overlay-template.html&#39;
+    });
+});
+
+        </code></pre>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script>
+    (function() {
+        var app = angular.module('app-http-integration-with-reference-id-and-matchers', [
+    'bsLoadingOverlay',
+    'bsLoadingOverlayHttpInterceptor',
+    'ui.bootstrap'
+])
+.factory('randomTextInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: 'random-text-spinner',
+        requestsMatcher: function (requestConfig) {
+            return requestConfig.url.indexOf('hipsterjesus') !== -1;
+        }
+    });
+})
+.factory('randomUserInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory({
+        referenceId: 'random-user-spinner',
+        requestsMatcher: function (requestConfig) {
+            return requestConfig.url.indexOf('randomuser') !== -1;
+        }
+    });
+})
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push('randomTextInterceptor');
+    $httpProvider.interceptors.push('randomUserInterceptor');
+}).run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay-template.html'
+    });
+});
+
+        app.controller('HttpIntegrationWithReferenceIdAndMatchersController', function($scope, $http, $sce, bsLoadingOverlayService) {
+    $scope.vm = vm = {};
+    vm.randomText = $sce.trustAsHtml('Fetch result here');
+    vm.randomUser = {};
+
+    $scope.fetchRandomText = function() {
+        $http.get('http://hipsterjesus.com/api/')
+            .success(function(data) {
+                vm.randomText = $sce.trustAsHtml(data.text);
+            })
+            .error(function() {
+                vm.randomText = $sce.trustAsHtml('Can not get the article');
+            });
+    };
+
+    $scope.fetchRandomUser = function() {
+        $http.get('https://randomuser.me/api/')
+            .success(function(data) {
+                vm.randomUser = data.results[0];
+            });
+    };
+});
+
+        angular.bootstrap(document.querySelector(".app-http-integration-with-reference-id-and-matchers"), ['app-http-integration-with-reference-id-and-matchers']);
     })()
 </script>
 

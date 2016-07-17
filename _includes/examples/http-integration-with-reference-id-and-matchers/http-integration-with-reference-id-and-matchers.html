@@ -1,0 +1,61 @@
+<style>
+    .random-result {
+        display: flex;
+        height: 300px;
+        margin-top: 1em;
+    }
+
+    .random-result__text, .random-result__user {
+        position: relative;
+        overflow: auto;
+        border: 2px dashed #C00;
+        flex: 1;
+        margin: 1em;
+        padding: 1em;
+        text-align: center;
+    }
+
+    .user__photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 20px;
+    }
+
+    .user__name {
+        font-size: 2em;
+        text-align: center;
+    }
+</style>
+<div
+    class="well well-lg bs-loading-container"
+>
+    <button ng-click="fetchRandomText()">Fetch random text</button>
+    <button ng-click="fetchRandomUser()">Fetch random user</button>
+
+    <div class="random-result">
+        <div
+            ng-bind-html="vm.randomText"
+            class="random-result__text"
+            bs-loading-overlay
+            bs-loading-overlay-reference-id="random-text-spinner"
+            bs-loading-overlay-delay="3000"
+        ></div>
+        <div
+            class="random-result__user user"
+            bs-loading-overlay
+            bs-loading-overlay-reference-id="random-user-spinner"
+            bs-loading-overlay-delay="3000"
+        >
+            {% raw %}
+            <img ng-src="{{vm.randomUser.picture.large}}" alt="" class="user__photo" />
+            <p class="user__name">
+                {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+            </p>
+            {% endraw %}
+
+
+        </div>
+    </div>
+
+</div>
