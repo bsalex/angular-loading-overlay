@@ -6,26 +6,31 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8310c436284d4919876a1f8e7ac6e0c0)](https://www.codacy.com/app/bs-alex-mail/angular-loading-overlay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsalex/angular-loading-overlay&amp;utm_campaign=Badge_Grade)
 [![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The module provides your app with overlays (like "Loading...") that could be shown on async operations.  
+The module provides your app with organized and flexible way to show overlays (like "**Loading...**").  
 
 It supports multiple independent named overlays on one page.  
 
 It also allows you to create **preconfigured handlers** and wrap **promises** to show and hide overlays on promise work started and finished.
 
 The module has integration with **[Spin.js](http://spin.js.org/)** via [angular-loading-overlay-spinjs](https://github.com/bsalex/angular-loading-overlay-spinjs).  
-See Docs & Examples for more information.  
+See <a href="http://bsalex.github.io/angular-loading-overlay/_site/#examples-spinjs" target="_blank">Docs & Examples</a> for more information.  
 
-The module has integration with angular **$http service** via [angular-loading-overlay-http-interceptor](https://github.com/bsalex/angular-loading-overlay-http-interceptor).  
-See Docs & Examples for more information.  
+The module provides integration with angular **$http service** via [angular-loading-overlay-http-interceptor](https://github.com/bsalex/angular-loading-overlay-http-interceptor).  
+The integration includes requests matchers which adds more flexibility.   
+See <a href="http://bsalex.github.io/angular-loading-overlay/_site/#examples-http-service" target="_blank">Docs & Examples</a> for more information.  
 
 Should you have any questions, feel free to contact me on Gitter [![Join the chat at https://gitter.im/bsalex/angular-loading-overlay](https://badges.gitter.im/bsalex/angular-loading-overlay.svg)](https://gitter.im/bsalex/angular-loading-overlay?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## <a href="http://bsalex.github.io/angular-loading-overlay/_site/" target="_blank">Docs & Examples</a>
 
 ## Installation
-`bower install --save angular-loading-overlay`  
+````
+bower install --save angular-loading-overlay
+````  
 or  
-`npm install --save angular-loading-overlay`
+````
+npm install --save angular-loading-overlay
+````
 
 ## Usage
 
