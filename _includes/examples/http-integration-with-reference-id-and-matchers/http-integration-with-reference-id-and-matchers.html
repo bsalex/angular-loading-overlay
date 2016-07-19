@@ -35,12 +35,13 @@
 
     <div class="random-result">
         <div
-            ng-bind-html="randomText"
             class="random-result__text"
             bs-loading-overlay
             bs-loading-overlay-reference-id="random-text-spinner"
             bs-loading-overlay-delay="3000"
-        ></div>
+        >
+            <p ng-bind-html="randomText"></p>
+        </div>
         <div
             class="random-result__user user"
             bs-loading-overlay

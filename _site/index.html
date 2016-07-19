@@ -1456,7 +1456,9 @@
 >
     Fetch random text: <button ng-click="fetchRandomText()">Fetch</button>
 
-    <div ng-bind-html="result" class="fetch-random-result"></div>
+    <div class="fetch-random-result">
+        <p ng-bind-html="result"></p>
+    </div>
 </div>
 
     <tabset>
@@ -1495,7 +1497,9 @@
     bs-loading-overlay-delay=&quot;3000&quot;
 &gt;
       Fetch random text: &lt;button ng-click=&quot;fetchRandomText()&quot;&gt;Fetch&lt;/button&gt;
-      &lt;div ng-bind-html=&quot;result&quot; class=&quot;fetch-random-result&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;fetch-random-result&quot;&gt;
+        &lt;p ng-bind-html=&quot;result&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -1592,7 +1596,9 @@
 >
     Fetch random text: <button ng-click="fetchRandomText()">Fetch</button>
 
-    <div ng-bind-html="result" class="fetch-random-result"></div>
+    <div class="fetch-random-result">
+        <p ng-bind-html="result"></p>
+    </div>
 </div>
 
     <tabset>
@@ -1632,7 +1638,9 @@
     bs-loading-overlay-delay=&quot;3000&quot;
 &gt;
       Fetch random text: &lt;button ng-click=&quot;fetchRandomText()&quot;&gt;Fetch&lt;/button&gt;
-      &lt;div ng-bind-html=&quot;result&quot; class=&quot;fetch-random-result&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;fetch-random-result&quot;&gt;
+        &lt;p ng-bind-html=&quot;result&quot;&gt;&lt;/p&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -1756,12 +1764,13 @@
 
     <div class="random-result">
         <div
-            ng-bind-html="randomText"
             class="random-result__text"
             bs-loading-overlay
             bs-loading-overlay-reference-id="random-text-spinner"
             bs-loading-overlay-delay="3000"
-        ></div>
+        >
+            <p ng-bind-html="randomText"></p>
+        </div>
         <div
             class="random-result__user user"
             bs-loading-overlay
@@ -1849,12 +1858,13 @@
       &lt;button ng-click=&quot;fetchRandomUser()&quot;&gt;Fetch random user&lt;/button&gt;
       &lt;div class=&quot;random-result&quot;&gt;
         &lt;div
-            ng-bind-html=&quot;randomText&quot;
             class=&quot;random-result__text&quot;
             bs-loading-overlay
             bs-loading-overlay-reference-id=&quot;random-text-spinner&quot;
             bs-loading-overlay-delay=&quot;3000&quot;
-        &gt;&lt;/div&gt;
+        &gt;
+          &lt;p ng-bind-html=&quot;randomText&quot;&gt;&lt;/p&gt;
+        &lt;/div&gt;
         &lt;div
             class=&quot;random-result__user user&quot;
             bs-loading-overlay
