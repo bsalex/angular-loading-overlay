@@ -1756,7 +1756,7 @@
 
     <div class="random-result">
         <div
-            ng-bind-html="vm.randomText"
+            ng-bind-html="randomText"
             class="random-result__text"
             bs-loading-overlay
             bs-loading-overlay-reference-id="random-text-spinner"
@@ -1769,9 +1769,9 @@
             bs-loading-overlay-delay="3000"
         >
             
-            <img ng-src="{{vm.randomUser.picture.large}}" alt="" class="user__photo" />
+            <img ng-src="{{randomUser.picture.large}}" alt="" class="user__photo" />
             <p class="user__name">
-                {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+                {{randomUser.name.first}} {{randomUser.name.last}}
             </p>
             
 
@@ -1786,24 +1786,23 @@
         
         <pre><code class="language-javascript line-numbers">
         app.controller(&#39;HttpIntegrationWithReferenceIdAndMatchersController&#39;, function($scope, $http, $sce, bsLoadingOverlayService) {
-    $scope.vm = vm = {};
-    vm.randomText = $sce.trustAsHtml(&#39;Fetch result here&#39;);
-    vm.randomUser = {};
+    $scope.randomText = $sce.trustAsHtml(&#39;Fetch result here&#39;);
+    $scope.randomUser = {};
 
     $scope.fetchRandomText = function() {
         $http.get(&#39;http://hipsterjesus.com/api/&#39;)
             .success(function(data) {
-                vm.randomText = $sce.trustAsHtml(data.text);
+                $scope.randomText = $sce.trustAsHtml(data.text);
             })
             .error(function() {
-                vm.randomText = $sce.trustAsHtml(&#39;Can not get the article&#39;);
+                $scope.randomText = $sce.trustAsHtml(&#39;Can not get the article&#39;);
             });
     };
 
     $scope.fetchRandomUser = function() {
         $http.get(&#39;https://randomuser.me/api/&#39;)
             .success(function(data) {
-                vm.randomUser = data.results[0];
+                $scope.randomUser = data.results[0];
             });
     };
 });
@@ -1850,7 +1849,7 @@
       &lt;button ng-click=&quot;fetchRandomUser()&quot;&gt;Fetch random user&lt;/button&gt;
       &lt;div class=&quot;random-result&quot;&gt;
         &lt;div
-            ng-bind-html=&quot;vm.randomText&quot;
+            ng-bind-html=&quot;randomText&quot;
             class=&quot;random-result__text&quot;
             bs-loading-overlay
             bs-loading-overlay-reference-id=&quot;random-text-spinner&quot;
@@ -1862,9 +1861,9 @@
             bs-loading-overlay-reference-id=&quot;random-user-spinner&quot;
             bs-loading-overlay-delay=&quot;3000&quot;
         &gt;
-          &lt;img ng-src=&quot;{{vm.randomUser.picture.large}}&quot; alt=&quot;&quot; class=&quot;user__photo&quot; /&gt;
+          &lt;img ng-src=&quot;{{randomUser.picture.large}}&quot; alt=&quot;&quot; class=&quot;user__photo&quot; /&gt;
           &lt;p class=&quot;user__name&quot;&gt;
-            {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+            {{randomUser.name.first}} {{randomUser.name.last}}
             &lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -1944,24 +1943,23 @@
 });
 
         app.controller('HttpIntegrationWithReferenceIdAndMatchersController', function($scope, $http, $sce, bsLoadingOverlayService) {
-    $scope.vm = vm = {};
-    vm.randomText = $sce.trustAsHtml('Fetch result here');
-    vm.randomUser = {};
+    $scope.randomText = $sce.trustAsHtml('Fetch result here');
+    $scope.randomUser = {};
 
     $scope.fetchRandomText = function() {
         $http.get('http://hipsterjesus.com/api/')
             .success(function(data) {
-                vm.randomText = $sce.trustAsHtml(data.text);
+                $scope.randomText = $sce.trustAsHtml(data.text);
             })
             .error(function() {
-                vm.randomText = $sce.trustAsHtml('Can not get the article');
+                $scope.randomText = $sce.trustAsHtml('Can not get the article');
             });
     };
 
     $scope.fetchRandomUser = function() {
         $http.get('https://randomuser.me/api/')
             .success(function(data) {
-                vm.randomUser = data.results[0];
+                $scope.randomUser = data.results[0];
             });
     };
 });

@@ -35,7 +35,7 @@
 
     <div class="random-result">
         <div
-            ng-bind-html="vm.randomText"
+            ng-bind-html="randomText"
             class="random-result__text"
             bs-loading-overlay
             bs-loading-overlay-reference-id="random-text-spinner"
@@ -48,9 +48,9 @@
             bs-loading-overlay-delay="3000"
         >
             {% raw %}
-            <img ng-src="{{vm.randomUser.picture.large}}" alt="" class="user__photo" />
+            <img ng-src="{{randomUser.picture.large}}" alt="" class="user__photo" />
             <p class="user__name">
-                {{vm.randomUser.name.first}} {{vm.randomUser.name.last}}
+                {{randomUser.name.first}} {{randomUser.name.last}}
             </p>
             {% endraw %}
 
