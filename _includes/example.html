@@ -12,7 +12,7 @@
         {% capture controller_code %}
         {% include {{controller_path}} controller_name=controller_name %}
         {% endcapture %}
-        <pre><code class="language-javascript line-numbers">{{ controller_code | escape }}</code></pre>
+        <pre><code ng-non-bindable class="language-javascript line-numbers">{{ controller_code | escape }}</code></pre>
       </tab>
       <tab heading="HTML">
           {% capture html_code %}
@@ -24,13 +24,13 @@
             </div>
           </div>
           {% endcapture %}
-          <pre><code class="language-markup line-numbers">{{ html_code | format_html | escape }}</code></pre>
+          <pre><code ng-non-bindable class="language-markup line-numbers">{{ html_code | format_html | escape }}</code></pre>
       </tab>
       <tab heading="Module">
         {% capture module_code %}
         {% include {{module_path}} module_name=module_name %}
         {% endcapture %}
-        <pre><code class="language-javascript line-numbers">{{ module_code | escape }}</code></pre>
+        <pre><code ng-non-bindable class="language-javascript line-numbers">{{ module_code | escape }}</code></pre>
       </tab>
     </tabset>
   </div>

@@ -1,6 +1,6 @@
 app.controller('{{include.controller_name}}', function($scope, $http, $sce, bsLoadingOverlayService) {
     $scope.randomText = $sce.trustAsHtml('Fetch result here');
-    $scope.randomUser = {};
+    $scope.randomUser = undefined;
 
     $scope.fetchRandomText = function() {
         $http.get('http://hipsterjesus.com/api/')

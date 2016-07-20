@@ -49,10 +49,12 @@
             bs-loading-overlay-delay="3000"
         >
             {% raw %}
-            <img ng-src="{{randomUser.picture.large}}" alt="" class="user__photo" />
-            <p class="user__name">
-                {{randomUser.name.first}} {{randomUser.name.last}}
-            </p>
+            <div ng-if="randomUser">
+                <img ng-src="{{randomUser.picture.large}}" alt="" class="user__photo" />
+                <p class="user__name">
+                    {{randomUser.name.first}} {{randomUser.name.last}}
+                </p>
+            </div>
             {% endraw %}
 
 
