@@ -1,1 +1,2 @@
-/// <reference path="../typings/index.d.ts" />
+import 'angular-mocks';
+import 'jasmine';

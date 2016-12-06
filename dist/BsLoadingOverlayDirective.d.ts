@@ -1,14 +1,17 @@
+/// <reference types="angular" />
+/// <reference types="angular-mocks" />
+import * as angular from 'angular';
 import { BsLoadingOverlayService } from './BsLoadingOverlayService';
-export default class BsLoadingOverlayDirective implements ng.IDirective {
+export default class BsLoadingOverlayDirective implements angular.IDirective {
     private $compile;
     private $rootScope;
     private $templateRequest;
     private $q;
     private $timeout;
     private bsLoadingOverlayService;
-    constructor($compile: ng.ICompileService, $rootScope: ng.IRootScopeService, $templateRequest: ng.ITemplateRequestService, $q: ng.IQService, $timeout: ng.ITimeoutService, bsLoadingOverlayService: BsLoadingOverlayService);
+    constructor($compile: angular.ICompileService, $rootScope: angular.IRootScopeService, $templateRequest: angular.ITemplateRequestService, $q: angular.IQService, $timeout: angular.ITimeoutService, bsLoadingOverlayService: BsLoadingOverlayService);
     private updateOverlayElement(overlayInstance);
     restrict: string;
-    link: ng.IDirectiveLinkFn;
+    link: angular.IDirectiveLinkFn;
 }
-export declare const BsLoadingOverlayDirectiveFactory: ng.IDirectiveFactory;
+export declare const BsLoadingOverlayDirectiveFactory: angular.IDirectiveFactory;
