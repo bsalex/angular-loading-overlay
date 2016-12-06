@@ -1,30 +1,33 @@
-/// <reference path="../typings/index.d.ts" />
+import * as angular from 'angular';
+import * as sinon from 'sinon';
+import 'angular-mocks';
+import 'jasmine';
 
 import BsLoadingOverlayModule from './BsLoadingOverlayModule';
 import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
 
-interface BsLoadingOverlayScope extends ng.IScope {
+interface BsLoadingOverlayScope extends angular.IScope {
     model: any;
 }
 
-interface IRootScopeServiceWithExposedListeners extends ng.IRootScopeService {
+interface IRootScopeServiceWithExposedListeners extends angular.IRootScopeService {
     $$listeners: any;
 }
 
 describe('bsLoadingOverlay directive', () => {
     let bsLoadingOverlayService: any,
-        bsLoadingOverlayServiceMock: Sinon.SinonMock,
-        $compile: ng.ICompileService,
+        bsLoadingOverlayServiceMock: sinon.SinonMock,
+        $compile: angular.ICompileService,
         scope: BsLoadingOverlayScope,
         $rootScope: IRootScopeServiceWithExposedListeners,
         referenceId: string,
         template: string,
-        $templateCache: ng.ITemplateCacheService,
-        $timeout: Sinon.SinonSpy & ng.ITimeoutService,
+        $templateCache: angular.ITemplateCacheService,
+        $timeout: sinon.SinonSpy & angular.ITimeoutService,
         defaultConfig: IBsLoadingOverlayOptions = {};
 
-    const getCompiledElement = (template: string, scope: ng.IScope) => {
-        let element: ng.IAugmentedJQuery;
+    const getCompiledElement = (template: string, scope: angular.IScope) => {
+        let element: angular.IAugmentedJQuery;
 
         scope.$apply(() => {
             element = $compile(template)(scope);
@@ -35,7 +38,7 @@ describe('bsLoadingOverlay directive', () => {
 
     beforeEach(() => {
         angular.mock.module(BsLoadingOverlayModule.name);
-        angular.mock.module(($provide: ng.auto.IProvideService) => {
+        angular.mock.module(($provide: angular.auto.IProvideService) => {
             $provide.value('bsLoadingOverlayService', bsLoadingOverlayService);
             $provide.decorator('$timeout', ($delegate: any) => sinon.spy($delegate));
         });
@@ -58,12 +61,12 @@ describe('bsLoadingOverlay directive', () => {
         bsLoadingOverlayServiceMock.expects('getGlobalConfig').atLeast(1).returns(defaultConfig);
 
         angular.mock.inject((
-            _$compile_: ng.ICompileService,
+            _$compile_: angular.ICompileService,
             _$rootScope_: IRootScopeServiceWithExposedListeners,
-            _$q_: ng.IQService,
-            _$document_: ng.IDocumentService,
-            _$templateCache_: ng.ITemplateCacheService,
-            _$timeout_: Sinon.SinonSpy & ng.ITimeoutService
+            _$q_: angular.IQService,
+            _$document_: angular.IDocumentService,
+            _$templateCache_: angular.ITemplateCacheService,
+            _$timeout_: sinon.SinonSpy & angular.ITimeoutService
         ) => {
             $compile = _$compile_;
             scope = <BsLoadingOverlayScope>_$rootScope_.$new();

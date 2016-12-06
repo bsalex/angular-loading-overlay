@@ -16,7 +16,6 @@
         "rewriteTsconfig": true
     },
     "files": [
-        "typings/index.d.ts",
         "source/BsLoadingOverlayDirective.spec.ts",
         "source/BsLoadingOverlayDirective.ts",
         "source/BsLoadingOverlayInstance.ts",

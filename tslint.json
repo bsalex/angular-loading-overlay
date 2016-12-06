@@ -17,7 +17,6 @@
         "curly": true,
         "no-console": true,
         "no-debugger": true,
-        "no-duplicate-key": true,
         "no-duplicate-variable": true,
         "no-require-imports": true,
         "one-line": [

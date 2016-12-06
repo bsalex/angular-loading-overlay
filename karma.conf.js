@@ -13,8 +13,6 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'node_modules/angular/angular.js',
-            'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/ng-describe/dist/ng-describe.js',
             'source/**/*spec.ts'
         ],
@@ -67,10 +65,16 @@ module.exports = function(config) {
                     test: /\.ts$/,
                     loader: 'ts-loader',
                     exclude: /node_modules/
+                }, {
+                    test: /\.json$/,
+                    loader: 'json-loader'
                 }]
             },
             resolve: {
                 extensions: ['', '.ts', '.js']
+            },
+            node: {
+                fs: 'empty'
             }
         },
 

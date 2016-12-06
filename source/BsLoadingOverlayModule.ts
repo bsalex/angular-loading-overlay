@@ -1,3 +1,4 @@
+import * as angular from 'angular';
 import {BsLoadingOverlayDirectiveFactory} from './BsLoadingOverlayDirective';
 import BsLoadingOverlayService from './BsLoadingOverlayService';
 

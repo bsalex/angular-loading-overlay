@@ -1,12 +1,13 @@
+import * as angular from 'angular';
 export default class BsLoadingOverlayInstance {
-    private delayPromise: ng.IPromise<void>;
+    private delayPromise: angular.IPromise<void>;
 
     constructor(
         public referenceId: string,
         public delay: number,
         public activeClass: string,
-        public $element: ng.IAugmentedJQuery,
-        public overlayElement: ng.IAugmentedJQuery,
+        public $element: angular.IAugmentedJQuery,
+        public overlayElement: angular.IAugmentedJQuery,
         private $timeout,
         private $q
     ) {}

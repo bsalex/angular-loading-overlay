@@ -29,7 +29,9 @@ module.exports = {
         colors: true,
         reasons: true
     },
-
+    externals: {
+        "angular": "angular"
+    },
     resolve: {
         extensions: ['', '.ts', '.js']
     },

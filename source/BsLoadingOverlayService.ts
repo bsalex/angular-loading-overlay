@@ -1,10 +1,11 @@
+import * as angular from 'angular';
 import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
 import IBsLoadingOverlayHandler from './IBsLoadingOverlayHandler';
 
 export class BsLoadingOverlayService {
     constructor(
-        private $rootScope: ng.IRootScopeService,
-        private $q: ng.IQService
+        private $rootScope: angular.IRootScopeService,
+        private $q: angular.IQService
     ) { }
 
     globalConfig: IBsLoadingOverlayOptions = {};
@@ -15,11 +16,11 @@ export class BsLoadingOverlayService {
         this.notifyOverlays(options.referenceId);
     }
 
-    wrap(options: IBsLoadingOverlayOptions, promiseFunction: ng.IPromise<any> | (() => (ng.IPromise<any> | {}))): ng.IPromise<any> {
-        let promise: () => (ng.IPromise<any> | {});
+    wrap(options: IBsLoadingOverlayOptions, promiseFunction: angular.IPromise<any> | (() => (angular.IPromise<any> | {}))): angular.IPromise<any> {
+        let promise: () => (angular.IPromise<any> | {});
 
         if (typeof promiseFunction === 'function') {
-            promise = <() => ng.IPromise<any>>promiseFunction;
+            promise = <() => angular.IPromise<any>>promiseFunction;
         } else {
             promise = () => promiseFunction;
         }
@@ -51,7 +52,7 @@ export class BsLoadingOverlayService {
     getGlobalConfig = () => this.globalConfig;
 }
 
-const bsLoadingOverlayServiceFactory = ($rootScope: ng.IRootScopeService, $q: ng.IQService) => new BsLoadingOverlayService($rootScope, $q);
+const bsLoadingOverlayServiceFactory = ($rootScope: angular.IRootScopeService, $q: angular.IQService) => new BsLoadingOverlayService($rootScope, $q);
 bsLoadingOverlayServiceFactory.$inject = ['$rootScope', '$q'];
 
 export default bsLoadingOverlayServiceFactory;

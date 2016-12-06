@@ -45,8 +45,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var BsLoadingOverlayDirective_1 = __webpack_require__(1);
-	var BsLoadingOverlayService_1 = __webpack_require__(3);
+	var angular = __webpack_require__(1);
+	var BsLoadingOverlayDirective_1 = __webpack_require__(2);
+	var BsLoadingOverlayService_1 = __webpack_require__(4);
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = angular.module('bsLoadingOverlay', [])
 	    .directive('bsLoadingOverlay', BsLoadingOverlayDirective_1.BsLoadingOverlayDirectiveFactory)
@@ -55,10 +56,16 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	module.exports = angular;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var BsLoadingOverlayInstance_1 = __webpack_require__(2);
+	var BsLoadingOverlayInstance_1 = __webpack_require__(3);
 	var BsLoadingOverlayDirective = (function () {
 	    function BsLoadingOverlayDirective($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) {
 	        var _this = this;
@@ -115,9 +122,7 @@
 	}());
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = BsLoadingOverlayDirective;
-	exports.BsLoadingOverlayDirectiveFactory = function ($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) {
-	    return (new BsLoadingOverlayDirective($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService));
-	};
+	exports.BsLoadingOverlayDirectiveFactory = function ($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService) { return (new BsLoadingOverlayDirective($compile, $rootScope, $templateRequest, $q, $timeout, bsLoadingOverlayService)); };
 	exports.BsLoadingOverlayDirectiveFactory.$inject = [
 	    '$compile',
 	    '$rootScope',
@@ -129,10 +134,11 @@
 
 
 /***/ },
-/* 2 */
-/***/ function(module, exports) {
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var angular = __webpack_require__(1);
 	var BsLoadingOverlayInstance = (function () {
 	    function BsLoadingOverlayInstance(referenceId, delay, activeClass, $element, overlayElement, $timeout, $q) {
 	        this.referenceId = referenceId;
@@ -184,10 +190,11 @@
 
 
 /***/ },
-/* 3 */
-/***/ function(module, exports) {
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var angular = __webpack_require__(1);
 	var BsLoadingOverlayService = (function () {
 	    function BsLoadingOverlayService($rootScope, $q) {
 	        var _this = this;

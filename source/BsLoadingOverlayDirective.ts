@@ -1,8 +1,9 @@
+import * as angular from 'angular';
 import IBsLoadingOverlayOptions from './IBsLoadingOverlayOptions';
 import BsLoadingOverlayInstance from './BsLoadingOverlayInstance';
 import {BsLoadingOverlayService} from './BsLoadingOverlayService';
 
-interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
+interface BsLoadingOverlayDirectiveAttributes extends angular.IAttributes {
     bsLoadingOverlayReferenceId: string;
     bsLoadingOverlay: string;
     bsLoadingOverlayDelay: number;
@@ -11,17 +12,17 @@ interface BsLoadingOverlayDirectiveAttributes extends ng.IAttributes {
     bsLoadingOverlayTemplateOptions: any;
 }
 
-interface BsLoadingOverlayDirectiveScope extends ng.IScope {
+interface BsLoadingOverlayDirectiveScope extends angular.IScope {
     bsLoadingOverlayTemplateOptions: any;
 }
 
-export default class BsLoadingOverlayDirective implements ng.IDirective {
+export default class BsLoadingOverlayDirective implements angular.IDirective {
     constructor(
-        private $compile: ng.ICompileService,
-        private $rootScope: ng.IRootScopeService,
-        private $templateRequest: ng.ITemplateRequestService,
-        private $q: ng.IQService,
-        private $timeout: ng.ITimeoutService,
+        private $compile: angular.ICompileService,
+        private $rootScope: angular.IRootScopeService,
+        private $templateRequest: angular.ITemplateRequestService,
+        private $q: angular.IQService,
+        private $timeout: angular.ITimeoutService,
         private bsLoadingOverlayService: BsLoadingOverlayService
     ) {}
 
@@ -34,8 +35,8 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
     };
 
     restrict = 'EA';
-    link: ng.IDirectiveLinkFn = (scope: BsLoadingOverlayDirectiveScope, $element: ng.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
-        let templatePromise: ng.IPromise<string>;
+    link: angular.IDirectiveLinkFn = (scope: BsLoadingOverlayDirectiveScope, $element: angular.IAugmentedJQuery, $attributes: BsLoadingOverlayDirectiveAttributes) => {
+        let templatePromise: angular.IPromise<string>;
         let overlayElementScope: BsLoadingOverlayDirectiveScope;
         const globalConfig = this.bsLoadingOverlayService.getGlobalConfig();
         const templateUrl = $attributes.bsLoadingOverlayTemplateUrl || globalConfig.templateUrl;
@@ -67,7 +68,7 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
 
             const unsubscribe = this.$rootScope.$on(
                 'bsLoadingOverlayUpdateEvent',
-                (event: ng.IAngularEvent, options: IBsLoadingOverlayOptions) => {
+                (event: angular.IAngularEvent, options: IBsLoadingOverlayOptions) => {
                     if (options.referenceId === overlayInstance.referenceId) {
                         this.updateOverlayElement(overlayInstance);
                     }
@@ -83,12 +84,12 @@ export default class BsLoadingOverlayDirective implements ng.IDirective {
     }
 }
 
-export const BsLoadingOverlayDirectiveFactory: ng.IDirectiveFactory = (
-    $compile: ng.ICompileService,
-    $rootScope: ng.IRootScopeService,
-    $templateRequest: ng.ITemplateRequestService,
-    $q: ng.IQService,
-    $timeout: ng.ITimeoutService,
+export const BsLoadingOverlayDirectiveFactory: angular.IDirectiveFactory = (
+    $compile: angular.ICompileService,
+    $rootScope: angular.IRootScopeService,
+    $templateRequest: angular.ITemplateRequestService,
+    $q: angular.IQService,
+    $timeout: angular.ITimeoutService,
     bsLoadingOverlayService: BsLoadingOverlayService
 ) => (
     new BsLoadingOverlayDirective(

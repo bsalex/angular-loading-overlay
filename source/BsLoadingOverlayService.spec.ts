@@ -1,7 +1,10 @@
+import * as angular from 'angular';
+import * as sinon from 'sinon';
+
 import BsLoadingOverlayModule from './BsLoadingOverlayModule';
 import {BsLoadingOverlayService} from './BsLoadingOverlayService';
 
-declare var ngDescribe: (testDescriptions: any) => void;
+declare const ngDescribe: (testDescriptions: any) => void;
 
 ngDescribe({
     name: 'bsLoadingOverlayService interface',
@@ -9,8 +12,8 @@ ngDescribe({
     inject: ['$rootScope', 'bsLoadingOverlayService', '$q'],
     tests: function(dependencies: {
         bsLoadingOverlayService: BsLoadingOverlayService,
-        $rootScope: ng.IRootScopeService,
-        $q: ng.IQService
+        $rootScope: angular.IRootScopeService,
+        $q: angular.IQService
     }) {
         it('should exist', () => {
             expect(dependencies.bsLoadingOverlayService).toBeDefined();
