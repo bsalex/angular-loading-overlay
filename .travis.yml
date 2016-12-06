@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - "6.2.0"
+  - "7.2.0"
 
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
 install:
-  - npm install
-  - npm run prepare-development
+  - npm install -g yarn
+  - yarn
 
 addons:
   code_climate:
